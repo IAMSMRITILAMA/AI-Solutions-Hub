@@ -1,0 +1,35 @@
+# Database
+db.sqlite3
+
+# Media uploads
+media/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Virtual Environment
+env/
+venv/
+.venv/
+
+# Environment variables
+.env
+*.env
+
+# Debug & temporary files
+err.txt
+recover.txt
+granular_debug.py
+screenshot.py
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
