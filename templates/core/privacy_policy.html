@@ -1,0 +1,221 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Privacy Policy | AI-Solutions{% endblock %}
+
+{% block content %}
+<style>
+    /* Hero */
+    .privacy-hero {
+        background: linear-gradient(135deg, #0a0a1a 0%, #0d1b3e 50%, #0a0a2e 100%);
+        padding: 90px 0;
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        color: white;
+        text-align: center;
+        margin-bottom: 60px;
+    }
+    .privacy-hero .hero-label {
+        display: inline-block;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: #60a5fa;
+        background: rgba(13, 110, 253, 0.15);
+        border-radius: 999px;
+        padding: 6px 18px;
+        margin-bottom: 20px;
+    }
+    .privacy-card {
+        background: #ffffff;
+        border: 1px solid #e8eef6;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 100, 255, 0.04);
+        padding: 40px;
+        margin-bottom: 60px;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .privacy-section {
+        margin-bottom: 35px;
+    }
+    .privacy-section:last-child {
+        margin-bottom: 0;
+    }
+    .privacy-section h3 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 16px;
+    }
+    .privacy-section p, .privacy-section li {
+        color: #475569;
+        line-height: 1.7;
+    }
+    .privacy-section ul {
+        padding-left: 20px;
+        margin-bottom: 0;
+    }
+    .privacy-section li {
+        margin-bottom: 8px;
+    }
+    .privacy-section li:last-child {
+        margin-bottom: 0;
+    }
+    .back-btn {
+        color: #2563eb;
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 30px;
+        transition: color 0.2s ease;
+    }
+    .back-btn:hover {
+        color: #1d4ed8;
+        text-decoration: underline;
+    }
+</style>
+
+<!-- HERO BANNER -->
+<section class="privacy-hero">
+    <div class="container">
+        <span class="hero-label">LEGAL</span>
+        <h1 class="display-4 fw-bolder text-white mb-3">Privacy Policy</h1>
+        <p class="lead mx-auto" style="color: rgba(255,255,255,0.8); max-width: 600px;">
+            Last updated: June 2026
+        </p>
+    </div>
+</section>
+
+<div class="container">
+    <div class="privacy-card">
+        <!-- Back Button -->
+        <a href="{% url 'home' %}" class="back-btn">&larr; Back to Home</a>
+        
+        <!-- SECTION 1 -->
+        <div class="privacy-section">
+            <h3>SECTION 1 — Introduction</h3>
+            <p>
+                At AI-Solutions, we are committed to protecting your personal data and respecting your privacy. This Privacy Policy explains how we collect, use, store and protect your information when you use our website at <a href="https://ai-solutions.tech" target="_blank" rel="noopener noreferrer">ai-solutions.tech</a>.
+            </p>
+        </div>
+        
+        <hr class="my-4" style="border-color: #e2e8f0;">
+        
+        <!-- SECTION 2 -->
+        <div class="privacy-section">
+            <h3>SECTION 2 — Information We Collect</h3>
+            <p>We collect the following personal information:</p>
+            <ul>
+                <li>Full Name</li>
+                <li>Email Address</li>
+                <li>Phone Number</li>
+                <li>Company Name</li>
+                <li>Country</li>
+                <li>Job Title</li>
+                <li>Job Details</li>
+                <li>Messages and inquiries submitted</li>
+                <li>Feedback and reviews submitted</li>
+                <li>Newsletter subscription email</li>
+            </ul>
+        </div>
+        
+        <hr class="my-4" style="border-color: #e2e8f0;">
+        
+        <!-- SECTION 3 -->
+        <div class="privacy-section">
+            <h3>SECTION 3 — How We Use Your Information</h3>
+            <p>We use your personal data to:</p>
+            <ul>
+                <li>Respond to your inquiries and contact form submissions</li>
+                <li>Send you relevant AI insights and company updates (newsletter)</li>
+                <li>Notify you about upcoming events</li>
+                <li>Improve our website and services</li>
+                <li>Manage customer relationships</li>
+                <li>Comply with legal obligations</li>
+            </ul>
+        </div>
+        
+        <hr class="my-4" style="border-color: #e2e8f0;">
+        
+        <!-- SECTION 4 -->
+        <div class="privacy-section">
+            <h3>SECTION 4 — Data Storage & Security</h3>
+            <p>Your data is stored securely in our database with the following protections:</p>
+            <ul>
+                <li>Encrypted passwords using Django's built-in hashing</li>
+                <li>CSRF protection on all forms</li>
+                <li>Secure admin authentication</li>
+                <li>Access restricted to authorized personnel only</li>
+                <li>Data is never sold to third parties</li>
+            </ul>
+        </div>
+        
+        <hr class="my-4" style="border-color: #e2e8f0;">
+        
+        <!-- SECTION 5 -->
+        <div class="privacy-section">
+            <h3>SECTION 5 — Cookies</h3>
+            <p>Our website uses essential cookies to:</p>
+            <ul>
+                <li>Maintain your session when logged in as admin</li>
+                <li>Remember your preferences</li>
+                <li>Ensure website security</li>
+            </ul>
+            <p class="mt-3">We do not use advertising or tracking cookies.</p>
+        </div>
+        
+        <hr class="my-4" style="border-color: #e2e8f0;">
+        
+        <!-- SECTION 6 -->
+        <div class="privacy-section">
+            <h3>SECTION 6 — Third Party Services</h3>
+            <p>We use the following third party services:</p>
+            <ul>
+                <li>Google Maps — to display our office location on contact page</li>
+                <li>Unsplash — for website imagery</li>
+            </ul>
+            <p class="mt-3">These services have their own privacy policies.</p>
+        </div>
+        
+        <hr class="my-4" style="border-color: #e2e8f0;">
+        
+        <!-- SECTION 7 -->
+        <div class="privacy-section">
+            <h3>SECTION 7 — Your Rights</h3>
+            <p>You have the right to:</p>
+            <ul>
+                <li>Access your personal data</li>
+                <li>Request correction of your data</li>
+                <li>Request deletion of your data</li>
+                <li>Withdraw consent at any time</li>
+                <li>Lodge a complaint with the Information Commissioner's Office (ICO) in the UK</li>
+            </ul>
+            <p class="mt-3">
+                To exercise these rights contact: <a href="mailto:hello@ai-solutions.tech">hello@ai-solutions.tech</a>
+            </p>
+        </div>
+        
+        <hr class="my-4" style="border-color: #e2e8f0;">
+        
+        <!-- SECTION 8 -->
+        <div class="privacy-section">
+            <h3>SECTION 8 — Contact Us</h3>
+            <p>If you have any questions about this Privacy Policy please contact:</p>
+            <p class="mb-0">
+                <strong>AI-Solutions</strong><br>
+                AI-Solutions Hub, Sunderland, UK<br>
+                Email: <a href="mailto:hello@ai-solutions.tech">hello@ai-solutions.tech</a><br>
+                Phone: +44 191 123 4567
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

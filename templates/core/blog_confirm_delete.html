@@ -1,0 +1,25 @@
+{% extends 'core/dashboard_base.html' %}
+
+{% block title %}Delete Blog Post | AI-Solutions Staff{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+        <div class="dashboard-card text-center border-danger border border-1">
+            <i class="bi bi-exclamation-triangle-fill text-danger mb-3" style="font-size: 3.5rem;"></i>
+            <h2 class="text-white mt-2">Confirm Deletion</h2>
+            <p class="text-muted">Are you sure you want to delete this blog post? This action cannot be undone.</p>
+            
+            <p class="fs-5 text-warning mb-4 fw-bold">"{{ object.title }}"</p>
+            
+            <form method="post">
+                {% csrf_token %}
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="{% url 'blog_list' %}" class="btn btn-outline-secondary px-4 py-2">Cancel</a>
+                    <button type="submit" class="btn btn-danger px-4 py-2">Yes, Delete Post</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,355 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Past Solutions | AI-Solutions{% endblock %}
+
+{% block content %}
+<style>
+    /* Hero */
+    .ps-hero {
+        background: linear-gradient(135deg, #0a0a1a 0%, #0d1b3e 50%, #0a0a2e 100%);
+        padding: 90px 0;
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        color: white;
+        text-align: center;
+        margin-bottom: 60px;
+    }
+    .ps-hero .hero-label {
+        display: inline-block;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: #60a5fa;
+        background: rgba(13, 110, 253, 0.15);
+        border-radius: 999px;
+        padding: 6px 18px;
+        margin-bottom: 20px;
+    }
+
+    /* Filter Tabs */
+    .filter-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        margin-bottom: 48px;
+    }
+    .filter-tab {
+        padding: 8px 22px;
+        border-radius: 999px;
+        border: 2px solid #e2e8f0;
+        background: #fff;
+        color: #475569;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    .filter-tab:hover {
+        border-color: #0d6efd;
+        color: #0d6efd;
+    }
+    .filter-tab.active {
+        background: #0d6efd;
+        border-color: #0d6efd;
+        color: #fff;
+    }
+
+    /* Project Cards Grid */
+    .ps-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 28px;
+    }
+    @media (max-width: 991px) { .ps-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 575px)  { .ps-grid { grid-template-columns: 1fr; } }
+
+    /* Project Card */
+    .ps-card {
+        background: #fff;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+        border: 1px solid #f1f3f5;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .ps-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 40px rgba(13,110,253,0.12);
+    }
+    .ps-card-img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+    .ps-card-img-placeholder {
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(135deg, #0d1b3e, #0d6efd);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255,255,255,0.4);
+        font-size: 3rem;
+    }
+    .ps-card-body {
+        padding: 24px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    .ps-badge {
+        display: inline-block;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: #0d6efd;
+        background: rgba(13, 110, 253, 0.08);
+        border-radius: 999px;
+        padding: 4px 12px;
+        margin-bottom: 12px;
+    }
+    .ps-card-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 10px;
+        line-height: 1.4;
+    }
+    .ps-card-desc {
+        font-size: 0.9rem;
+        color: #64748b;
+        line-height: 1.6;
+        margin-bottom: 16px;
+        flex-grow: 1;
+    }
+    .ps-tech-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-bottom: 16px;
+    }
+    .ps-tech-tag {
+        font-size: 0.75rem;
+        background: #f1f5f9;
+        color: #475569;
+        border-radius: 6px;
+        padding: 3px 10px;
+        font-weight: 500;
+    }
+    .ps-outcomes {
+        font-size: 0.85rem;
+        color: #15803d;
+        background: #f0fdf4;
+        border-left: 3px solid #22c55e;
+        padding: 10px 14px;
+        border-radius: 0 8px 8px 0;
+        margin-top: auto;
+    }
+    .ps-outcomes i { margin-right: 6px; }
+
+    /* Empty state */
+    .ps-empty {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 60px 20px;
+        color: #94a3b8;
+    }
+    .ps-empty i { font-size: 3rem; margin-bottom: 16px; display: block; }
+</style>
+
+<!-- HERO BANNER -->
+<section class="ps-hero">
+    <div class="container">
+        <span class="hero-label">Past Solutions</span>
+        <h1 class="display-4 fw-bolder text-white mb-3">Our Work Speaks for Itself</h1>
+        <p class="lead mx-auto" style="color: rgba(255,255,255,0.8); max-width: 600px;">
+            A showcase of AI prototypes and intelligent solutions delivered for clients worldwide
+        </p>
+    </div>
+</section>
+
+<div class="container">
+
+    <!-- FILTER TABS -->
+    <div class="filter-tabs">
+        <button class="filter-tab active" data-filter="all">All</button>
+        <button class="filter-tab" data-filter="ai-prototyping">AI Prototyping</button>
+        <button class="filter-tab" data-filter="virtual-assistants">Virtual Assistants</button>
+        <button class="filter-tab" data-filter="nlp">NLP</button>
+        <button class="filter-tab" data-filter="consulting">Consulting</button>
+    </div>
+
+    <!-- PROJECT CARDS GRID -->
+    <div class="ps-grid" id="ps-grid">
+        <!-- Card 1 -->
+        <div class="ps-card" data-category="ai-prototyping">
+            <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=400&q=80" alt="E-Commerce Recommendation Engine" class="ps-card-img">
+            <div class="ps-card-body">
+                <span class="ps-badge">AI Prototyping</span>
+                <h3 class="ps-card-title">E-Commerce Recommendation Engine</h3>
+                <p class="ps-card-desc">Built an AI recommendation system increasing sales by 35% for a UK retail client</p>
+                <div class="mt-auto">
+                    <p class="text-muted small fw-semibold mb-3"><i class="fas fa-building me-2"></i>RetailTech Ltd — UK</p>
+                    <a href="#" class="text-primary fw-bold text-decoration-none">View Case Study &rarr;</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="ps-card" data-category="virtual-assistants">
+            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=400&q=80" alt="24/7 Customer Support Bot" class="ps-card-img">
+            <div class="ps-card-body">
+                <span class="ps-badge">Virtual Assistants</span>
+                <h3 class="ps-card-title">24/7 Customer Support Bot</h3>
+                <p class="ps-card-desc">Deployed an NLP chatbot handling 10,000+ daily queries for a finance company</p>
+                <div class="mt-auto">
+                    <p class="text-muted small fw-semibold mb-3"><i class="fas fa-building me-2"></i>FinanceCore — USA</p>
+                    <a href="#" class="text-primary fw-bold text-decoration-none">View Case Study &rarr;</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="ps-card" data-category="nlp">
+            <img src="https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=400&q=80" alt="Sentiment Analysis Dashboard" class="ps-card-img">
+            <div class="ps-card-body">
+                <span class="ps-badge">NLP</span>
+                <h3 class="ps-card-title">Sentiment Analysis Dashboard</h3>
+                <p class="ps-card-desc">Real-time sentiment tracking system for social media monitoring across 5 languages</p>
+                <div class="mt-auto">
+                    <p class="text-muted small fw-semibold mb-3"><i class="fas fa-building me-2"></i>MediaWatch — Germany</p>
+                    <a href="#" class="text-primary fw-bold text-decoration-none">View Case Study &rarr;</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="ps-card" data-category="consulting">
+            <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=400&q=80" alt="AI Roadmap for Healthcare" class="ps-card-img">
+            <div class="ps-card-body">
+                <span class="ps-badge">Consulting</span>
+                <h3 class="ps-card-title">AI Roadmap for Healthcare</h3>
+                <p class="ps-card-desc">Developed a 12-month AI adoption strategy for a hospital network serving 50,000 patients</p>
+                <div class="mt-auto">
+                    <p class="text-muted small fw-semibold mb-3"><i class="fas fa-building me-2"></i>MediGroup — Canada</p>
+                    <a href="#" class="text-primary fw-bold text-decoration-none">View Case Study &rarr;</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="ps-card" data-category="ai-prototyping">
+            <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=400&q=80" alt="Predictive Maintenance System" class="ps-card-img">
+            <div class="ps-card-body">
+                <span class="ps-badge">AI Prototyping</span>
+                <h3 class="ps-card-title">Predictive Maintenance System</h3>
+                <p class="ps-card-desc">ML model predicting equipment failures 2 weeks in advance reducing downtime by 60%</p>
+                <div class="mt-auto">
+                    <p class="text-muted small fw-semibold mb-3"><i class="fas fa-building me-2"></i>IndusTech — UAE</p>
+                    <a href="#" class="text-primary fw-bold text-decoration-none">View Case Study &rarr;</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="ps-card" data-category="nlp">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=400&q=80" alt="Automated Report Generator" class="ps-card-img">
+            <div class="ps-card-body">
+                <span class="ps-badge">NLP</span>
+                <h3 class="ps-card-title">Automated Report Generator</h3>
+                <p class="ps-card-desc">NLP system generating financial reports automatically saving 20 hours per week</p>
+                <div class="mt-auto">
+                    <p class="text-muted small fw-semibold mb-3"><i class="fas fa-building me-2"></i>DataFlow — Sweden</p>
+                    <a href="#" class="text-primary fw-bold text-decoration-none">View Case Study &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- No results message (hidden by default, shown via JS) -->
+    <div id="ps-no-results" class="text-center py-5" style="display:none;">
+        <i class="fas fa-search fa-3x text-muted mb-3 d-block"></i>
+        <h5 class="text-muted">No projects in this category yet.</h5>
+    </div>
+
+    <!-- 1. RESULTS STATS BAR -->
+    <div class="row my-5">
+        <div class="col-12">
+            <div class="rounded-4 py-5 px-4" style="background: linear-gradient(135deg, #0a0a1a 0%, #0d1b3e 100%);">
+                <div class="row text-center g-4">
+                    <div class="col-6 col-md-3">
+                        <h2 class="display-5 fw-bold mb-1" style="color: #60a5fa;">50+</h2>
+                        <p class="mb-0" style="color: rgba(255,255,255,0.7);">Projects Delivered</p>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <h2 class="display-5 fw-bold mb-1" style="color: #60a5fa;">200+</h2>
+                        <p class="mb-0" style="color: rgba(255,255,255,0.7);">Happy Clients</p>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <h2 class="display-5 fw-bold mb-1" style="color: #60a5fa;">5</h2>
+                        <p class="mb-0" style="color: rgba(255,255,255,0.7);">Countries Served</p>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <h2 class="display-5 fw-bold mb-1" style="color: #60a5fa;">98%</h2>
+                        <p class="mb-0" style="color: rgba(255,255,255,0.7);">Success Rate</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. CTA SECTION -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="rounded-4 p-5 text-center text-white" style="background: linear-gradient(135deg, #0a0a1a 0%, #0d1b3e 50%, #0a0a2e 100%); box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                <h2 class="fw-bold mb-3 text-white" style="color: #ffffff !important;">Have a Project in Mind?</h2>
+                <p class="mb-4 lead mx-auto" style="color: rgba(255,255,255,0.85); max-width: 500px;">Let us build your next AI solution together</p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <a href="{% url 'contact' %}" class="btn btn-primary btn-lg rounded-pill px-4">
+                        Get In Touch &rarr;
+                    </a>
+                    <a href="{% url 'services' %}" class="btn btn-outline-light btn-lg rounded-pill px-4">
+                        See Our Services
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    const tabs = document.querySelectorAll('.filter-tab');
+    const cards = document.querySelectorAll('.ps-card');
+    const noResults = document.getElementById('ps-no-results');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            // Update active tab
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            const filter = tab.dataset.filter;
+            let visible = 0;
+
+            cards.forEach(card => {
+                const match = filter === 'all' || card.dataset.category === filter;
+                card.style.display = match ? 'flex' : 'none';
+                card.style.flexDirection = match ? 'column' : '';
+                if (match) visible++;
+            });
+
+            noResults.style.display = visible === 0 ? 'block' : 'none';
+        });
+    });
+</script>
+{% endblock %}

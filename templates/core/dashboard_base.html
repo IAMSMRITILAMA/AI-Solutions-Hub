@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Staff Dashboard | AI-Solutions{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Google Fonts: Syne and DM Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #0d0d0d;
+            --bg-card: #141414;
+            --bg-sidebar: #0f0f1a;
+            --border-color: #222222;
+            --primary-accent: #7c3aed;
+            --primary-accent-hover: #9061f9;
+            --text-heading: #ffffff;
+            --text-body: #a3a3a3;
+            --text-muted: #6b7280;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-body);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Syne', sans-serif;
+            color: var(--text-heading);
+            font-weight: 700;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 260px;
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            min-height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            padding: 1.5rem 1rem;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-brand {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #7c3aed 0%, #d946ef 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            margin-bottom: 2.5rem;
+            padding-left: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        .menu-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.75rem 1rem;
+            color: var(--text-body);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .menu-link:hover {
+            background-color: rgba(124, 58, 237, 0.1);
+            color: var(--primary-accent-hover);
+        }
+
+        .menu-link.active {
+            background-color: var(--primary-accent);
+            color: #ffffff;
+        }
+
+        .menu-link i {
+            font-size: 1.2rem;
+        }
+
+        /* Main Content Styling */
+        .main-wrapper {
+            margin-left: 260px;
+            padding: 2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.75rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-purple {
+            background-color: var(--primary-accent);
+            color: #ffffff;
+            font-weight: 600;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.35);
+        }
+
+        .btn-purple:hover {
+            background-color: var(--primary-accent-hover);
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        .btn-outline-purple {
+            background-color: transparent;
+            color: var(--primary-accent-hover);
+            border: 2px solid var(--primary-accent);
+            font-weight: 600;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-outline-purple:hover {
+            background-color: var(--primary-accent);
+            color: #ffffff;
+        }
+
+        /* Table styling override */
+        .table-dark-custom {
+            --bs-table-bg: transparent;
+            --bs-table-color: var(--text-body);
+            background-color: var(--bg-card);
+            color: var(--text-body);
+        }
+        
+        .table-dark-custom th {
+            background-color: #1a1a24;
+            color: var(--text-heading);
+            border-bottom: 2px solid var(--border-color);
+            padding: 1rem;
+            font-family: 'Syne', sans-serif;
+        }
+
+        .table-dark-custom td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+            background-color: transparent !important;
+        }
+
+        .table-dark-custom tr {
+            background-color: transparent !important;
+        }
+
+        .table-dark-custom tr:hover {
+            background-color: rgba(255, 255, 255, 0.05) !important;
+        }
+
+        /* Pagination style */
+        .pagination .page-link {
+            background-color: var(--bg-card);
+            border-color: var(--border-color);
+            color: var(--text-body);
+        }
+
+        .pagination .page-link:hover {
+            background-color: var(--primary-accent);
+            color: white;
+            border-color: var(--primary-accent);
+        }
+
+        .pagination .active .page-link {
+            background-color: var(--primary-accent);
+            border-color: var(--primary-accent);
+            color: white;
+        }
+
+        /* Badge status colors */
+        .badge-new {
+            background-color: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        
+        .badge-progress {
+            background-color: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .badge-resolved {
+            background-color: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        /* Toast / Notification Styling */
+        .alert-dismissible {
+            border-radius: 12px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-heading);
+        }
+
+        /* Make muted text more visible on dark background */
+        .text-muted {
+            color: #9ca3af !important;
+        }
+
+        /* Responsive menu toggler */
+        .mobile-header {
+            display: none;
+            background-color: var(--bg-sidebar);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem;
+        }
+
+        @media (max-width: 991.98px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            .main-wrapper {
+                margin-left: 0;
+            }
+            .mobile-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                position: sticky;
+                top: 0;
+                z-index: 1010;
+            }
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+    <!-- Mobile Header -->
+    <div class="mobile-header">
+        <a href="{% url 'dashboard' %}" class="sidebar-brand mb-0">AI-Solutions</a>
+        <button class="btn btn-outline-secondary" onclick="toggleSidebar()">
+            <i class="bi bi-list fs-3 text-white"></i>
+        </button>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar" id="sidebar">
+        <a href="{% url 'dashboard' %}" class="sidebar-brand">
+            <i class="bi bi-cpu"></i> AI-Solutions
+        </a>
+        <ul class="sidebar-menu">
+            <li class="menu-item">
+                <a href="{% url 'dashboard' %}" class="menu-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                    <i class="bi bi-speedometer2"></i> Dashboard
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{% url 'inquiry_list' %}" class="menu-link {% if 'inquiries' in request.path %}active{% endif %}">
+                    <i class="bi bi-chat-left-text"></i> Inquiries
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{% url 'contact_list' %}" class="menu-link {% if 'contacts' in request.path %}active{% endif %}">
+                    <i class="bi bi-envelope"></i> Contacts
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{% url 'blog_list' %}" class="menu-link {% if 'blog' in request.path %}active{% endif %}">
+                    <i class="bi bi-journal-richtext"></i> Blog
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{% url 'event_list' %}" class="menu-link {% if 'events' in request.path %}active{% endif %}">
+                    <i class="bi bi-calendar-event"></i> Events
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="/dashboard/feedback" class="menu-link {% if 'feedback' in request.path %}active{% endif %}">
+                    <i class="bi bi-star"></i> Feedback/Reviews
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="/dashboard/gallery" class="menu-link {% if 'gallery' in request.path %}active{% endif %}">
+                    <i class="bi bi-image"></i> Gallery Management
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{% url 'change_password' %}" class="menu-link {% if 'change-password' in request.path %}active{% endif %}" style="color: #f97316;">
+                    <i class="bi bi-lock-fill" style="color: #f97316;"></i> Change Password
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-footer border-top border-secondary border-opacity-25 pt-3 mt-auto">
+            <div class="d-flex align-items-center gap-2 mb-3">
+                <div class="rounded-circle bg-purple p-2 text-white d-flex align-items-center justify-content-center" style="width: 38px; height: 38px; background-color: var(--primary-accent);">
+                    <i class="bi bi-person-circle"></i>
+                </div>
+                <div class="overflow-hidden">
+                    <h6 class="mb-0 text-white text-truncate" style="font-size: 0.9rem;">{{ user.username }}</h6>
+                    <span class="text-muted small">Staff Portal</span>
+                </div>
+            </div>
+            <a href="{% url 'dashboard_logout' %}" class="btn btn-outline-danger w-100 rounded-pill py-1.5 small d-flex align-items-center justify-content-center gap-2">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content Wrapper -->
+    <div class="main-wrapper">
+        <!-- Message Notification Center -->
+        {% if messages %}
+        <div class="row">
+            <div class="col-12">
+                {% for message in messages %}
+                <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+                    <div class="d-flex align-items-center gap-2">
+                        {% if message.tags == 'success' %}
+                        <i class="bi bi-check-circle-fill text-success fs-5"></i>
+                        {% else %}
+                        <i class="bi bi-exclamation-triangle-fill text-danger fs-5"></i>
+                        {% endif %}
+                        <span>{{ message }}</span>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,50 @@
+{% extends 'core/dashboard_base.html' %}
+
+{% block title %}Contact Message - {{ contact.subject }} | AI-Solutions Staff{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="d-flex align-items-center gap-3 mb-4">
+            <a href="{% url 'contact_list' %}" class="btn btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
+                <i class="bi bi-arrow-left text-white fs-5"></i>
+            </a>
+            <div>
+                <h1 class="display-6 fw-bold text-white mb-1">Contact Message Details</h1>
+                <p class="text-muted mb-0">Submitted at {{ contact.submitted_at|date:"M d, Y H:i" }}</p>
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="d-flex justify-content-between align-items-center border-bottom border-secondary border-opacity-25 pb-3 mb-4">
+                <h4 class="mb-0 text-white">{{ contact.subject }}</h4>
+                <span class="badge 
+                    {% if contact.is_read %}bg-secondary border border-secondary text-light
+                    {% else %}bg-info text-dark{% endif %} px-3 py-1.5 fs-6">
+                    {% if contact.is_read %}Read{% else %}Unread{% endif %}
+                </span>
+            </div>
+
+            <div class="row g-4 mb-4">
+                <div class="col-md-6">
+                    <label class="small text-muted text-uppercase fw-semibold d-block">Name</label>
+                    <span class="text-white fs-5 fw-bold"><i class="bi bi-person me-2 text-muted"></i>{{ contact.name }}</span>
+                </div>
+                <div class="col-md-6">
+                    <label class="small text-muted text-uppercase fw-semibold d-block">Email Address</label>
+                    <a href="mailto:{{ contact.email }}" class="text-info fs-5 text-decoration-none fw-bold"><i class="bi bi-envelope me-2"></i>{{ contact.email }}</a>
+                </div>
+            </div>
+
+            <div class="border-top border-secondary border-opacity-25 pt-4 mb-4">
+                <h5 class="text-white fw-bold mb-2">Message Content</h5>
+                <div class="bg-dark rounded p-3 border border-secondary border-opacity-25 text-white" style="white-space: pre-wrap; line-height: 1.6;">{{ contact.message }}</div>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2 border-top border-secondary border-opacity-25 pt-3">
+                <a href="{% url 'contact_delete' contact.id %}" class="btn btn-outline-danger rounded-pill px-4">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

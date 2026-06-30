@@ -1,0 +1,138 @@
+{% extends 'core/dashboard_base.html' %}
+
+{% block title %}Customer Inquiries | AI-Solutions Staff{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+    <div>
+        <h1 class="display-6 fw-bold text-white mb-1">Customer Inquiries</h1>
+        <p class="text-muted mb-0">Review interests, edit inquiry statuses, and add internal staff notes.</p>
+    </div>
+    <div>
+        <a href="{% url 'inquiry_add' %}" class="btn btn-purple d-flex align-items-center gap-2">
+            <i class="bi bi-plus-lg"></i> Add Inquiry
+        </a>
+    </div>
+</div>
+
+<!-- Search and Sort Card -->
+<div class="dashboard-card mb-4">
+    <form method="get" class="row g-3 align-items-center">
+        <!-- Search bar -->
+        <div class="col-md-6 col-lg-5">
+            <div class="input-group">
+                <span class="input-group-text bg-dark border-secondary border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                <input type="text" name="q" value="{{ q }}" class="form-control bg-dark border-secondary border-start-0 text-white" placeholder="Search by name or email..." style="border-radius: 0 8px 8px 0;">
+            </div>
+        </div>
+        <!-- Sorting dropdown -->
+        <div class="col-md-4 col-lg-4">
+            <div class="d-flex align-items-center gap-2">
+                <label for="sort_by" class="text-muted small text-nowrap mb-0">Sort By:</label>
+                <select name="sort_by" id="sort_by" class="form-select bg-dark border-secondary text-white" onchange="this.form.submit()">
+                    <option value="-created_at" {% if sort_by == '-created_at' %}selected{% endif %}>Date (Newest First)</option>
+                    <option value="created_at" {% if sort_by == 'created_at' %}selected{% endif %}>Date (Oldest First)</option>
+                    <option value="status" {% if sort_by == 'status' %}selected{% endif %}>Status (A-Z)</option>
+                    <option value="-status" {% if sort_by == '-status' %}selected{% endif %}>Status (Z-A)</option>
+                    <option value="name" {% if sort_by == 'name' %}selected{% endif %}>Name (A-Z)</option>
+                    <option value="-name" {% if sort_by == '-name' %}selected{% endif %}>Name (Z-A)</option>
+                </select>
+            </div>
+        </div>
+        <!-- Action Buttons -->
+        <div class="col-md-2 col-lg-3 d-flex gap-2">
+            <button type="submit" class="btn btn-purple w-100">Filter</button>
+            {% if q or sort_by != '-created_at' %}
+                <a href="{% url 'inquiry_list' %}" class="btn btn-outline-secondary w-auto" title="Clear Filters"><i class="bi bi-x-lg"></i></a>
+            {% endif %}
+        </div>
+    </form>
+</div>
+
+<!-- Table Card -->
+<div class="dashboard-card">
+    <div class="table-responsive">
+        <table class="table table-dark-custom align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Interest</th>
+                    <th>Status</th>
+                    <th>Submitted At</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if inquiries %}
+                    {% for inq in inquiries %}
+                    <tr>
+                        <td class="text-white fw-bold">{{ inq.name }}</td>
+                        <td><a href="mailto:{{ inq.email }}" class="text-info text-decoration-none small"><i class="bi bi-envelope me-1"></i>{{ inq.email }}</a></td>
+                        <td><span class="badge bg-secondary border border-secondary px-2.5 py-1 text-light">{{ inq.service_interest }}</span></td>
+                        <td>
+                            <span class="badge 
+                                {% if inq.status == 'New' %}badge-new
+                                {% elif inq.status == 'In Progress' %}badge-progress
+                                {% else %}badge-resolved{% endif %} px-2.5 py-1">
+                                {{ inq.status }}
+                            </span>
+                        </td>
+                        <td class="small text-muted">{{ inq.created_at|date:"M d, Y H:i" }}</td>
+                        <td class="text-end">
+                            <div class="d-flex justify-content-end gap-1.5 flex-wrap">
+                                <a href="{% url 'inquiry_detail' inq.id %}" class="btn btn-sm btn-outline-info rounded-pill px-3 py-1"><i class="bi bi-eye"></i> View</a>
+                                <a href="{% url 'inquiry_edit' inq.id %}" class="btn btn-sm btn-outline-warning rounded-pill px-3 py-1"><i class="bi bi-pencil"></i> Edit</a>
+                                <a href="{% url 'inquiry_delete' inq.id %}" class="btn btn-sm btn-outline-danger rounded-pill px-3 py-1"><i class="bi bi-trash"></i> Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-5">
+                            <i class="bi bi-chat-left-dots fs-1 text-secondary mb-3 d-block"></i>
+                            No customer inquiries match this query.
+                        </td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+    <div class="d-flex justify-content-center mt-4">
+        <nav aria-label="Page navigation">
+            <ul class="pagination mb-0">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if q %}&q={{ q }}{% endif %}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+                
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                    <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ num }}{% if q %}&q={{ q }}{% endif %}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">{{ num }}</a>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if q %}&q={{ q }}{% endif %}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

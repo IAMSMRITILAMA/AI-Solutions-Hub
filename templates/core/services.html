@@ -1,0 +1,575 @@
+{% extends 'base.html' %}
+
+{% block title %}Our Services | AI-Solutions{% endblock %}
+
+{% block content %}
+<style>
+    /* Hero Banner */
+    .services-hero {
+        background: linear-gradient(135deg, #0a0a1a 0%, #0d1b3e 50%, #0a0a2e 100%);
+        padding: 90px 0;
+        margin: 0 -12px;
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        color: white;
+        text-align: center;
+        margin-bottom: 60px;
+    }
+    .services-hero .hero-label {
+        display: inline-block;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: #60a5fa;
+        background: rgba(13, 110, 253, 0.15);
+        border-radius: 999px;
+        padding: 6px 18px;
+        margin-bottom: 20px;
+    }
+
+    /* Eyebrow label */
+    .svc-label {
+        display: inline-block;
+        font-size: 12px;
+        font-weight: 600;
+        color: #0073e6;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+    }
+
+    /* Service cards */
+    .svc-card {
+        background: #ffffff;
+        border: 1px solid #e8eef6;
+        border-top: 3px solid #0073e6;
+        border-radius: 16px;
+        padding: 36px 28px 28px;
+        box-shadow: 0 4px 20px rgba(0, 100, 255, 0.06);
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .svc-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 36px rgba(0, 100, 255, 0.14);
+    }
+
+    /* Featured card (middle) */
+    .svc-featured {
+        border: 2px solid #0073e6;
+        border-top: 3px solid #0073e6;
+        box-shadow: 0 8px 28px rgba(0, 100, 255, 0.10);
+    }
+
+    /* Icon circle */
+    .svc-icon {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: rgba(13, 110, 253, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        color: #0d6efd;
+        margin-bottom: 20px;
+        flex-shrink: 0;
+    }
+
+    .svc-title {
+        font-size: 22px;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 12px;
+    }
+
+    .svc-desc {
+        font-size: 15px;
+        color: #6b7280;
+        line-height: 1.7;
+        margin-bottom: 0;
+    }
+
+    /* Divider above feature list */
+    .svc-divider {
+        border: none;
+        border-top: 1px solid #e8eef6;
+        margin: 20px 0 16px 0;
+    }
+
+    /* Feature list */
+    .svc-features {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 16px 0;
+    }
+    .svc-features li {
+        font-size: 14px;
+        color: #4b5563;
+        padding: 5px 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .svc-check {
+        color: #0073e6;
+        font-weight: 700;
+    }
+
+    /* Learn More link */
+    .svc-link {
+        margin-top: auto;
+        color: #0073e6;
+        font-weight: 600;
+        font-size: 14px;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+    .svc-link:hover {
+        color: #0055b3;
+        text-decoration: underline;
+    }
+
+    /* CTA gradient section */
+    .svc-cta {
+        background: linear-gradient(135deg, #0073e6 0%, #005bb5 100%);
+        border-radius: 20px;
+        padding: 60px 40px;
+        box-shadow: 0 12px 40px rgba(0, 100, 255, 0.20);
+    }
+    .svc-cta-btn {
+        background: #ffffff;
+        color: #0073e6;
+        border: none;
+        border-radius: 999px;
+        padding: 14px 36px;
+        font-weight: 600;
+        font-size: 16px;
+        transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .svc-cta-btn:hover {
+        background: #f0f7ff;
+        color: #005bb5;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+</style>
+
+<!-- 1. HERO BANNER -->
+<section class="services-hero">
+    <div class="container">
+        <span class="hero-label">Our Services</span>
+        <h1 class="display-4 fw-bolder text-white mb-3">Intelligent Services</h1>
+        <p class="lead mx-auto" style="color: rgba(255,255,255,0.8); max-width: 580px;">
+            Leveraging AI to solve real-world industry challenges
+        </p>
+    </div>
+</section>
+
+<!-- 2. SERVICE CARDS -->
+<div class="container">
+    <div class="svc-grid">
+
+        <!-- Service 1 — AI Prototyping -->
+        <div class="svc-card">
+            <div class="svc-icon"><i class="fas fa-robot"></i></div>
+            <h3 class="svc-title">AI Prototyping</h3>
+            <p class="svc-desc">Test your AI ideas with our rapid prototyping services. We build functional MVPs that help you validate concepts and secure stakeholders' buy-in effectively.</p>
+            <hr class="svc-divider">
+            <ul class="svc-features">
+                <li><span class="svc-check"><i class="fas fa-check-circle"></i></span> Concept Validation</li>
+                <li><span class="svc-check"><i class="fas fa-check-circle"></i></span> Tech Stack Selection</li>
+                <li><span class="svc-check"><i class="fas fa-check-circle"></i></span> Functional Prototypes</li>
+            </ul>
+            <a href="{% url 'contact' %}" class="svc-link">Learn More →</a>
+        </div>
+
+        <!-- Service 2 (Featured) — Virtual Assistants -->
+        <div class="svc-card svc-featured">
+            <div class="svc-icon"><i class="fas fa-comments"></i></div>
+            <h3 class="svc-title">Virtual Assistants</h3>
+            <p class="svc-desc">Our AI-powered chatbots and virtual assistants provide 24/7 support, answering queries, collecting user data, and seamlessly transferring to humans when needed.</p>
+            <hr class="svc-divider">
+            <ul class="svc-features">
+                <li><span class="svc-check"><i class="fas fa-check-circle"></i></span> NLP Integration</li>
+                <li><span class="svc-check"><i class="fas fa-check-circle"></i></span> CRM Connection</li>
+                <li><span class="svc-check"><i class="fas fa-check-circle"></i></span> Human-in-the-loop logic</li>
+            </ul>
+            <a href="{% url 'contact' %}" class="svc-link">Learn More →</a>
+        </div>
+
+        <!-- Service 3 — Data Management -->
+        <div class="svc-card">
+            <div class="svc-icon"><i class="fas fa-chart-bar"></i></div>
+            <h3 class="svc-title">Data Management</h3>
+            <p class="svc-desc">Transform raw data into actionable insights. We set up robust database systems using PostgreSQL and develop analytics dashboards to support informed decisions.</p>
+            <hr class="svc-divider">
+            <ul class="svc-features">
+                <li><span class="svc-check"><i class="fas fa-check-circle"></i></span> Data Storage &amp; Security</li>
+                <li><span class="svc-check"><i class="fas fa-check-circle"></i></span> Trend Analysis</li>
+                <li><span class="svc-check"><i class="fas fa-check-circle"></i></span> Custom Dashboards</li>
+            </ul>
+            <a href="{% url 'contact' %}" class="svc-link">Learn More →</a>
+        </div>
+
+        <!-- Service 4 — NLP Solutions -->
+        <div class="svc-card">
+            <div class="svc-icon"><i class="fas fa-language"></i></div>
+            <h3 class="svc-title">NLP Solutions</h3>
+            <p class="svc-desc">Custom natural language processing models for text analysis, sentiment detection and language automation — making your data speak for itself.</p>
+            <hr class="svc-divider">
+            <ul class="svc-features">
+                <li><span class="svc-check"><i class="fas fa-check-circle"></i></span> Text Classification</li>
+                <li><span class="svc-check"><i class="fas fa-check-circle"></i></span> Sentiment Analysis</li>
+                <li><span class="svc-check"><i class="fas fa-check-circle"></i></span> Language Models</li>
+            </ul>
+            <a href="{% url 'contact' %}" class="svc-link">Learn More →</a>
+        </div>
+
+        <!-- Service 5 — Consulting -->
+        <div class="svc-card">
+            <div class="svc-icon"><i class="fas fa-lightbulb"></i></div>
+            <h3 class="svc-title">Consulting</h3>
+            <p class="svc-desc">Expert AI strategy and roadmap consulting to help your business adopt AI the right way — with clear goals, measurable milestones and team alignment.</p>
+            <hr class="svc-divider">
+            <ul class="svc-features">
+                <li><span class="svc-check"><i class="fas fa-check-circle"></i></span> AI Readiness Assessment</li>
+                <li><span class="svc-check"><i class="fas fa-check-circle"></i></span> Strategy Planning</li>
+                <li><span class="svc-check"><i class="fas fa-check-circle"></i></span> Team Training</li>
+            </ul>
+            <a href="{% url 'contact' %}" class="svc-link">Learn More →</a>
+        </div>
+
+    </div>
+
+    <!-- ── HOW IT WORKS ─────────────────────────────────── -->
+    <div class="hiw-section my-5 py-5 px-4 rounded-4">
+        <div class="text-center mb-5">
+            <div style="width:60px;height:3px;background:#0d6efd;border-radius:999px;margin:0 auto 18px auto;"></div>
+            <h2 class="fw-bold" style="color:#0f172a;">How It Works</h2>
+            <p class="text-muted mx-auto" style="max-width:540px;">Simple 4-step process to deliver your AI solution</p>
+        </div>
+        <div class="row align-items-start g-0 justify-content-center">
+
+            <!-- Step 1 -->
+            <div class="col-12 col-md hiw-step">
+                <div class="hiw-circle">1</div>
+                <h5 class="fw-bold mt-3 mb-2">Consult</h5>
+                <p class="text-muted small">We understand your business needs and goals</p>
+            </div>
+            <div class="col-auto hiw-arrow d-none d-md-flex"><i class="fas fa-chevron-right"></i></div>
+
+            <!-- Step 2 -->
+            <div class="col-12 col-md hiw-step">
+                <div class="hiw-circle">2</div>
+                <h5 class="fw-bold mt-3 mb-2">Plan</h5>
+                <p class="text-muted small">We design a tailored AI strategy and roadmap</p>
+            </div>
+            <div class="col-auto hiw-arrow d-none d-md-flex"><i class="fas fa-chevron-right"></i></div>
+
+            <!-- Step 3 -->
+            <div class="col-12 col-md hiw-step">
+                <div class="hiw-circle">3</div>
+                <h5 class="fw-bold mt-3 mb-2">Build</h5>
+                <p class="text-muted small">Our team builds and tests your solution</p>
+            </div>
+            <div class="col-auto hiw-arrow d-none d-md-flex"><i class="fas fa-chevron-right"></i></div>
+
+            <!-- Step 4 -->
+            <div class="col-12 col-md hiw-step">
+                <div class="hiw-circle">4</div>
+                <h5 class="fw-bold mt-3 mb-2">Deliver</h5>
+                <p class="text-muted small">We deploy, train your team and provide ongoing support</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── PRICING ───────────────────────────────────────── -->
+    <div class="my-5 py-2">
+        <div class="text-center mb-5">
+            <div style="width:60px;height:3px;background:#0d6efd;border-radius:999px;margin:0 auto 18px auto;"></div>
+            <h2 class="fw-bold" style="color:#0f172a;">Simple Transparent Pricing</h2>
+            <p class="text-muted mx-auto" style="max-width:540px;">Choose the plan that fits your business needs</p>
+        </div>
+        <div class="row g-4 justify-content-center align-items-stretch">
+
+            <!-- Starter -->
+            <div class="col-md-4">
+                <div class="pricing-card h-100">
+                    <p class="pricing-tier">Starter</p>
+                    <div class="pricing-price">£999<span>/project</span></div>
+                    <p class="pricing-for text-muted">For small businesses</p>
+                    <hr>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check-circle text-primary me-2"></i>1 AI prototype</li>
+                        <li><i class="fas fa-check-circle text-primary me-2"></i>Basic virtual assistant</li>
+                        <li><i class="fas fa-check-circle text-primary me-2"></i>Email support</li>
+                        <li><i class="fas fa-check-circle text-primary me-2"></i>2 week delivery</li>
+                    </ul>
+                    <a href="{% url 'contact' %}" class="btn btn-outline-primary rounded-pill w-100 fw-semibold mt-auto">Get Started</a>
+                </div>
+            </div>
+
+            <!-- Professional (highlighted) -->
+            <div class="col-md-4">
+                <div class="pricing-card pricing-featured h-100">
+                    <span class="pricing-badge">Most Popular</span>
+                    <p class="pricing-tier text-white">Professional</p>
+                    <div class="pricing-price text-white">£2,499<span>/project</span></div>
+                    <p class="pricing-for" style="color:rgba(255,255,255,0.75);">For growing businesses</p>
+                    <hr style="border-color:rgba(255,255,255,0.2);">
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check-circle me-2" style="color:#93c5fd;"></i>3 AI prototypes</li>
+                        <li><i class="fas fa-check-circle me-2" style="color:#93c5fd;"></i>Advanced virtual assistant</li>
+                        <li><i class="fas fa-check-circle me-2" style="color:#93c5fd;"></i>NLP integration</li>
+                        <li><i class="fas fa-check-circle me-2" style="color:#93c5fd;"></i>Priority support</li>
+                        <li><i class="fas fa-check-circle me-2" style="color:#93c5fd;"></i>4 week delivery</li>
+                    </ul>
+                    <a href="{% url 'contact' %}" class="btn btn-light rounded-pill w-100 fw-bold mt-auto" style="color:#0d6efd;">Get Started</a>
+                </div>
+            </div>
+
+            <!-- Enterprise -->
+            <div class="col-md-4">
+                <div class="pricing-card h-100">
+                    <p class="pricing-tier">Enterprise</p>
+                    <div class="pricing-price">Custom<span> pricing</span></div>
+                    <p class="pricing-for text-muted">For large organizations</p>
+                    <hr>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check-circle text-primary me-2"></i>Unlimited prototypes</li>
+                        <li><i class="fas fa-check-circle text-primary me-2"></i>Full AI suite</li>
+                        <li><i class="fas fa-check-circle text-primary me-2"></i>Dedicated account manager</li>
+                        <li><i class="fas fa-check-circle text-primary me-2"></i>24/7 support</li>
+                        <li><i class="fas fa-check-circle text-primary me-2"></i>Custom delivery</li>
+                    </ul>
+                    <a href="{% url 'contact' %}" class="btn btn-outline-primary rounded-pill w-100 fw-semibold mt-auto">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── INDUSTRIES WE SERVE ────────────────────────────── -->
+    <div class="hiw-section my-5 py-5 px-4 rounded-4">
+        <div class="text-center mb-5">
+            <div style="width:60px;height:3px;background:#0d6efd;border-radius:999px;margin:0 auto 18px auto;"></div>
+            <h2 class="fw-bold" style="color:#0f172a;">Industries We Serve</h2>
+            <p class="text-muted mx-auto" style="max-width:540px;">Our AI solutions work across multiple sectors</p>
+        </div>
+        <div class="row g-4 justify-content-center">
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="industry-card">
+                    <div class="industry-icon"><i class="fas fa-hospital"></i></div>
+                    <p class="industry-name">Healthcare</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="industry-card">
+                    <div class="industry-icon"><i class="fas fa-chart-line"></i></div>
+                    <p class="industry-name">Finance</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="industry-card">
+                    <div class="industry-icon"><i class="fas fa-shopping-bag"></i></div>
+                    <p class="industry-name">Retail</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="industry-card">
+                    <div class="industry-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <p class="industry-name">Education</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="industry-card">
+                    <div class="industry-icon"><i class="fas fa-cog"></i></div>
+                    <p class="industry-name">Manufacturing</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="industry-card">
+                    <div class="industry-icon"><i class="fas fa-truck"></i></div>
+                    <p class="industry-name">Logistics</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="row mt-2 mb-5">
+        <div class="col-12">
+            <div class="svc-cta text-center">
+                <h2 class="fw-bold mb-3 text-white">Need a Custom Solution?</h2>
+                <p class="mb-4" style="color: rgba(255,255,255,0.85); max-width: 520px; margin: 0 auto;">Our engineers are ready to tailor an AI strategy specifically for your industry needs.</p>
+                <a href="{% url 'contact' %}" class="btn svc-cta-btn btn-lg mt-3">Consult with Us</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* ── Service Cards Grid ── */
+    .svc-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        margin-bottom: 20px;
+    }
+    @media (max-width: 991px) {
+        .svc-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 575px) {
+        .svc-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── How It Works ── */
+    .hiw-section {
+        background: #f8faff;
+        border: 1px solid #eef2ff;
+    }
+    .hiw-step {
+        text-align: center;
+        padding: 0 20px;
+    }
+    .hiw-circle {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #0d6efd, #0056b3);
+        color: white;
+        font-size: 1.5rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        box-shadow: 0 8px 20px rgba(13,110,253,0.3);
+    }
+    .hiw-arrow {
+        align-items: center;
+        color: #0d6efd;
+        font-size: 1.3rem;
+        padding: 0 4px;
+        padding-top: 30px;
+        opacity: 0.5;
+    }
+
+    /* ── Pricing ── */
+    .pricing-card {
+        background: #fff;
+        border: 1px solid #e8eef6;
+        border-radius: 20px;
+        padding: 36px 32px 32px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+    }
+    .pricing-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 36px rgba(0,0,0,0.08);
+    }
+    .pricing-featured {
+        background: linear-gradient(135deg, #0d6efd 0%, #0056b3 100%);
+        border-color: transparent;
+        box-shadow: 0 16px 40px rgba(13,110,253,0.35);
+        color: #fff;
+    }
+    .pricing-badge {
+        position: absolute;
+        top: -14px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #f97316;
+        color: #fff;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 4px 16px;
+        border-radius: 999px;
+        white-space: nowrap;
+    }
+    .pricing-tier {
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: #0d6efd;
+        margin-bottom: 8px;
+    }
+    .pricing-price {
+        font-size: 2.4rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 4px;
+        line-height: 1.1;
+    }
+    .pricing-price span {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #6b7280;
+    }
+    .pricing-featured .pricing-price { color: #fff; }
+    .pricing-featured .pricing-price span { color: rgba(255,255,255,0.7); }
+    .pricing-featured .pricing-tier { color: rgba(255,255,255,0.8); }
+    .pricing-for {
+        font-size: 0.9rem;
+        margin-bottom: 16px;
+    }
+    .pricing-features {
+        list-style: none;
+        padding: 0;
+        margin: 16px 0 24px;
+        flex-grow: 1;
+    }
+    .pricing-features li {
+        font-size: 0.95rem;
+        color: #4b5563;
+        padding: 6px 0;
+    }
+    .pricing-featured .pricing-features li { color: rgba(255,255,255,0.9); }
+
+    /* ── Industries ── */
+    .industry-card {
+        background: #fff;
+        border: 1px solid #e8eef6;
+        border-radius: 16px;
+        padding: 28px 16px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .industry-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(13,110,253,0.1);
+    }
+    .industry-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: rgba(37, 99, 235, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 12px auto;
+        font-size: 1.5rem;
+        color: #2563eb;
+    }
+    .industry-name {
+        font-weight: 700;
+        font-size: 0.95rem;
+        color: #0f172a;
+        margin: 0;
+    }
+</style>
+
+{% endblock %}

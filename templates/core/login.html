@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Staff Login | AI-Solutions{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center align-items-center py-5 my-5">
+    <div class="col-md-6 col-lg-5">
+        <div class="glass-card shadow-lg p-4 p-md-5 text-center" style="border: 1px solid #e8eef6; border-radius: 20px;">
+            <!-- Brand Icon / Accent -->
+            <div class="mx-auto mb-4 d-flex align-items-center justify-content-center rounded-circle" style="width: 70px; height: 70px; background: rgba(13, 110, 253, 0.1); color: #0d6efd; font-size: 1.8rem;">
+                <i class="fas fa-lock"></i>
+            </div>
+            
+            <h2 class="fw-bold mb-2 text-heading" style="color: #0f172a;">Staff Portal Login</h2>
+            <p class="text-muted small mb-4">Authorized administrative personnel only</p>
+            
+            {% if form.errors %}
+            <div class="alert alert-danger alert-dismissible fade show text-start fw-semibold rounded-3 border-0" role="alert" style="background-color: #fee2e2; color: #991b1b;">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="fas fa-exclamation-circle fs-5"></i>
+                    <span>Invalid username or password.<br>Please try again.</span>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+            
+            <form method="post" class="text-start" novalidate>
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{ form.username|as_crispy_field }}
+                </div>
+                <div class="mb-4">
+                    <label for="id_password" class="form-label fw-bold" style="color: #334155;">Password<span class="asteriskField">*</span></label>
+                    <div class="input-group">
+                        <input type="password" name="password" id="id_password" class="form-control" required>
+                        <button class="btn btn-outline-secondary border" type="button" id="togglePassword" style="border-color: #ced4da;">
+                            <i class="fas fa-eye text-muted" id="toggleIcon"></i>
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 btn-lg mt-2 fw-bold rounded-pill" style="background: #0073e6; box-shadow: 0 4px 15px rgba(0,115,230,0.3);">Secure Log In</button>
+            </form>
+            
+            <div class="mt-4 border-top pt-3">
+                <a href="{% url 'home' %}" class="small text-muted text-decoration-none">&larr; Return to Homepage</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const togglePassword = document.getElementById('togglePassword');
+    const password = document.getElementById('id_password');
+    const toggleIcon = document.getElementById('toggleIcon');
+
+    if (togglePassword && password && toggleIcon) {
+        togglePassword.addEventListener('click', function () {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            
+            if (type === 'password') {
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            } else {
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            }
+        });
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends 'core/dashboard_base.html' %}
+
+{% block title %}Feedback & Reviews | AI-Solutions Staff{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+    <div>
+        <h1 class="display-6 fw-bold text-white mb-1">Feedback & Reviews</h1>
+        <p class="text-muted mb-0">Manage customer reviews, delete spam, and select featured feedback.</p>
+    </div>
+    <div>
+        <a href="{% url 'feedback_add' %}" class="btn btn-purple d-flex align-items-center gap-2">
+            <i class="bi bi-plus-lg"></i> Add Review
+        </a>
+    </div>
+</div>
+
+<!-- Search and Sort Card -->
+<div class="dashboard-card mb-4">
+    <form method="get" class="row g-3 align-items-center">
+        <!-- Search bar -->
+        <div class="col-md-6 col-lg-5">
+            <div class="input-group">
+                <span class="input-group-text bg-dark border-secondary border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                <input type="text" name="q" value="{{ q }}" class="form-control bg-dark border-secondary border-start-0 text-white" placeholder="Search by customer name..." style="border-radius: 0 8px 8px 0;">
+            </div>
+        </div>
+        <!-- Filter dropdown -->
+        <div class="col-md-4 col-lg-4">
+            <div class="d-flex align-items-center gap-2">
+                <label for="rating" class="text-muted small text-nowrap mb-0">Rating:</label>
+                <select name="rating" id="rating" class="form-select bg-dark border-secondary text-white" onchange="this.form.submit()">
+                    <option value="">All Ratings</option>
+                    <option value="5" {% if rating == '5' %}selected{% endif %}>5 Stars</option>
+                    <option value="4" {% if rating == '4' %}selected{% endif %}>4 Stars</option>
+                    <option value="3" {% if rating == '3' %}selected{% endif %}>3 Stars</option>
+                    <option value="2" {% if rating == '2' %}selected{% endif %}>2 Stars</option>
+                    <option value="1" {% if rating == '1' %}selected{% endif %}>1 Star</option>
+                </select>
+            </div>
+        </div>
+        <!-- Action Buttons -->
+        <div class="col-md-2 col-lg-3 d-flex gap-2">
+            <button type="submit" class="btn btn-purple w-100">Filter</button>
+            {% if q or rating %}
+                <a href="{% url 'feedback_list' %}" class="btn btn-outline-secondary w-auto" title="Clear Filters"><i class="bi bi-x-lg"></i></a>
+            {% endif %}
+        </div>
+    </form>
+</div>
+
+<!-- Table Card -->
+<div class="dashboard-card">
+    <div class="table-responsive">
+        <table class="table table-dark-custom align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Rating</th>
+                    <th>Comment</th>
+                    <th>Date</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if feedbacks %}
+                    {% for fb in feedbacks %}
+                    <tr>
+                        <td class="text-white fw-bold">
+                            {{ fb.customer_name }}
+                            {% if fb.is_featured %}
+                                <span class="badge badge-resolved ms-1 px-2 py-1" style="font-size: 0.7rem;"><i class="bi bi-star-fill"></i> Featured</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="text-warning small">
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= fb.rating %}
+                                        <i class="bi bi-star-fill"></i>
+                                    {% else %}
+                                        <i class="bi bi-star"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </td>
+                        <td class="text-truncate" style="max-width: 250px;">{{ fb.comment }}</td>
+                        <td class="small text-muted">{{ fb.date|date:"M d, Y" }}</td>
+                        <td class="text-end">
+                            <div class="d-flex justify-content-end gap-1.5 flex-wrap">
+                                <a href="?toggle_id={{ fb.id }}{% if q %}&q={{ q }}{% endif %}{% if rating %}&rating={{ rating }}{% endif %}" class="btn btn-sm {% if fb.is_featured %}btn-outline-secondary{% else %}btn-outline-success{% endif %} rounded-pill px-3 py-1">
+                                    <i class="bi {% if fb.is_featured %}bi-star{% else %}bi-star-fill{% endif %}"></i> 
+                                    {% if fb.is_featured %}Unfeature{% else %}Feature{% endif %}
+                                </a>
+                                <a href="#" class="btn btn-sm btn-outline-info rounded-pill px-3 py-1"><i class="bi bi-eye"></i> View</a>
+                                <a href="?delete_id={{ fb.id }}{% if q %}&q={{ q }}{% endif %}{% if rating %}&rating={{ rating }}{% endif %}" class="btn btn-sm btn-outline-danger rounded-pill px-3 py-1" onclick="return confirm('Are you sure you want to delete this feedback?');"><i class="bi bi-trash"></i> Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center text-muted py-5">
+                            <i class="bi bi-star fs-1 text-secondary mb-3 d-block"></i>
+                            No feedback matches this query.
+                        </td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

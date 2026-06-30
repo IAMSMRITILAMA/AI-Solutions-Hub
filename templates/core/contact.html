@@ -1,0 +1,354 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Contact Us | AI-Solutions{% endblock %}
+
+{% block content %}
+<style>
+    /* Hero */
+    .contact-hero {
+        background: linear-gradient(135deg, #0a0a1a 0%, #0d1b3e 50%, #0a0a2e 100%);
+        padding: 90px 0;
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        color: white;
+        text-align: center;
+        margin-bottom: 60px;
+    }
+    .contact-hero .hero-label {
+        display: inline-block;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: #60a5fa;
+        background: rgba(13, 110, 253, 0.15);
+        border-radius: 999px;
+        padding: 6px 18px;
+        margin-bottom: 20px;
+    }
+
+    /* Icon Styles */
+    .contact-icon-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        background-color: rgba(13, 110, 253, 0.1);
+        color: #0d6efd;
+        font-size: 1.3rem;
+        transition: all 0.3s ease;
+        flex-shrink: 0;
+    }
+    .contact-info-block:hover .contact-icon-wrapper {
+        transform: scale(1.1);
+        background-color: rgba(13, 110, 253, 0.18);
+    }
+
+    /* Social icons */
+    .social-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: rgba(13, 110, 253, 0.1);
+        color: #0d6efd;
+        font-size: 1.1rem;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    .social-link:hover {
+        background: #0d6efd;
+        color: #fff;
+        transform: translateY(-3px);
+    }
+
+    /* Business Hours */
+    .hours-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #f1f5f9;
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-row .day { font-weight: 600; color: #1e293b; }
+    .hours-row .time { color: #64748b; font-size: 0.9rem; }
+    .hours-row .badge-open {
+        background: #d1fae5; color: #065f46;
+        font-size: 11px; font-weight: 700;
+        padding: 3px 8px; border-radius: 999px;
+    }
+    .hours-row .badge-closed {
+        background: #fee2e2; color: #991b1b;
+        font-size: 11px; font-weight: 700;
+        padding: 3px 8px; border-radius: 999px;
+    }
+
+    /* Map */
+    .map-container {
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+</style>
+
+<!-- HERO BANNER -->
+<section class="contact-hero">
+    <div class="container">
+        <span class="hero-label">CONTACT US</span>
+        <h1 class="display-4 fw-bolder text-white mb-3">Get in Touch</h1>
+        <p class="lead mx-auto" style="color: rgba(255,255,255,0.8); max-width: 600px;">
+            Our team will reach out within 24 hours
+        </p>
+    </div>
+</section>
+
+<div class="container mb-5">
+    <div class="row g-5">
+
+        <!-- LEFT COLUMN: Info + Hours + Social -->
+        <div class="col-lg-5">
+
+            <h3 class="fw-bold mb-4" style="color: #0f172a;">Contact Information</h3>
+            <p class="text-muted mb-5" style="font-size: 1.05rem; line-height: 1.7;">Have a question about our AI solutions or interested in a partnership? Fill out the form, or reach out to us directly.</p>
+
+            <!-- Contact Details -->
+            <div class="mb-4 d-flex align-items-center gap-4 contact-info-block" style="cursor:default;">
+                <div class="contact-icon-wrapper"><i class="fas fa-map-marker-alt"></i></div>
+                <div>
+                    <h6 class="fw-bold mb-1" style="color: #1e293b;">Address</h6>
+                    <p class="text-muted mb-0">AI-Solutions Hub, Sunderland, UK</p>
+                </div>
+            </div>
+
+            <div class="mb-4 d-flex align-items-center gap-4 contact-info-block" style="cursor:default;">
+                <div class="contact-icon-wrapper"><i class="fas fa-envelope"></i></div>
+                <div>
+                    <h6 class="fw-bold mb-1" style="color: #1e293b;">Email</h6>
+                    <a href="mailto:hello@ai-solutions.tech" class="text-muted text-decoration-none">hello@ai-solutions.tech</a>
+                </div>
+            </div>
+
+            <div class="mb-5 d-flex align-items-center gap-4 contact-info-block" style="cursor:default;">
+                <div class="contact-icon-wrapper"><i class="fas fa-phone-alt"></i></div>
+                <div>
+                    <h6 class="fw-bold mb-1" style="color: #1e293b;">Phone</h6>
+                    <a href="tel:+441911234567" class="text-muted text-decoration-none">+44 191 123 4567</a>
+                </div>
+            </div>
+
+            <!-- Business Hours -->
+            <div class="glass-card mb-5" style="padding: 28px;">
+                <h5 class="fw-bold mb-4" style="color: #0f172a;"><i class="far fa-clock text-primary me-2"></i>Business Hours</h5>
+                <div class="hours-row">
+                    <span class="day">Monday – Friday</span>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="time">9:00 AM – 6:00 PM</span>
+                        <span class="badge-open">Open</span>
+                    </div>
+                </div>
+                <div class="hours-row">
+                    <span class="day">Saturday</span>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="time">10:00 AM – 3:00 PM</span>
+                        <span class="badge-open">Open</span>
+                    </div>
+                </div>
+                <div class="hours-row">
+                    <span class="day">Sunday</span>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="time">Closed</span>
+                        <span class="badge-closed">Closed</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Media Links -->
+            <h6 class="fw-bold mb-3" style="color: #1e293b;">Follow Us</h6>
+            <div class="d-flex gap-3">
+                <a href="#" class="social-link" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="social-link" title="Twitter / X"><i class="fab fa-x-twitter"></i></a>
+                <a href="#" class="social-link" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-link" title="YouTube"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Form -->
+        <div class="col-lg-7">
+            <div class="glass-card p-4 p-md-5" style="border: 1px solid #e8eef6; border-radius: 20px;">
+                <h3 class="fw-bold mb-1" style="color: #0f172a;">Send Us a Message</h3>
+                <p class="text-muted mb-4">We'll get back to you within 24 hours.</p>
+
+                <!-- SUCCESS MESSAGE -->
+                <div id="successMessage" class="text-center py-5" style="display: none;">
+                    <div class="mb-3">
+                        <i class="fas fa-check-circle text-success" style="font-size: 4.5rem;"></i>
+                    </div>
+                    <h3 class="fw-bold mb-2" style="color: #0f172a;">Message sent successfully!</h3>
+                    <p class="text-muted mb-4">We will contact you within 24 hours</p>
+                    <button class="btn btn-outline-primary rounded-pill px-4 fw-semibold" onclick="resetForm()">Send another message</button>
+                </div>
+
+                <form id="contactForm" novalidate onsubmit="handleContactSubmit(event)">
+                    {% csrf_token %}
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold" style="color: #334155;">Name*</label>
+                            <input type="text" id="id_name" class="form-control form-control-lg bg-light border-0" placeholder="Your Name">
+                            <div class="invalid-feedback fw-semibold mt-2 text-danger" id="nameError">Enter your name</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold" style="color: #334155;">Email*</label>
+                            <input type="email" id="id_email" class="form-control form-control-lg bg-light border-0" placeholder="Your Email Address">
+                            <div class="invalid-feedback fw-semibold mt-2 text-danger" id="emailError">Enter valid email</div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label fw-bold" style="color: #334155;">Phone</label>
+                            <input type="text" id="id_phone" class="form-control form-control-lg bg-light border-0" placeholder="Phone Number (Optional)">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold" style="color: #334155;">Company Name*</label>
+                            <input type="text" id="id_company" class="form-control form-control-lg bg-light border-0" placeholder="Your Company Name">
+                            <div class="invalid-feedback fw-semibold mt-2 text-danger" id="companyError">Enter company name</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold" style="color: #334155;">Country*</label>
+                            <select id="id_country" class="form-select form-select-lg bg-light border-0">
+                                <option value="">Select your country</option>
+                                <option value="UK">United Kingdom</option>
+                                <option value="US">United States</option>
+                                <option value="CA">Canada</option>
+                                <option value="AU">Australia</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <div class="invalid-feedback fw-semibold mt-2 text-danger" id="countryError">Select your country</div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label fw-bold" style="color: #334155;">Job Title*</label>
+                            <input type="text" id="id_job_title" class="form-control form-control-lg bg-light border-0" placeholder="Your Job Title">
+                            <div class="invalid-feedback fw-semibold mt-2 text-danger" id="jobTitleError">Enter job title</div>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-bold" style="color: #334155;">Job Details*</label>
+                            <textarea id="id_job_details" class="form-control bg-light border-0" rows="3" placeholder="Describe your role..."></textarea>
+                            <div class="invalid-feedback fw-semibold mt-2 text-danger" id="jobDetailsError">Enter job details</div>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-bold" style="color: #334155;">Message*</label>
+                            <textarea id="id_message" class="form-control bg-light border-0" rows="4" placeholder="Tell us more about your project..."></textarea>
+                            <div class="invalid-feedback fw-semibold mt-2 text-danger" id="messageError">Enter your message</div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 btn-lg mt-4 rounded-pill fw-bold"
+                        style="background: #0073e6; box-shadow: 0 4px 15px rgba(0,115,230,0.3); padding: 14px 24px;">
+                        <i class="fas fa-paper-plane me-2"></i>Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAP SECTION -->
+    <div class="row mt-5 mb-2">
+        <div class="col-12">
+            <div class="mb-4">
+                <h3 class="fw-bold mb-2" style="color: #0f172a;">Find Us Here</h3>
+                <p class="text-muted" style="font-size: 1.1rem;">AI-Solutions Hub, Sunderland, UK</p>
+            </div>
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d37065.12856990092!2d-1.4218989!3d54.9069301!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487e66f5cf098453%3A0x2a8e39c3d6d7f929!2sSunderland%2C%20UK!5e0!3m2!1sen!2sus!4v1234567890"
+                width="100%" 
+                height="400" 
+                style="border:0;border-radius:12px;" 
+                allowfullscreen="" 
+                loading="lazy">
+            </iframe>
+        </div>
+    </div>
+
+    <!-- CTA ROW -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="rounded-4 p-5 text-center text-white" style="background: linear-gradient(135deg, #0a0a1a 0%, #0d1b3e 50%, #0a0a2e 100%); box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                <h2 class="fw-bold mb-3 text-white">Not ready to reach out yet?</h2>
+                <p class="mb-4 lead mx-auto" style="color: rgba(255,255,255,0.85); max-width: 520px;">Explore our work and services first. We'd love to show you what AI can do for your business.</p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <a href="{% url 'past_solutions' %}" class="btn btn-primary btn-lg rounded-pill px-4">View Our Work &rarr;</a>
+                    <a href="{% url 'services' %}" class="btn btn-outline-light btn-lg rounded-pill px-4">Our Services</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function handleContactSubmit(e) {
+    e.preventDefault();
+    let valid = true;
+    
+    // Validate Name
+    const name = document.getElementById('id_name');
+    if (!name.value.trim()) { name.classList.add('is-invalid'); valid = false; } 
+    else { name.classList.remove('is-invalid'); }
+    
+    // Validate Email
+    const email = document.getElementById('id_email');
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email.value.trim() || !emailRegex.test(email.value)) { email.classList.add('is-invalid'); valid = false; } 
+    else { email.classList.remove('is-invalid'); }
+
+    // Validate Company
+    const company = document.getElementById('id_company');
+    if (!company.value.trim()) { company.classList.add('is-invalid'); valid = false; } 
+    else { company.classList.remove('is-invalid'); }
+
+    // Validate Country
+    const country = document.getElementById('id_country');
+    if (!country.value) { country.classList.add('is-invalid'); valid = false; } 
+    else { country.classList.remove('is-invalid'); }
+
+    // Validate Job Title
+    const jobTitle = document.getElementById('id_job_title');
+    if (!jobTitle.value.trim()) { jobTitle.classList.add('is-invalid'); valid = false; } 
+    else { jobTitle.classList.remove('is-invalid'); }
+
+    // Validate Job Details
+    const jobDetails = document.getElementById('id_job_details');
+    if (!jobDetails.value.trim()) { jobDetails.classList.add('is-invalid'); valid = false; } 
+    else { jobDetails.classList.remove('is-invalid'); }
+
+    // Validate Message
+    const message = document.getElementById('id_message');
+    if (!message.value.trim()) { message.classList.add('is-invalid'); valid = false; } 
+    else { message.classList.remove('is-invalid'); }
+
+    if (valid) {
+        document.getElementById('contactForm').style.display = 'none';
+        document.getElementById('successMessage').style.display = 'block';
+        document.getElementById('contactForm').reset();
+    }
+}
+
+function resetForm() {
+    document.getElementById('successMessage').style.display = 'none';
+    document.getElementById('contactForm').style.display = 'block';
+}
+
+// Remove invalid class on input
+document.querySelectorAll('#contactForm .form-control, #contactForm .form-select').forEach(input => {
+    input.addEventListener('input', function() {
+        this.classList.remove('is-invalid');
+    });
+});
+</script>
+{% endblock %}

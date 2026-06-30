@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Wireframe</title>
+    <style>
+        :root {
+            --border-color: #000;
+            --bg-light: #fff;
+            --font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 50px;
+            font-family: var(--font-family);
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            margin-bottom: 30px;
+        }
+
+        /* The overall floating widget container */
+        .chatbot-container {
+            width: 320px;
+            background: var(--bg-light);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* Header */
+        .chat-header {
+            border-bottom: 2px solid var(--border-color);
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            background-color: #eee;
+        }
+
+        .chat-header .close-btn {
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Chat messages area */
+        .chat-messages {
+            height: 350px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            overflow-y: auto;
+        }
+
+        /* Individual chat bubbles */
+        .chat-bubble {
+            max-width: 80%;
+            padding: 10px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .bot-bubble {
+            align-self: flex-start;
+            background-color: #fff;
+        }
+
+        .user-bubble {
+            align-self: flex-end;
+            background-color: #ddd;
+        }
+
+        /* Input area */
+        .chat-input-area {
+            border-top: 2px solid var(--border-color);
+            padding: 10px;
+            display: flex;
+            gap: 10px;
+            background-color: #eee;
+        }
+
+        .chat-input {
+            flex-grow: 1;
+            border: 2px solid var(--border-color);
+            border-radius: 4px;
+            padding: 8px 10px;
+            font-size: 14px;
+            background-color: #fff;
+        }
+
+        .send-btn {
+            border: 2px solid var(--border-color);
+            background-color: #000;
+            color: #fff;
+            border-radius: 4px;
+            padding: 0 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Floating button */
+        .chat-toggle-btn {
+            margin-top: 40px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            align-self: flex-end;
+            margin-right: calc(50vw - 160px);
+        }
+
+        .chat-toggle-btn svg {
+            width: 30px;
+            height: 30px;
+        }
+
+        .annotation {
+            text-align: center;
+            color: #555;
+            margin-top: 50px;
+            max-width: 500px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h2>Chatbot Popup Wireframe</h2>
+
+    <div class="chatbot-container">
+        <!-- Header -->
+        <div class="chat-header">
+            <span>AI Support Assistant</span>
+            <span class="close-btn">X</span>
+        </div>
+
+        <!-- Messages Area -->
+        <div class="chat-messages">
+            <div class="chat-bubble bot-bubble">
+                Hello! I am the AI-Solutions Assistant. How can I help you today?
+            </div>
+            
+            <div class="chat-bubble user-bubble">
+                Can you tell me more about your AI prototyping services?
+            </div>
+
+            <div class="chat-bubble bot-bubble">
+                Absolutely! Our prototyping services help you quickly test AI capabilities before full-scale integration. 
+                <br><br>
+                Would you like to speak with a consultant?
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="chat-input-area">
+            <input type="text" class="chat-input" placeholder="Type message..." readonly>
+            <button class="send-btn">Send</button>
+        </div>
+    </div>
+
+    <!-- The floating toggle button icon -->
+    <div class="chat-toggle-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+    </div>
+
+    <p class="annotation">
+        * Note: This is a strict low-fidelity black-and-white wireframe representing the structural layout of the chatbot widget, including the open chat window and the closed floating toggle button state.
+    </p>
+
+</body>
+</html>

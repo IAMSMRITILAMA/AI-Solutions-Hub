@@ -1,0 +1,544 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Photo Gallery | AI-Solutions{% endblock %}
+
+{% block content %}
+<style>
+    /* Hero */
+    .gallery-hero {
+        background: linear-gradient(135deg, #0a0a1a 0%, #0d1b3e 50%, #0a0a2e 100%);
+        padding: 90px 0;
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        color: white;
+        text-align: center;
+        margin-bottom: 60px;
+    }
+    .gallery-hero .hero-label {
+        display: inline-block;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: #60a5fa;
+        background: rgba(13, 110, 253, 0.15);
+        border-radius: 999px;
+        padding: 6px 18px;
+        margin-bottom: 20px;
+    }
+
+    /* Filter Tabs */
+    .filter-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        margin-bottom: 48px;
+    }
+    .filter-tab {
+        padding: 8px 22px;
+        border-radius: 999px;
+        border: 2px solid #e2e8f0;
+        background: #fff;
+        color: #475569;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    .filter-tab:hover {
+        border-color: #0d6efd;
+        color: #0d6efd;
+    }
+    .filter-tab.active {
+        background: #0d6efd;
+        border-color: #0d6efd;
+        color: #fff;
+    }
+
+    /* Gallery Grid */
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-auto-rows: 250px;
+        gap: 24px;
+    }
+    .gallery-item {
+        transition: all 0.4s ease;
+        opacity: 1;
+        transform: scale(1);
+    }
+    .gallery-item.tall {
+        grid-row: span 2;
+    }
+    .gallery-item.wide {
+        grid-column: span 2;
+    }
+
+    @media (max-width: 991px) {
+        .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+        .gallery-item.wide { grid-column: span 1; }
+    }
+    @media (max-width: 768px) {
+        .gallery-grid { grid-template-columns: 1fr; }
+        .gallery-item.tall { grid-row: span 1; }
+    }
+
+    .photo-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px;
+        cursor: pointer;
+        background: #fff;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        height: 100%;
+        width: 100%;
+    }
+    .photo-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+    .photo-card:hover .photo-img {
+        transform: scale(1.03);
+    }
+    .photo-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(13, 27, 62, 0.85); /* Dark blue overlay */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        padding: 20px;
+    }
+    .photo-card:hover .photo-overlay {
+        opacity: 1;
+    }
+    .zoom-icon {
+        color: #fff;
+        font-size: 2.5rem;
+        margin-bottom: auto;
+        margin-top: auto;
+        transform: translateY(20px);
+        transition: transform 0.3s ease;
+    }
+    .photo-card:hover .zoom-icon {
+        transform: translateY(0);
+    }
+    .photo-caption {
+        color: #fff;
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 0;
+        transform: translateY(20px);
+        transition: transform 0.3s ease;
+        width: 100%;
+    }
+    .photo-card:hover .photo-caption {
+        transform: translateY(0);
+    }
+
+    /* Filter Animation */
+    .gallery-item.hidden {
+        transform: scale(0.9);
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    /* Lightbox */
+    .lightbox-overlay {
+        display: none;
+        position: fixed;
+        z-index: 1060;
+        left: 0; top: 0; width: 100%; height: 100%;
+        background-color: rgba(0, 0, 0, 0.92);
+        justify-content: center;
+        align-items: center;
+    }
+    .lightbox-content {
+        position: relative;
+        max-width: 90%;
+        max-height: 90%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .lightbox-content img {
+        max-height: 80vh;
+        max-width: 100%;
+        object-fit: contain;
+        border-radius: 8px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    }
+    .lightbox-close {
+        position: absolute;
+        top: -40px; right: 0;
+        color: white; font-size: 40px; font-weight: bold; cursor: pointer;
+        line-height: 1;
+        transition: color 0.2s ease;
+    }
+    .lightbox-close:hover {
+        color: #60a5fa;
+    }
+    .lightbox-caption {
+        color: white; font-size: 18px; margin-top: 20px; font-weight: 600;
+    }
+    .lightbox-prev, .lightbox-next {
+        cursor: pointer; position: absolute; top: 50%;
+        padding: 16px; margin-top: -50px; color: white; font-weight: bold;
+        font-size: 30px; transition: 0.3s; user-select: none;
+        border-radius: 50%; background: rgba(255,255,255,0.1);
+        display: flex; justify-content: center; align-items: center;
+        width: 60px; height: 60px;
+    }
+    .lightbox-prev { left: -80px; }
+    .lightbox-next { right: -80px; }
+    .lightbox-prev:hover, .lightbox-next:hover { 
+        color: #fff; background: #0073e6;
+    }
+    
+    @media (max-width: 768px) {
+        .lightbox-prev { left: 10px; }
+        .lightbox-next { right: 10px; }
+        .lightbox-close { top: -45px; right: 10px; }
+    }
+</style>
+
+<!-- HERO BANNER -->
+<section class="gallery-hero">
+    <div class="container">
+        <span class="hero-label">OUR GALLERY</span>
+        <h1 class="display-4 fw-bolder text-white mb-3">Photo Gallery</h1>
+        <p class="lead mx-auto" style="color: rgba(255,255,255,0.8); max-width: 600px;">
+            A glimpse into our events, team activities and AI workshops
+        </p>
+    </div>
+</section>
+
+<div class="container mb-5">
+    <!-- FILTER TABS -->
+    <div class="filter-tabs">
+        <button class="filter-tab active" data-filter="all">All</button>
+        <button class="filter-tab" data-filter="team">Team</button>
+        <button class="filter-tab" data-filter="event">Events</button>
+        <button class="filter-tab" data-filter="project">Projects</button>
+        <button class="filter-tab" data-filter="office">Office</button>
+    </div>
+
+    <!-- GALLERY GRID -->
+    <div class="gallery-grid mb-5" id="gallery-grid">
+        <!-- 1 -->
+        <div class="gallery-item" data-category="team">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80" class="photo-img" alt="Annual Team Retreat">
+                <div class="photo-overlay">
+                    <i class="fas fa-search-plus zoom-icon"></i>
+                    <p class="photo-caption">Annual Team Retreat</p>
+                </div>
+            </div>
+        </div>
+        <!-- 2 -->
+        <div class="gallery-item wide" data-category="event">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80" class="photo-img" alt="Global AI Workshop 2025">
+                <div class="photo-overlay">
+                    <i class="fas fa-search-plus zoom-icon"></i>
+                    <p class="photo-caption">Global AI Workshop 2025</p>
+                </div>
+            </div>
+        </div>
+        <!-- 3 -->
+        <div class="gallery-item tall" data-category="office">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=600&q=80" class="photo-img" alt="Main Sunderland Office">
+                <div class="photo-overlay">
+                    <i class="fas fa-search-plus zoom-icon"></i>
+                    <p class="photo-caption">Main Sunderland Office</p>
+                </div>
+            </div>
+        </div>
+        <!-- 4 -->
+        <div class="gallery-item" data-category="project">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80" class="photo-img" alt="Dashboard Redesign Launch">
+                <div class="photo-overlay">
+                    <i class="fas fa-search-plus zoom-icon"></i>
+                    <p class="photo-caption">Dashboard Redesign Launch</p>
+                </div>
+            </div>
+        </div>
+        <!-- 5 -->
+        <div class="gallery-item" data-category="event">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=600&q=80" class="photo-img" alt="London Tech Hackathon">
+                <div class="photo-overlay">
+                    <i class="fas fa-search-plus zoom-icon"></i>
+                    <p class="photo-caption">London Tech Hackathon</p>
+                </div>
+            </div>
+        </div>
+        <!-- 6 -->
+        <div class="gallery-item wide" data-category="team">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=800&q=80" class="photo-img" alt="Brainstorming Session">
+                <div class="photo-overlay">
+                    <i class="fas fa-search-plus zoom-icon"></i>
+                    <p class="photo-caption">Brainstorming Session</p>
+                </div>
+            </div>
+        </div>
+        <!-- 7 -->
+        <div class="gallery-item" data-category="office">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=600&q=80" class="photo-img" alt="New Remote Setup">
+                <div class="photo-overlay">
+                    <i class="fas fa-search-plus zoom-icon"></i>
+                    <p class="photo-caption">New Remote Setup</p>
+                </div>
+            </div>
+        </div>
+        <!-- 8 -->
+        <div class="gallery-item tall" data-category="project">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=600&q=80" class="photo-img" alt="NLP Model Review">
+                <div class="photo-overlay">
+                    <i class="fas fa-search-plus zoom-icon"></i>
+                    <p class="photo-caption">NLP Model Review</p>
+                </div>
+            </div>
+        </div>
+        <!-- 9 -->
+        <div class="gallery-item" data-category="team">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=600&q=80" class="photo-img" alt="Award Ceremony 2026">
+                <div class="photo-overlay">
+                    <i class="fas fa-search-plus zoom-icon"></i>
+                    <p class="photo-caption">Award Ceremony 2026</p>
+                </div>
+            </div>
+        </div>
+        <!-- 10 -->
+        <div class="gallery-item" data-category="event">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=600&q=80" class="photo-img" alt="Tech Seminar Series">
+                <div class="photo-overlay">
+                    <i class="fas fa-search-plus zoom-icon"></i>
+                    <p class="photo-caption">Tech Seminar Series</p>
+                </div>
+            </div>
+        </div>
+        <!-- 11 -->
+        <div class="gallery-item wide" data-category="project">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80" class="photo-img" alt="Server Migration Day">
+                <div class="photo-overlay">
+                    <i class="fas fa-search-plus zoom-icon"></i>
+                    <p class="photo-caption">Server Migration Day</p>
+                </div>
+            </div>
+        </div>
+        <!-- 12 -->
+        <div class="gallery-item" data-category="office">
+            <div class="photo-card" onclick="openLightbox(this)">
+                <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=600&q=80" class="photo-img" alt="Conference Room C">
+                <div class="photo-overlay">
+                    <i class="fas fa-search-plus zoom-icon"></i>
+                    <p class="photo-caption">Conference Room C</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- No Results message -->
+    <div id="no-photos-msg" class="text-center py-5" style="display: none;">
+        <i class="fas fa-camera-retro fa-3x text-muted mb-3 d-block"></i>
+        <h5 class="text-muted">No photos found for this category.</h5>
+    </div>
+
+    <!-- LOAD MORE BUTTON -->
+    <div class="text-center mb-5" id="load-more-container">
+        <button id="load-more-btn" class="btn btn-outline-primary btn-lg rounded-pill px-5 fw-semibold border-2">
+            Load More Photos
+        </button>
+    </div>
+
+    <!-- CTA SECTION -->
+    <div class="row mb-4 mt-5">
+        <div class="col-12">
+            <div class="rounded-4 p-5 text-center text-white" style="background: linear-gradient(135deg, #0a0a1a 0%, #0d1b3e 50%, #0a0a2e 100%); box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                <h2 class="fw-bold mb-3 text-white" style="color: #ffffff !important;">Want to See More?</h2>
+                <p class="mb-4 lead mx-auto" style="color: rgba(255,255,255,0.85); max-width: 500px;">Follow us on social media for daily updates and behind the scenes content</p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <a href="{% url 'past_solutions' %}" class="btn btn-primary btn-lg rounded-pill px-4">
+                        View Our Work &rarr;
+                    </a>
+                    <a href="{% url 'contact' %}" class="btn btn-outline-light btn-lg rounded-pill px-4">
+                        Contact Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- LIGHTBOX HTML -->
+<div id="lightbox" class="lightbox-overlay">
+    <div class="lightbox-content">
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <img id="lightbox-img" src="" alt="Full Screen Image">
+        <div id="lightbox-caption" class="lightbox-caption"></div>
+        <a class="lightbox-prev" onclick="changeLightbox(-1)">&#10094;</a>
+        <a class="lightbox-next" onclick="changeLightbox(1)">&#10095;</a>
+    </div>
+</div>
+
+<script>
+    // Filtering & Load More Logic
+    const tabs = document.querySelectorAll('.filter-tab');
+    const allItems = Array.from(document.querySelectorAll('.gallery-item'));
+    const noMsg = document.getElementById('no-photos-msg');
+    const loadMoreBtn = document.getElementById('load-more-btn');
+    
+    let currentLimit = 8;
+    let currentFilter = 'all';
+
+    function renderGrid() {
+        let visibleCount = 0;
+        let matchCount = 0;
+
+        allItems.forEach(item => {
+            const match = currentFilter === 'all' || item.dataset.category === currentFilter;
+            
+            if (match) {
+                matchCount++;
+                if (matchCount <= currentLimit) {
+                    item.style.display = 'block';
+                    // Force reflow
+                    void item.offsetWidth;
+                    item.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    item.classList.add('hidden');
+                    setTimeout(() => {
+                        if (item.classList.contains('hidden')) {
+                            item.style.display = 'none';
+                        }
+                    }, 400);
+                }
+            } else {
+                item.classList.add('hidden');
+                setTimeout(() => {
+                    if (item.classList.contains('hidden')) {
+                        item.style.display = 'none';
+                    }
+                }, 400);
+            }
+        });
+
+        setTimeout(() => {
+            noMsg.style.display = visibleCount === 0 ? 'block' : 'none';
+            if (matchCount > currentLimit) {
+                loadMoreBtn.style.display = 'inline-block';
+            } else {
+                loadMoreBtn.style.display = 'none';
+            }
+        }, 400);
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            currentFilter = tab.dataset.filter;
+            currentLimit = 8; // Reset limit on filter change
+            renderGrid();
+        });
+    });
+
+    loadMoreBtn.addEventListener('click', () => {
+        currentLimit += 4;
+        renderGrid();
+    });
+
+    // Initial render
+    renderGrid();
+
+    // Lightbox Logic
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    let currentLightboxIndex = 0;
+    let currentVisibleItems = [];
+
+    function openLightbox(element) {
+        // Find all currently visible items
+        currentVisibleItems = allItems.filter(item => item.style.display === 'block' && !item.classList.contains('hidden'));
+        
+        const parentItem = element.closest('.gallery-item');
+        currentLightboxIndex = currentVisibleItems.indexOf(parentItem);
+        
+        updateLightboxContent();
+        lightbox.style.display = 'flex';
+    }
+
+    function closeLightbox() {
+        lightbox.style.display = 'none';
+    }
+
+    function changeLightbox(direction) {
+        currentLightboxIndex += direction;
+        
+        if (currentLightboxIndex >= currentVisibleItems.length) {
+            currentLightboxIndex = 0; // Wrap around to first
+        } else if (currentLightboxIndex < 0) {
+            currentLightboxIndex = currentVisibleItems.length - 1; // Wrap around to last
+        }
+        
+        updateLightboxContent();
+    }
+
+    function updateLightboxContent() {
+        if (currentVisibleItems.length === 0) return;
+        const item = currentVisibleItems[currentLightboxIndex];
+        const img = item.querySelector('.photo-img');
+        const caption = item.querySelector('.photo-caption');
+        
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightboxCaption.textContent = caption.textContent;
+    }
+
+    // Close lightbox on clicking outside image
+    lightbox.addEventListener('click', function(e) {
+        if (e.target === lightbox || e.target.classList.contains('lightbox-content')) {
+            closeLightbox();
+        }
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (lightbox.style.display === 'flex') {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            } else if (e.key === 'ArrowRight') {
+                changeLightbox(1);
+            } else if (e.key === 'ArrowLeft') {
+                changeLightbox(-1);
+            }
+        }
+    });
+</script>
+{% endblock %}

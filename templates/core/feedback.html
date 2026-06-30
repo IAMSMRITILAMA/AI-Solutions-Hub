@@ -1,0 +1,450 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Customer Feedback | AI-Solutions{% endblock %}
+
+{% block content %}
+<style>
+    /* Hero */
+    .fb-hero {
+        background: linear-gradient(135deg, #0a0a1a 0%, #0d1b3e 50%, #0a0a2e 100%);
+        padding: 90px 0;
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        color: white;
+        text-align: center;
+        margin-bottom: 60px;
+    }
+    .fb-hero .hero-label {
+        display: inline-block;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: #60a5fa;
+        background: rgba(13, 110, 253, 0.15);
+        border-radius: 999px;
+        padding: 6px 18px;
+        margin-bottom: 20px;
+    }
+    
+    .glass-card {
+        background: #ffffff;
+        border: 1px solid #e8eef6;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 4px 20px rgba(0, 100, 255, 0.05);
+    }
+
+    /* Star Rating */
+    .star-rating {
+        font-size: 2.2rem;
+        color: #e2e8f0;
+        display: flex;
+        gap: 8px;
+        cursor: pointer;
+    }
+    .star-rating .fa-star {
+        transition: color 0.1s ease, transform 0.1s ease;
+    }
+    .star-rating .fa-star:hover {
+        transform: scale(1.15);
+    }
+    .star-rating .fa-star.active {
+        color: #facc15; /* Yellow */
+    }
+
+    /* Review Filter Tabs */
+    .filter-btn {
+        background: #fff;
+        color: #475569;
+        font-weight: 600;
+        transition: all 0.2s ease;
+    }
+    .filter-btn:hover {
+        border-color: #0d6efd !important;
+    }
+    .filter-btn.active {
+        background: #0d6efd;
+        border-color: #0d6efd !important;
+        color: #fff !important;
+    }
+    .filter-btn.active .star-icon {
+        color: #fff !important;
+    }
+    .star-icon {
+        color: #facc15;
+    }
+</style>
+
+<!-- HERO BANNER -->
+<section class="fb-hero">
+    <div class="container">
+        <span class="hero-label">CUSTOMER FEEDBACK</span>
+        <h1 class="display-4 fw-bolder text-white mb-3">What Our Clients Say</h1>
+        <p class="lead mx-auto" style="color: rgba(255,255,255,0.8); max-width: 600px;">
+            Share your experience and see what others are saying
+        </p>
+    </div>
+</section>
+
+<!-- OVERALL RATING SUMMARY -->
+<div class="container mb-5">
+    <div class="glass-card">
+        <div class="row align-items-center">
+            <!-- Left Side -->
+            <div class="col-md-5 text-center text-md-start mb-4 mb-md-0" style="border-right: 1px solid #e2e8f0;">
+                <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-3 mb-2">
+                    <h1 class="display-3 fw-bold mb-0" style="color: #0f172a;">4.9</h1>
+                    <div style="color: #facc15; font-size: 1.5rem;">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <p class="text-muted fw-semibold mb-1" style="font-size: 1.1rem;">Out of 5 stars</p>
+                <p class="text-muted mb-2">Based on 180+ reviews</p>
+                <p class="text-success fw-semibold small mb-0"><i class="fas fa-check-circle me-1"></i>Verified customers only</p>
+            </div>
+            
+            <!-- Right Side -->
+            <div class="col-md-7 ps-md-5">
+                <!-- 5 Star -->
+                <div class="d-flex align-items-center mb-2">
+                    <span class="text-muted fw-bold me-2" style="min-width: 25px;">5★</span>
+                    <div class="progress flex-grow-1 mx-2" style="height: 10px; border-radius: 999px; background: #e2e8f0;">
+                        <div class="progress-bar" style="width: 85%; background: #facc15; border-radius: 999px;"></div>
+                    </div>
+                    <span class="text-muted small ms-2" style="min-width: 70px;">153 reviews</span>
+                </div>
+                <!-- 4 Star -->
+                <div class="d-flex align-items-center mb-2">
+                    <span class="text-muted fw-bold me-2" style="min-width: 25px;">4★</span>
+                    <div class="progress flex-grow-1 mx-2" style="height: 10px; border-radius: 999px; background: #e2e8f0;">
+                        <div class="progress-bar" style="width: 10%; background: #facc15; border-radius: 999px;"></div>
+                    </div>
+                    <span class="text-muted small ms-2" style="min-width: 70px;">18 reviews</span>
+                </div>
+                <!-- 3 Star -->
+                <div class="d-flex align-items-center mb-2">
+                    <span class="text-muted fw-bold me-2" style="min-width: 25px;">3★</span>
+                    <div class="progress flex-grow-1 mx-2" style="height: 10px; border-radius: 999px; background: #e2e8f0;">
+                        <div class="progress-bar" style="width: 3%; background: #facc15; border-radius: 999px;"></div>
+                    </div>
+                    <span class="text-muted small ms-2" style="min-width: 70px;">6 reviews</span>
+                </div>
+                <!-- 2 Star -->
+                <div class="d-flex align-items-center mb-2">
+                    <span class="text-muted fw-bold me-2" style="min-width: 25px;">2★</span>
+                    <div class="progress flex-grow-1 mx-2" style="height: 10px; border-radius: 999px; background: #e2e8f0;">
+                        <div class="progress-bar" style="width: 1%; background: #facc15; border-radius: 999px;"></div>
+                    </div>
+                    <span class="text-muted small ms-2" style="min-width: 70px;">2 reviews</span>
+                </div>
+                <!-- 1 Star -->
+                <div class="d-flex align-items-center mb-0">
+                    <span class="text-muted fw-bold me-2" style="min-width: 25px;">1★</span>
+                    <div class="progress flex-grow-1 mx-2" style="height: 10px; border-radius: 999px; background: #e2e8f0;">
+                        <div class="progress-bar" style="width: 0.5%; background: #facc15; border-radius: 999px;"></div>
+                    </div>
+                    <span class="text-muted small ms-2" style="min-width: 70px;">1 review</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mb-5">
+    <div class="row g-5">
+        <!-- Feedback Form -->
+        <div class="col-lg-5">
+            <div class="glass-card">
+                <!-- SUCCESS MESSAGE -->
+                <div id="success-msg" 
+                     style="{% if messages %}display:block;{% else %}display:none;{% endif %}
+                            text-align:center;
+                            padding:40px 20px;">
+                  <div style="font-size:50px">✅</div>
+                  <h3>Thank you for your feedback!</h3>
+                  <p>Review submitted successfully</p>
+                  <button 
+                    onclick="resetForm()"
+                    type="button"
+                    style="border:1px solid #2563eb;
+                           color:#2563eb;
+                           background:#fff;
+                           padding:10px 24px;
+                           border-radius:20px;
+                           cursor:pointer;
+                           font-size:14px;">
+                    Submit another review
+                  </button>
+                </div>
+
+                <form id="feedback-form" method="post" style="{% if messages %}display:none;{% else %}display:block;{% endif %}" novalidate>
+                    {% csrf_token %}
+                    <h3 class="fw-bold mb-4" style="color: #0f172a;">Share Your Thoughts</h3>
+                    
+                    <div class="mb-4">
+                        <label class="form-label fw-bold" style="color: #334155;">Name</label>
+                        <input type="text" name="customer_name" id="id_customer_name" class="form-control form-control-lg bg-light border-0" placeholder="Your Name">
+                        <div class="invalid-feedback fw-semibold mt-2 text-danger" id="nameError">Please enter your name</div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold" style="color: #334155;">Rating</label>
+                        <div class="star-rating" id="starRating">
+                            <i class="star fas fa-star" data-value="1"></i>
+                            <i class="star fas fa-star" data-value="2"></i>
+                            <i class="star fas fa-star" data-value="3"></i>
+                            <i class="star fas fa-star" data-value="4"></i>
+                            <i class="star fas fa-star" data-value="5"></i>
+                        </div>
+                        <div class="mt-2 fw-semibold" id="ratingText" style="color: #64748b;">Select a rating</div>
+                        <input type="hidden" name="rating" id="rating-value">
+                        <div class="invalid-feedback fw-semibold mt-2 text-danger" id="ratingError" style="display:none;">Please select a rating</div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold" style="color: #334155;">Comment</label>
+                        <textarea name="comment" id="id_comment" class="form-control bg-light border-0" rows="4" placeholder="Your experience..."></textarea>
+                        <div class="invalid-feedback fw-semibold mt-2 text-danger" id="commentError">Please enter comment</div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill mt-2 fw-bold" style="background: #0d6efd; box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);">Submit Feedback</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Feedback List -->
+        <div class="col-lg-7">
+            <h3 class="fw-bold mb-3" style="color: #0f172a;">Recent Reviews</h3>
+            
+            <!-- FILTER & SORT REVIEWS -->
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4 p-3 bg-light rounded-3 border">
+                <div class="d-flex gap-2 overflow-auto pb-1 pb-md-0" id="review-filters">
+                    <button class="btn btn-sm border border-secondary-subtle rounded-pill px-3 filter-btn active" data-filter="all">All</button>
+                    <button class="btn btn-sm border border-secondary-subtle rounded-pill px-3 filter-btn" data-filter="5"><span class="star-icon">★★★★★</span></button>
+                    <button class="btn btn-sm border border-secondary-subtle rounded-pill px-3 filter-btn" data-filter="4"><span class="star-icon">★★★★</span></button>
+                    <button class="btn btn-sm border border-secondary-subtle rounded-pill px-3 filter-btn" data-filter="3"><span class="star-icon">★★★</span></button>
+                    <button class="btn btn-sm border border-secondary-subtle rounded-pill px-3 filter-btn" data-filter="2"><span class="star-icon">★★</span></button>
+                    <button class="btn btn-sm border border-secondary-subtle rounded-pill px-3 filter-btn" data-filter="1"><span class="star-icon">★</span></button>
+                </div>
+                <div style="min-width: 150px;">
+                    <select class="form-select form-select-sm rounded-pill fw-semibold border-secondary-subtle py-2" id="review-sort">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="highest">Highest Rated</option>
+                        <option value="lowest">Lowest Rated</option>
+                    </select>
+                </div>
+            </div>
+
+            {% if feedbacks %}
+                <div class="d-flex flex-column gap-4" id="reviews-container">
+                {% for f in feedbacks %}
+                    <div class="glass-card review-card" style="padding: 30px;" data-rating="{{ f.rating }}" data-timestamp="{{ f.date|date:'Ymd' }}">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h5 class="fw-bold mb-1" style="color: #0f172a;">{{ f.customer_name }}</h5>
+                                <p class="small text-muted mb-0">{{ f.date }}</p>
+                            </div>
+                            <div style="color: #facc15; font-size: 1.1rem;">
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= f.rating %}
+                                        <i class="fas fa-star"></i>
+                                    {% else %}
+                                        <i class="far fa-star text-muted" style="opacity: 0.3;"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <p class="mb-0" style="color: #475569; line-height: 1.7; font-size: 15px;">"{{ f.comment }}"</p>
+                    </div>
+                {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-comment-dots fa-3x mb-3" style="color: #cbd5e1;"></i>
+                    <h5 class="text-muted fw-bold">No feedback yet.</h5>
+                    <p class="text-muted">Be the first to share your experience!</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+    const stars = document.querySelectorAll('#starRating .fa-star');
+    const ratingInput = document.getElementById('rating-value');
+    const ratingText = document.getElementById('ratingText');
+    const ratingError = document.getElementById('ratingError');
+    const texts = {
+        1: '1★ Poor',
+        2: '2★ Fair',
+        3: '3★ Good',
+        4: '4★ Very Good',
+        5: '5★ Excellent'
+    };
+
+    let selectedRating = 0;
+
+    stars.forEach(star => {
+        star.addEventListener('mouseover', function() {
+            const val = this.dataset.value;
+            highlightStars(val);
+            ratingText.textContent = texts[val];
+            ratingText.style.color = '#facc15';
+        });
+        
+        star.addEventListener('mouseout', function() {
+            highlightStars(selectedRating);
+            if (selectedRating) {
+                ratingText.textContent = texts[selectedRating];
+                ratingText.style.color = '#facc15';
+            } else {
+                ratingText.textContent = 'Select a rating';
+                ratingText.style.color = '#64748b';
+            }
+        });
+        
+        star.addEventListener('click', function() {
+            selectedRating = this.dataset.value;
+            ratingInput.value = selectedRating;
+            ratingError.style.display = 'none';
+        });
+    });
+
+    function highlightStars(val) {
+        stars.forEach(s => {
+            if (s.dataset.value <= val) {
+                s.classList.add('active');
+            } else {
+                s.classList.remove('active');
+            }
+        });
+    }
+
+    const feedbackFormEl = document.getElementById('feedback-form');
+    if (feedbackFormEl) {
+        feedbackFormEl.addEventListener('submit', function(e) {
+            let valid = true;
+            
+            const name = document.getElementById('id_customer_name');
+            if (!name.value.trim()) {
+                name.classList.add('is-invalid');
+                valid = false;
+            } else {
+                name.classList.remove('is-invalid');
+            }
+
+            if (!ratingInput.value) {
+                ratingError.style.display = 'block';
+                valid = false;
+            }
+
+            const comment = document.getElementById('id_comment');
+            if (!comment.value.trim()) {
+                comment.classList.add('is-invalid');
+                valid = false;
+            } else {
+                comment.classList.remove('is-invalid');
+            }
+
+            if (!valid) {
+                e.preventDefault();
+            }
+        });
+    }
+
+    // Review Filtering & Sorting
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const sortSelect = document.getElementById('review-sort');
+    const reviewsContainer = document.getElementById('reviews-container');
+    
+    let reviewCards = [];
+    if(reviewsContainer) {
+        reviewCards = Array.from(reviewsContainer.querySelectorAll('.review-card'));
+    }
+
+    function applyFilterAndSort() {
+        if(!reviewsContainer) return;
+        
+        // 1. Filter
+        const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+        
+        reviewCards.forEach(card => {
+            if (activeFilter === 'all' || card.dataset.rating === activeFilter) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        // 2. Sort
+        const sortMode = sortSelect.value;
+        const visibleCards = reviewCards.filter(c => c.style.display !== 'none');
+        
+        visibleCards.sort((a, b) => {
+            if (sortMode === 'newest') {
+                return b.dataset.timestamp.localeCompare(a.dataset.timestamp);
+            } else if (sortMode === 'oldest') {
+                return a.dataset.timestamp.localeCompare(b.dataset.timestamp);
+            } else if (sortMode === 'highest') {
+                return parseInt(b.dataset.rating) - parseInt(a.dataset.rating);
+            } else if (sortMode === 'lowest') {
+                return parseInt(a.dataset.rating) - parseInt(b.dataset.rating);
+            }
+        });
+
+        // Re-append to container in sorted order
+        visibleCards.forEach(card => reviewsContainer.appendChild(card));
+    }
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            e.currentTarget.classList.add('active');
+            applyFilterAndSort();
+        });
+    });
+
+    if(sortSelect) {
+        sortSelect.addEventListener('change', applyFilterAndSort);
+        // Initial run just in case
+        applyFilterAndSort();
+    }
+
+    function resetForm() {
+      // Hide success message
+      document.getElementById('success-msg').style.display = 'none';
+      
+      // Show form again
+      document.getElementById('feedback-form').style.display = 'block';
+      
+      // Clear all form fields
+      document.getElementById('feedback-form').reset();
+      
+      // Reset star rating
+      document.querySelectorAll('.star-rating .star').forEach(star => {
+        star.classList.remove('selected', 'active');
+      });
+      
+      // Reset rating value
+      document.getElementById('rating-value').value = '';
+      selectedRating = 0;
+      ratingText.textContent = 'Select a rating';
+      ratingText.style.color = '#64748b';
+      
+      // Scroll to form top
+      document.getElementById('feedback-form').scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+</script>
+{% endblock %}

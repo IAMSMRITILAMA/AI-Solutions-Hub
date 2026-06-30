@@ -1,0 +1,1204 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="hero-section">
+<div class="row align-items-center mb-0 hero-row">
+    <div class="col-lg-6 mb-5 mb-lg-0">
+        <div class="badge hero-badge px-3 py-2 rounded-pill mb-3 fw-semibold">
+            ✨ Sunderland's Leading AI Startup
+        </div>
+        <h1 class="display-3 fw-bold mb-4" style="line-height: 1.15; color: #ffffff;">
+            Empowering the <br>
+            <span style="background: linear-gradient(135deg, #3b9eff 0%, #a78bfa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Future of Work</span> <br>
+            with AI.
+        </h1>
+        <p class="lead mb-4" style="font-size: 1.15rem; color: rgba(255,255,255,0.75);">
+            AI-Solutions delivers affordable prototyping and intelligent virtual assistants to help companies worldwide thrive in the digital age.
+        </p>
+        <div class="d-flex gap-3 mb-5">
+            <a href="{% url 'contact' %}" class="btn btn-premium">Get Started</a>
+            <a href="{% url 'services' %}" class="btn btn-hero-outline rounded-pill px-4 py-2 fw-semibold">Our Services</a>
+        </div>
+
+        <!-- Trust Indicator Pills -->
+        <div class="d-flex flex-wrap gap-3 pt-3" style="border-top: 1px solid rgba(255,255,255,0.12);">
+
+            <!-- Trusted & Secure -->
+            <div class="d-flex flex-column align-items-start gap-1">
+                <div class="trust-badge-dark">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#3b9eff" class="me-1" viewBox="0 0 16 16">
+                        <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8"/>
+                        <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"/>
+                    </svg>
+                    Trusted &amp; Secure
+                </div>
+                <span class="trust-sub-dark">Enterprise encryption</span>
+            </div>
+
+            <!-- Smart Solutions -->
+            <div class="d-flex flex-column align-items-start gap-1">
+                <div class="trust-badge-dark">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#3b9eff" class="me-1" viewBox="0 0 16 16">
+                        <path d="M6 12.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5M3 8.062C3 6.76 4.235 5.765 5.53 5.886a26.6 26.6 0 0 0 4.94 0C11.765 5.765 13 6.76 13 8.062v1.157a.93.93 0 0 1-.765.935c-.845.147-2.34.346-4.235.346s-3.39-.2-4.235-.346A.93.93 0 0 1 3 9.219zm4.542-.827a.25.25 0 0 0-.217.068l-.92.9a25 25 0 0 1-1.871-.183.25.25 0 0 0-.068.495c.55.076 1.232.149 2.02.193a.25.25 0 0 0 .189-.071l.754-.736.847 1.71a.25.25 0 0 0 .404.062l.932-.97a25 25 0 0 0 1.922-.188.25.25 0 0 0-.068-.495c-.538.074-1.207.145-1.98.189a.25.25 0 0 0-.166.076l-.754.785-.842-1.7a.25.25 0 0 0-.182-.134"/>
+                    </svg>
+                    Smart Solutions
+                </div>
+                <span class="trust-sub-dark">Advanced NLP logic</span>
+            </div>
+
+            <!-- Global Impact -->
+            <div class="d-flex flex-column align-items-start gap-1">
+                <div class="trust-badge-dark">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#3b9eff" class="me-1" viewBox="0 0 16 16">
+                        <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m7.5-6.923c-.67.204-1.335.82-1.887 1.855A8 8 0 0 0 5.145 4H7.5zM4.09 4a9.3 9.3 0 0 1 .64-1.539 7 7 0 0 1 .597-.933A7.03 7.03 0 0 0 2.255 4zm-.582 3.5c.03-.877.138-1.718.312-2.5H1.674a7 7 0 0 0-.656 2.5zM4.847 5a12.5 12.5 0 0 0-.338 2.5H7.5V5zM8.5 5v2.5h2.99a12.5 12.5 0 0 0-.337-2.5zM4.51 8.5a12.5 12.5 0 0 0 .337 2.5H7.5V8.5zm3.99 0V11h2.653c.187-.765.306-1.608.338-2.5zM5.145 12q.208.58.468 1.068c.552 1.035 1.218 1.65 1.887 1.855V12zm.182 2.472a7 7 0 0 1-.597-.933A9.3 9.3 0 0 1 4.09 12H2.255a7 7 0 0 0 3.072 2.472M3.82 11a13.7 13.7 0 0 1-.312-2.5h-2.49c.062.89.291 1.733.656 2.5zm6.853 3.472A7 7 0 0 0 13.745 12H11.91a9.3 9.3 0 0 1-.64 1.539 7 7 0 0 1-.597.933M8.5 12v2.923c.67-.204 1.335-.82 1.887-1.855q.26-.487.468-1.068zm3.51-1h2.027c.365-.767.594-1.61.656-2.5h-2.49a13.7 13.7 0 0 1-.313 2.5zm2.682-3.5a7 7 0 0 0-.656-2.5H11.82c.174.782.282 1.623.312 2.5zM11.27 2.461c.247.464.462.98.64 1.539h1.835a7 7 0 0 0-3.072-2.472c.218.284.418.598.597.933M10.855 4a8 8 0 0 0-.468-1.068C9.835 1.897 9.17 1.282 8.5 1.077V4z"/>
+                    </svg>
+                    Global Impact
+                </div>
+                <span class="trust-sub-dark">Serving various industries</span>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-lg-6 text-center">
+        <div class="position-relative d-inline-block p-2">
+            <!-- Glowing accent behind image -->
+            <div class="position-absolute rounded-circle" style="width: 120%; height: 120%; top: -10%; left: -10%; background: radial-gradient(circle, rgba(59, 158, 255, 0.25) 0%, transparent 70%); z-index: -1; filter: blur(20px);"></div>
+            <!-- Pulse ring -->
+            <div class="position-absolute pulse-ring-anim" style="top: 0; left: 0; right: 0; bottom: 0; border-radius: 20px; border: 1px solid rgba(59,158,255,0.3); pointer-events: none;"></div>
+            <img src="{% static 'img/hero_team.jpg' %}" class="img-fluid" style="max-height: 480px; object-fit: cover; border-radius: 20px; animation: float 6s ease-in-out infinite; box-shadow: 0 20px 60px rgba(0,0,0,0.4);" alt="AI Solutions Team">
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Stats Bar Section -->
+<div class="stats-bar-section">
+    <div class="container">
+        <div class="row g-0 stats-row">
+
+            <div class="col-6 col-md-3 stat-item">
+                <div class="stat-number" data-target="200" data-suffix="+">0+</div>
+                <div class="stat-label">Clients Worldwide</div>
+            </div>
+
+            <div class="col-6 col-md-3 stat-item">
+                <div class="stat-number" data-target="50" data-suffix="+">0+</div>
+                <div class="stat-label">Projects Delivered</div>
+            </div>
+
+            <div class="col-6 col-md-3 stat-item">
+                <div class="stat-number" data-target="5" data-suffix="">0</div>
+                <div class="stat-label">Countries Served</div>
+            </div>
+
+            <div class="col-6 col-md-3 stat-item last">
+                <div class="stat-number" data-target="98" data-suffix="%">0%</div>
+                <div class="stat-label">Client Satisfaction</div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Why Choose Us Section -->
+<div class="row mt-3 mb-0 pt-2 pb-3">
+    <div class="col-12 text-center mb-5">
+        <h2 class="fw-bold display-5 mb-3">Why Choose AI-Solutions?</h2>
+        <p class="text-muted col-md-6 mx-auto" style="font-size: 1.1rem;">
+            We combine high-performance AI solutions with agile prototyping processes to design scalable systems fit for any organization.
+        </p>
+    </div>
+    
+    <!-- 4-Column Card Grid -->
+    <div class="col-md-6 col-lg-3 mb-4">
+        <div class="feature-card text-center h-100 p-4 d-flex flex-column justify-content-between">
+            <div>
+                <div class="fa-icon-circle mx-auto mb-3">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h4 class="fw-bold mb-3">Innovation</h4>
+                <p class="text-muted small mb-0">Cutting-edge machine learning and predictive data models engineered for efficiency.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3 mb-4">
+        <div class="feature-card text-center h-100 p-4 d-flex flex-column justify-content-between">
+            <div>
+                <div class="fa-icon-circle mx-auto mb-3">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <h4 class="fw-bold mb-3">Prototyping</h4>
+                <p class="text-muted small mb-0">Rapid validation loop. We turn concepts into interactive software prototypes in weeks.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3 mb-4">
+        <div class="feature-card text-center h-100 p-4 d-flex flex-column justify-content-between">
+            <div>
+                <div class="fa-icon-circle mx-auto mb-3">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h4 class="fw-bold mb-3">Security</h4>
+                <p class="text-muted small mb-0">Built-in form validation, secure logins, and protection against unauthorized data access.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3 mb-4">
+        <div class="feature-card text-center h-100 p-4 d-flex flex-column justify-content-between">
+            <div>
+                <div class="fa-icon-circle mx-auto mb-3">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <h4 class="fw-bold mb-3">Customer-Centric</h4>
+                <p class="text-muted small mb-0">Tailored consultations, events, and reviews that directly guide product development.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- CTA Buttons -->
+    <div class="col-12 text-center mt-3 mb-2">
+        <a href="{% url 'about' %}" class="btn btn-premium px-4 py-2 me-2 mb-2">Learn About Us</a>
+        <a href="{% url 'services' %}" class="btn btn-outline-primary rounded-pill px-4 py-2 border-2 fw-semibold mb-2">Explore Services</a>
+    </div>
+</div>
+
+<!-- Customer Testimonials Section -->
+<div class="row mt-5 mb-5 pt-4 pb-4">
+    <div class="col-12 text-center mb-5">
+        <h2 class="fw-bold display-5 mb-4">What our clients say</h2>
+        <div class="d-flex flex-wrap justify-content-center align-items-center gap-4 mb-4">
+            <div class="text-center px-4">
+                <h1 class="fw-bold mb-0 text-primary display-3">4.9</h1>
+                <div class="text-warning mb-1" style="font-size: 1.2rem;">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                </div>
+                <p class="text-muted small mb-0 fw-semibold">Out of 5 stars</p>
+            </div>
+            <div class="text-start px-4 border-start">
+                <div class="d-flex align-items-center mb-2" style="font-size: 0.9rem;">
+                    <span class="me-2 text-muted fw-semibold" style="width: 50px;">5 stars</span>
+                    <div class="progress flex-grow-1" style="width: 160px; height: 8px;">
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center mb-2" style="font-size: 0.9rem;">
+                    <span class="me-2 text-muted fw-semibold" style="width: 50px;">4 stars</span>
+                    <div class="progress flex-grow-1" style="width: 160px; height: 8px;">
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: 8%" aria-valuenow="8" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center mb-2" style="font-size: 0.9rem;">
+                    <span class="me-2 text-muted fw-semibold" style="width: 50px;">3 stars</span>
+                    <div class="progress flex-grow-1" style="width: 160px; height: 8px;">
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: 2%" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center mb-2" style="font-size: 0.9rem;">
+                    <span class="me-2 text-muted fw-semibold" style="width: 50px;">2 stars</span>
+                    <div class="progress flex-grow-1" style="width: 160px; height: 8px;">
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center" style="font-size: 0.9rem;">
+                    <span class="me-2 text-muted fw-semibold" style="width: 50px;">1 star</span>
+                    <div class="progress flex-grow-1" style="width: 160px; height: 8px;">
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row g-4">
+        <!-- Testimonial 1 -->
+        <div class="col-md-6 col-lg-4">
+            <div class="glass-card p-4 h-100 d-flex flex-column" style="border-top: 4px solid #3b9eff;">
+                <div class="text-warning mb-3" style="font-size: 0.9rem;">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="text-muted mb-4 flex-grow-1" style="font-style: italic;">"The AI prototype they built for our customer service pipeline reduced response times by 40%. The team is incredibly professional and fast."</p>
+                <div class="d-flex align-items-center">
+                    <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold me-3 shadow-sm" style="width: 45px; height: 45px; font-size: 1.1rem; background: linear-gradient(135deg, #0d1b3e, #3b9eff); color: white;">JS</div>
+                    <div>
+                        <h6 class="fw-bold mb-0">James Smith</h6>
+                        <small class="text-muted">Operations Director, UK</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Testimonial 2 -->
+        <div class="col-md-6 col-lg-4">
+            <div class="glass-card p-4 h-100 d-flex flex-column" style="border-top: 4px solid #3b9eff;">
+                <div class="text-warning mb-3" style="font-size: 0.9rem;">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="text-muted mb-4 flex-grow-1" style="font-style: italic;">"AI-Solutions completely overhauled our data infrastructure. Their consulting phase was thorough, and execution was flawless."</p>
+                <div class="d-flex align-items-center">
+                    <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold me-3 shadow-sm" style="width: 45px; height: 45px; font-size: 1.1rem; background: linear-gradient(135deg, #2b5876, #4e4376); color: white;">ER</div>
+                    <div>
+                        <h6 class="fw-bold mb-0">Elena Rodriguez</h6>
+                        <small class="text-muted">CTO, Spain</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Testimonial 3 -->
+        <div class="col-md-6 col-lg-4">
+            <div class="glass-card p-4 h-100 d-flex flex-column" style="border-top: 4px solid #3b9eff;">
+                <div class="text-warning mb-3" style="font-size: 0.9rem;">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                </div>
+                <p class="text-muted mb-4 flex-grow-1" style="font-style: italic;">"We wanted a custom NLP model but didn't know where to start. They delivered a working prototype in just three weeks!"</p>
+                <div class="d-flex align-items-center">
+                    <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold me-3 shadow-sm" style="width: 45px; height: 45px; font-size: 1.1rem; background: linear-gradient(135deg, #11998e, #38ef7d); color: white;">MT</div>
+                    <div>
+                        <h6 class="fw-bold mb-0">Michael Torres</h6>
+                        <small class="text-muted">Product Manager, USA</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Testimonial 4 -->
+        <div class="col-md-6 col-lg-4">
+            <div class="glass-card p-4 h-100 d-flex flex-column" style="border-top: 4px solid #3b9eff;">
+                <div class="text-warning mb-3" style="font-size: 0.9rem;">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="text-muted mb-4 flex-grow-1" style="font-style: italic;">"Their virtual assistant integration seamlessly handled over 10,000 queries on the first day without a single crash. Highly recommended."</p>
+                <div class="d-flex align-items-center">
+                    <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold me-3 shadow-sm" style="width: 45px; height: 45px; font-size: 1.1rem; background: linear-gradient(135deg, #ee0979, #ff6a00); color: white;">AL</div>
+                    <div>
+                        <h6 class="fw-bold mb-0">Anna Lee</h6>
+                        <small class="text-muted">Head of Support, Canada</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Testimonial 5 -->
+        <div class="col-md-6 col-lg-4">
+            <div class="glass-card p-4 h-100 d-flex flex-column" style="border-top: 4px solid #3b9eff;">
+                <div class="text-warning mb-3" style="font-size: 0.9rem;">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="text-muted mb-4 flex-grow-1" style="font-style: italic;">"An absolute game-changer. The predictive analytics tool gave us a clear 6-month forecast that proved to be 95% accurate."</p>
+                <div class="d-flex align-items-center">
+                    <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold me-3 shadow-sm" style="width: 45px; height: 45px; font-size: 1.1rem; background: linear-gradient(135deg, #4facfe, #00f2fe); color: white;">DK</div>
+                    <div>
+                        <h6 class="fw-bold mb-0">David Kim</h6>
+                        <small class="text-muted">Financial Analyst, UK</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Testimonial 6 -->
+        <div class="col-md-6 col-lg-4">
+            <div class="glass-card p-4 h-100 d-flex flex-column" style="border-top: 4px solid #3b9eff;">
+                <div class="text-warning mb-3" style="font-size: 0.9rem;">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="text-muted mb-4 flex-grow-1" style="font-style: italic;">"Fantastic communication throughout the project. They don't just build code; they build solutions that solve actual business problems."</p>
+                <div class="d-flex align-items-center">
+                    <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold me-3 shadow-sm" style="width: 45px; height: 45px; font-size: 1.1rem; background: linear-gradient(135deg, #f83600, #f9d423); color: white;">SM</div>
+                    <div>
+                        <h6 class="fw-bold mb-0">Sarah Mensah</h6>
+                        <small class="text-muted">CEO, Germany</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-12 text-center mt-5 mb-3">
+        <a href="{% url 'feedback' %}" class="btn btn-outline-primary rounded-pill px-4 py-2 border-2 fw-semibold me-3 mb-2">View all reviews</a>
+        <a href="{% url 'feedback' %}#submit" class="btn btn-premium px-4 py-2 mb-2">Leave a review</a>
+    </div>
+</div>
+
+<!-- Latest Articles / Events Preview -->
+<div class="row mt-4 mb-5">
+    {% if latest_blogs %}
+    <div class="col-lg-7 mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold mb-0">Latest Articles</h2>
+            <a href="{% url 'blog' %}" class="text-accent text-decoration-none fw-semibold">View Blog &rarr;</a>
+        </div>
+        {% for article in latest_blogs %}
+        <a href="{% url 'blog_detail' article.slug %}" class="text-decoration-none d-block">
+        <div class="article-card">
+          
+          <!-- IMAGE ON LEFT -->
+          <div class="article-img">
+            {% if article.image %}
+            <img 
+              src="{{ article.image.url }}" 
+              alt="{{ article.title }}"
+              style="width:100%;
+                     height:100%;
+                     object-fit:cover;
+                     border-radius:8px;"
+            >
+            {% else %}
+            <div class="article-img-fallback">
+              <i class="fas fa-image"></i>
+            </div>
+            {% endif %}
+          </div>
+          
+          <!-- CONTENT ON RIGHT -->
+          <div class="article-content">
+            <span class="article-tag">
+              {{ article.category }}
+            </span>
+            <h3 class="article-title">
+              {{ article.title }}
+            </h3>
+            <p class="article-desc">
+              {{ article.description }}
+            </p>
+            <span class="article-date">
+              {{ article.date }}
+            </span>
+          </div>
+
+        </div>
+        </a>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="col-lg-5 mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold mb-0">Upcoming Events</h2>
+        </div>
+        {% for event in upcoming_events %}
+        <div class="glass-card mb-3 p-4">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <span class="badge bg-primary">{{ event.date|date:"M d" }}</span>
+                <span class="small text-muted">{{ event.time|time:"H:i" }} BST</span>
+            </div>
+            <h5 class="fw-bold text-heading mb-2">{{ event.title }}</h5>
+            <p class="text-muted small mb-0">{{ event.description|truncatewords:15 }}</p>
+        </div>
+        {% empty %}
+        <div class="glass-card p-4 text-center text-muted">
+            <i class="fas fa-calendar-xmark mb-2 d-block" style="font-size:1.8rem; color:#9ca3af;"></i>
+            No upcoming events at this time.
+        </div>
+        {% endfor %}
+        <div class="mt-3 text-center">
+            <a href="{% url 'events' %}" class="btn-see-all-events">See All Events &rarr;</a>
+        </div>
+    </div>
+</div>
+
+<!-- Photo Gallery Preview Section -->
+<div class="row mt-5 mb-5 pt-4 pb-4">
+    <div class="col-12 text-center mb-5">
+        <h2 class="fw-bold display-5 mb-3">Photo Gallery</h2>
+        <p class="text-muted col-md-6 mx-auto" style="font-size: 1.1rem;">
+            A glimpse into our work, events and team culture at AI-Solutions
+        </p>
+        
+        <!-- Filter Tabs -->
+        <div class="d-flex justify-content-center flex-wrap gap-2 mt-4" id="gallery-filter-tabs">
+            <button class="btn btn-primary rounded-pill px-4 py-1 fw-semibold gallery-filter-btn" data-filter="all">All</button>
+            <button class="btn btn-outline-secondary rounded-pill px-4 py-1 fw-semibold gallery-filter-btn" data-filter="team">Team</button>
+            <button class="btn btn-outline-secondary rounded-pill px-4 py-1 fw-semibold gallery-filter-btn" data-filter="events">Events</button>
+            <button class="btn btn-outline-secondary rounded-pill px-4 py-1 fw-semibold gallery-filter-btn" data-filter="projects">Projects</button>
+            <button class="btn btn-outline-secondary rounded-pill px-4 py-1 fw-semibold gallery-filter-btn" data-filter="office">Office</button>
+        </div>
+    </div>
+    
+    <!-- Gallery Grid -->
+    <div class="col-12">
+        <div class="gallery-grid" id="gallery-grid">
+            {% for photo in gallery_photos %}
+            <div class="gallery-item {% if forloop.first %}gallery-large{% endif %}" 
+                 data-category="{{ photo.category|lower }}">
+              <img src="{{ photo.image.url }}" 
+                   alt="{{ photo.title }}">
+              <div class="gallery-overlay">
+                <i class="zoom-icon">🔍</i>
+              </div>
+              <div class="gallery-caption">
+                {{ photo.title }}
+              </div>
+            </div>
+            {% endfor %}
+
+            <!-- +MORE tile -->
+            {% if gallery_count > 5 %}
+            <div class="gallery-item gallery-more"
+                 onclick="window.location='{% url 'gallery' %}'"
+                 data-category="all">
+              <div class="more-overlay">
+                <span class="more-count">
+                  +{{ gallery_count|add:"-5" }}
+                </span>
+                <span class="more-text">
+                  more photos
+                </span>
+              </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+        <a href="{% url 'gallery' %}" class="btn gallery-view-btn rounded-pill px-4 py-2 border-2 fw-semibold">View Full Gallery &rarr;</a>
+    </div>
+</div>
+
+<!-- Lightbox Markup -->
+<div id="gallery-lightbox" class="gallery-lightbox" style="display: none;">
+    <span class="lightbox-close" id="lightbox-close">&times;</span>
+    <span class="lightbox-arrow lightbox-arrow-left" id="lightbox-prev">&#10094;</span>
+    <span class="lightbox-arrow lightbox-arrow-right" id="lightbox-next">&#10095;</span>
+    <div class="lightbox-content-container">
+        <img id="lightbox-img" src="" alt="Enlarged photo">
+        <div id="lightbox-caption" class="lightbox-caption"></div>
+    </div>
+</div>
+
+<style>
+    /* ── Hero Section ── */
+    .hero-section {
+        background: linear-gradient(135deg, #0a0a1a 0%, #0d1b3e 50%, #0a0a2e 100%);
+        min-height: 90vh;
+        display: flex;
+        align-items: center;
+        margin: 0 -12px;
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        padding: 80px 0;
+    }
+
+    .hero-row {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 24px;
+    }
+
+    .hero-badge {
+        background: rgba(59,158,255,0.15);
+        color: #3b9eff;
+        border: 1px solid rgba(59,158,255,0.35);
+    }
+
+    .btn-hero-outline {
+        border: 2px solid rgba(255,255,255,0.3);
+        color: #ffffff;
+        background: transparent;
+        transition: all 0.25s ease;
+    }
+    .btn-hero-outline:hover {
+        background: rgba(255,255,255,0.08);
+        border-color: rgba(255,255,255,0.6);
+        color: #ffffff;
+    }
+
+    /* Dark-background trust badges */
+    .trust-badge-dark {
+        display: inline-flex;
+        align-items: center;
+        background: rgba(59,158,255,0.1);
+        border: 1px solid rgba(59,158,255,0.3);
+        border-radius: 999px;
+        padding: 8px 18px;
+        font-size: 13px;
+        font-weight: 500;
+        color: rgba(255,255,255,0.9);
+        white-space: nowrap;
+        transition: background 0.2s ease;
+    }
+    .trust-badge-dark:hover {
+        background: rgba(59,158,255,0.2);
+    }
+    .trust-sub-dark {
+        font-size: 12px;
+        color: rgba(255,255,255,0.45);
+        padding-left: 6px;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+    }
+
+    /* ── Stats Bar ── */
+    .stats-bar-section {
+        background: #0d1b3e;
+        padding: 40px 0;
+        margin: 3rem -12px 3rem -12px; /* break out of .container padding */
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+    }
+
+    .stats-row {
+        text-align: center;
+    }
+
+    /* Article thumbnail fallback */
+    .article-thumb-fallback {
+        width: 100%;
+        height: 120px;
+        background: #0d1b3e;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .article-thumb-fallback i {
+        font-size: 2rem;
+        color: #3b9eff;
+    }
+
+    /* See All Events button */
+    .btn-see-all-events {
+        display: inline-block;
+        border: 1px solid #3b9eff;
+        color: #3b9eff;
+        padding: 10px 24px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+    }
+    .btn-see-all-events:hover {
+        background: #3b9eff;
+        color: #ffffff;
+    }
+
+    .stat-item {
+        padding: 20px 24px;
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .stat-item.last {
+        border-right: none;
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #3b9eff;
+        line-height: 1.1;
+        font-family: 'Outfit', sans-serif;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.65);
+        margin-top: 6px;
+    }
+
+    @media (max-width: 767.98px) {
+        .stat-item {
+            border-right: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 12px;
+        }
+        .stat-item.last {
+            border-bottom: none;
+        }
+        /* 2-column grid: top row gets right border on first cell */
+        .stat-item:nth-child(odd) {
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        /* Remove bottom border from bottom 2 cells */
+        .stat-item:nth-child(3),
+        .stat-item:nth-child(4) {
+            border-bottom: none;
+        }
+    }
+
+    @keyframes pulse-ring {
+        0% {
+            transform: scale(0.98);
+            opacity: 0.3;
+            box-shadow: 0 0 0 0 rgba(0, 97, 255, 0.25);
+        }
+        70% {
+            transform: scale(1.015);
+            opacity: 0.9;
+            box-shadow: 0 0 0 12px rgba(0, 97, 255, 0);
+        }
+        100% {
+            transform: scale(0.98);
+            opacity: 0.3;
+            box-shadow: 0 0 0 0 rgba(0, 97, 255, 0);
+        }
+    }
+
+    .pulse-ring-anim {
+        animation: pulse-ring 3s cubic-bezier(0.215, 0.610, 0.355, 1) infinite;
+    }
+
+    /* Enhanced Feature Cards */
+    .feature-card {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 16px;
+        box-shadow: none;
+        padding: 2.2rem;
+        transition: all 0.3s ease;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-4px);
+        border-color: #3b9eff;
+        box-shadow: 0 8px 24px rgba(59, 158, 255, 0.12);
+    }
+    
+    .fa-icon-circle {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: #EBF4FF;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.3s ease;
+    }
+
+    .fa-icon-circle i {
+        font-size: 2rem;
+        color: #3b9eff;
+        margin-bottom: 0;
+    }
+    
+    .feature-card:hover .fa-icon-circle {
+        background: #D1E5FF;
+    }
+
+    /* Homepage Article Cards */
+    .article-card {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        padding: 12px;
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        margin-bottom: 1.25rem;
+    }
+    .article-card:hover {
+        border-color: #2563eb;
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(37, 99, 235, 0.15);
+    }
+    .article-card .article-img {
+        width: 80px;
+        height: 75px;
+        flex-shrink: 0;
+        overflow: hidden;
+        border-radius: 8px;
+        position: relative;
+    }
+    .article-card .article-img img {
+        transition: transform 0.3s ease;
+    }
+    .article-card:hover .article-img img {
+        transform: scale(1.03);
+    }
+    .article-card:hover .article-title {
+        text-decoration: underline;
+    }
+
+    .article-img-fallback {
+        width: 100%;
+        height: 100%;
+        background: #e5e7eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #9ca3af;
+        font-size: 1.4rem;
+        border-radius: 8px;
+    }
+
+    .article-content {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        min-width: 0;
+    }
+
+    .article-tag {
+        align-self: flex-start;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #2563eb;
+        background: #eff6ff;
+        border: 1px solid #dbeafe;
+        padding: 2px 8px;
+        border-radius: 999px;
+        margin-bottom: 6px;
+        letter-spacing: 0.5px;
+    }
+
+    .article-title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 4px;
+        line-height: 1.3;
+        transition: color 0.2s ease;
+    }
+    .article-card:hover .article-title {
+        color: #2563eb;
+    }
+
+    .article-desc {
+        font-size: 0.85rem;
+        color: #64748b;
+        margin-bottom: 6px;
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .article-date {
+        font-size: 0.75rem;
+        color: #94a3b8;
+        font-weight: 500;
+    }
+
+    /* Call-to-action event card */
+    .cta-event-card {
+        background: #ffffff;
+        border: 2px dashed rgba(0, 97, 255, 0.25);
+        border-radius: 18px;
+        box-shadow: 0 4px 20px rgba(0, 100, 255, 0.02);
+        transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        cursor: pointer;
+        min-height: 120px;
+    }
+    
+    .cta-event-card:hover {
+        transform: translateY(-4px);
+        background-color: rgba(0, 97, 255, 0.04);
+        border-color: var(--primary-color);
+        box-shadow: 0 10px 25px rgba(0, 97, 255, 0.08);
+    }
+
+    /* Trust Indicator Pills */
+    .trust-badge {
+        display: inline-flex;
+        align-items: center;
+        background: #EBF4FF;
+        border: 1px solid #B3D4FF;
+        border-radius: 999px;
+        padding: 8px 18px;
+        font-size: 13px;
+        font-weight: 500;
+        color: #1a3c6e;
+        white-space: nowrap;
+        transition: background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .trust-badge:hover {
+        background: #d6eaff;
+        box-shadow: 0 4px 12px rgba(0, 115, 230, 0.12);
+    }
+
+    .trust-sub {
+        font-size: 12px;
+        color: #8a9ab5;
+        padding-left: 6px;
+    }
+
+    /* ── Gallery Grid ── */
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 250px);
+        gap: 1.5rem;
+    }
+    .gallery-item {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        cursor: pointer;
+        transition: opacity 0.3s ease;
+    }
+    .gallery-item.hidden {
+        display: none;
+    }
+    .gallery-large {
+        grid-row: span 2;
+    }
+    .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    /* Overlay — transparent by default, darkens on hover */
+    .gallery-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(13, 27, 62, 0);
+        transition: background 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .gallery-item:hover .gallery-overlay {
+        background: rgba(13, 27, 62, 0.6);
+    }
+    /* Zoom icon — hidden by default */
+    .gallery-zoom {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        color: white;
+        font-size: 28px;
+    }
+    .gallery-item:hover .gallery-zoom {
+        opacity: 1;
+    }
+    /* Caption bar at bottom — hidden by default */
+    .gallery-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 8px 12px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        font-size: 11px;
+        font-weight: 600;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    .gallery-item:hover .gallery-caption {
+        opacity: 1;
+    }
+    /* Image zoom on hover */
+    .gallery-item:hover img {
+        transform: scale(1.08);
+    }
+    @media (max-width: 768px) {
+        .gallery-grid {
+            grid-template-columns: 1fr;
+            grid-template-rows: auto;
+        }
+        .gallery-item {
+            height: 250px;
+            grid-row: span 1 !important;
+        }
+    }
+
+    /* ── Gallery More Tile styles ── */
+    .gallery-more {
+        cursor: pointer;
+        border: 1px solid rgba(0,0,0,0.05);
+        height: 100%;
+        width: 100%;
+    }
+    .more-overlay {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+        text-align: center;
+        background: linear-gradient(135deg, #0d1b3e 0%, #0a0a2e 100%);
+        color: white;
+        transition: opacity 0.3s ease;
+    }
+    .more-overlay:hover {
+        opacity: 0.95;
+    }
+    .more-count {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: white;
+        line-height: 1;
+        display: block;
+    }
+    .more-text {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.7);
+        margin-top: 4px;
+        font-weight: 500;
+        display: block;
+    }
+    
+    .zoom-icon {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        color: white;
+        font-size: 28px;
+        font-style: normal;
+    }
+    .gallery-item:hover .zoom-icon {
+        opacity: 1;
+    }
+
+    /* ── Gallery View All Button ── */
+    .gallery-view-btn {
+        border: 2px solid #0d6efd !important;
+        color: #0d6efd !important;
+        background: transparent !important;
+        transition: all 0.3s ease !important;
+    }
+    .gallery-view-btn:hover {
+        background: #0d6efd !important;
+        color: #ffffff !important;
+    }
+
+    /* ── Gallery Lightbox Overlay ── */
+    .gallery-lightbox {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.9);
+        z-index: 9999;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .lightbox-content-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        max-width: 80vw;
+        max-height: 80vh;
+    }
+    .gallery-lightbox img {
+        max-width: 80vw;
+        max-height: 75vh;
+        object-fit: contain;
+        border-radius: 4px;
+        box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    }
+    .lightbox-caption {
+        color: white;
+        font-size: 14px;
+        text-align: center;
+        margin-top: 15px;
+        font-weight: 500;
+    }
+    .lightbox-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        color: white;
+        font-size: 28px;
+        cursor: pointer;
+        transition: opacity 0.2s;
+        line-height: 1;
+        user-select: none;
+    }
+    .lightbox-close:hover {
+        opacity: 0.8;
+    }
+    .lightbox-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        color: white;
+        font-size: 36px;
+        cursor: pointer;
+        user-select: none;
+        transition: opacity 0.2s;
+        padding: 10px;
+    }
+    .lightbox-arrow:hover {
+        opacity: 0.8;
+    }
+    .lightbox-arrow-left {
+        left: 20px;
+    }
+    .lightbox-arrow-right {
+        right: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Count-up animation using IntersectionObserver
+    const statNumbers = document.querySelectorAll('.stat-number');
+
+    function countUp(el) {
+        const target = parseInt(el.getAttribute('data-target'));
+        const suffix = el.getAttribute('data-suffix') || '';
+        const duration = 1600; // ms
+        const step = 16;       // ~60fps
+        const increment = target / (duration / step);
+        let current = 0;
+
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            el.textContent = Math.floor(current) + suffix;
+        }, step);
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.dataset.counted) {
+                entry.target.dataset.counted = 'true';
+                countUp(entry.target);
+            }
+        });
+    }, { threshold: 0.4 });
+
+    statNumbers.forEach(el => observer.observe(el));
+
+    // ── Gallery Filter Tabs ──
+    const filterBtns = document.querySelectorAll('.gallery-filter-btn');
+    const galleryItems = document.querySelectorAll('#gallery-grid .gallery-item');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const filter = btn.getAttribute('data-filter');
+
+            // Update active tab styling
+            filterBtns.forEach(b => {
+                b.classList.remove('btn-primary');
+                b.classList.add('btn-outline-secondary');
+            });
+            btn.classList.remove('btn-outline-secondary');
+            btn.classList.add('btn-primary');
+
+            // Show / hide gallery items with fade
+            galleryItems.forEach(item => {
+                const cat = item.getAttribute('data-category');
+                if (filter === 'all' || cat === filter || cat === 'all') {
+                    item.style.opacity = '0';
+                    item.classList.remove('hidden');
+                    // Fade in
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            item.style.opacity = '1';
+                        });
+                    });
+                } else {
+                    item.style.opacity = '0';
+                    setTimeout(() => item.classList.add('hidden'), 300);
+                }
+            });
+        });
+    });
+
+    // ── Gallery Lightbox Logic ──
+    const lightbox = document.getElementById('gallery-lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    const closeBtn = document.getElementById('lightbox-close');
+    const prevBtn = document.getElementById('lightbox-prev');
+    const nextBtn = document.getElementById('lightbox-next');
+    
+    let activeIndex = -1;
+    let visibleItems = [];
+
+    // Get only the currently visible gallery items (excluding the "+24 more" tile)
+    function updateVisibleItems() {
+        visibleItems = Array.from(document.querySelectorAll('#gallery-grid .gallery-item'))
+            .filter(item => !item.classList.contains('hidden') && !item.classList.contains('gallery-more'));
+    }
+
+    function openLightbox(index) {
+        updateVisibleItems();
+        activeIndex = index;
+        if (activeIndex >= 0 && activeIndex < visibleItems.length) {
+            const item = visibleItems[activeIndex];
+            const img = item.querySelector('img');
+            const cap = item.querySelector('.gallery-caption');
+            
+            lightboxImg.src = img.src;
+            lightboxImg.alt = img.alt || '';
+            lightboxCaption.textContent = cap ? cap.textContent : '';
+            lightbox.style.display = 'flex';
+        }
+    }
+
+    function closeLightbox() {
+        lightbox.style.display = 'none';
+        lightboxImg.src = '';
+        lightboxCaption.textContent = '';
+        activeIndex = -1;
+    }
+
+    function showPrev() {
+        if (visibleItems.length === 0) return;
+        activeIndex = (activeIndex - 1 + visibleItems.length) % visibleItems.length;
+        openLightbox(activeIndex);
+    }
+
+    function showNext() {
+        if (visibleItems.length === 0) return;
+        activeIndex = (activeIndex + 1) % visibleItems.length;
+        openLightbox(activeIndex);
+    }
+
+    // Attach click listener to gallery items
+    document.querySelectorAll('#gallery-grid .gallery-item').forEach(item => {
+        if (item.classList.contains('gallery-more')) return;
+        
+        item.addEventListener('click', (e) => {
+            updateVisibleItems();
+            const index = visibleItems.indexOf(item);
+            if (index !== -1) {
+                openLightbox(index);
+            }
+        });
+    });
+
+    closeBtn.addEventListener('click', closeLightbox);
+    prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showPrev();
+    });
+    nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showNext();
+    });
+
+    // Close on click outside photo
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox || e.target.classList.contains('lightbox-content-container')) {
+            closeLightbox();
+        }
+    });
+
+    // Key event listeners
+    document.addEventListener('keydown', (e) => {
+        if (lightbox.style.display === 'flex') {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            } else if (e.key === 'ArrowLeft') {
+                showPrev();
+            } else if (e.key === 'ArrowRight') {
+                showNext();
+            }
+        }
+    });
+</script>
+{% endblock %}

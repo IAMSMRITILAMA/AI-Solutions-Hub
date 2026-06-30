@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Case Studies | AI-Solutions{% endblock %}
+
+{% block content %}
+<div class="row mb-5 py-5 text-center">
+    <div class="col-12">
+        <h1 class="display-4 fw-bold">Case Studies</h1>
+        <p class="lead text-muted">Showcasing previous AI solutions and their impact across industries.</p>
+    </div>
+</div>
+
+<div class="row">
+    {% if case_studies %}
+        {% for cs in case_studies %}
+        <div class="col-lg-12 mb-5">
+            <div class="glass-card shadow-lg p-0 border-0 overflow-hidden">
+                <div class="row g-0">
+                    <div class="col-md-5">
+                        {% if cs.image %}
+                        <img src="{{ cs.image.url }}" class="img-fluid w-100 h-100" style="object-fit: cover;" alt="{{ cs.title }}">
+                        {% else %}
+                        <div class="bg-secondary w-100 h-100 d-flex align-items-center justify-content-center">
+                            <span class="display-1">📁</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-7 p-5">
+                        <h2 class="fw-bold mb-4">{{ cs.title }}</h2>
+                        <div class="mb-4">
+                            <h5 class="text-primary fw-bold">Project Objective</h5>
+                            <p class="text-muted">{{ cs.objective }}</p>
+                        </div>
+                        <div class="mb-4">
+                            <h5 class="text-primary fw-bold">Implemented Technologies</h5>
+                            <p class="badge bg-primary fs-6 me-2">{{ cs.technologies_used }}</p>
+                        </div>
+                        <div class="mb-0">
+                            <h5 class="text-accent fw-bold">Outcomes Achieved</h5>
+                            <p class="text-muted">{{ cs.outcomes }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-lg-8 mx-auto text-center py-5">
+            <div class="glass-card">
+                <h3>Our first batch of case studies is being prepared.</h3>
+                <p class="text-muted">Stay tuned to see how AI-Solutions is transforming the digital landscape.</p>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'core/dashboard_base.html' %}
+
+{% block title %}
+    {% if object %}Edit Feedback - {{ object.customer_name }}{% else %}Add New Feedback{% endif %} | AI-Solutions Staff
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="d-flex align-items-center gap-3 mb-4">
+            <a href="{% url 'feedback_list' %}" class="btn btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
+                <i class="bi bi-arrow-left text-white fs-5"></i>
+            </a>
+            <div>
+                <h1 class="display-6 fw-bold text-white mb-1">
+                    {% if object %}Edit Feedback{% else %}New Customer Feedback{% endif %}
+                </h1>
+                <p class="text-muted mb-0">
+                    {% if object %}Update the details of this customer feedback.{% else %}Manually register a review or testimonial from a customer.{% endif %}
+                </p>
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <form method="post" novalidate>
+                {% csrf_token %}
+                
+                <div class="row">
+                    <div class="col-md-8 mb-3">
+                        <label class="form-label text-white fw-bold">{{ form.customer_name.label }}</label>
+                        {{ form.customer_name }}
+                        {{ form.customer_name.errors }}
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label text-white fw-bold">{{ form.rating.label }}</label>
+                        {{ form.rating }}
+                        {{ form.rating.errors }}
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label text-white fw-bold">{{ form.comment.label }}</label>
+                    {{ form.comment }}
+                    {{ form.comment.errors }}
+                </div>
+
+                <div class="mb-4 d-flex align-items-center gap-2">
+                    {{ form.is_featured }}
+                    <label class="form-check-label text-white fw-bold" for="{{ form.is_featured.id_for_label }}">Featured (Showcase on website)</label>
+                    {{ form.is_featured.errors }}
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 pt-3 border-top border-secondary border-opacity-25">
+                    <a href="{% url 'feedback_list' %}" class="btn btn-outline-secondary rounded-pill px-4">Cancel</a>
+                    <button type="submit" class="btn btn-purple rounded-pill px-4">
+                        {% if object %}Save Changes{% else %}Add Review{% endif %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

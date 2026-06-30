@@ -1,0 +1,298 @@
+{% extends 'base.html' %}
+
+{% block title %}Staff Dashboard | AI-Solutions{% endblock %}
+
+{% block content %}
+<div class="row mb-4 align-items-center">
+    <div class="col-md-8">
+        <h1 class="fw-bold text-heading">AI-Solutions Staff Portal</h1>
+        <p class="text-muted">Welcome, <strong class="text-accent">{{ user.username }}</strong>. Manage customer inquiries and track system analytics.</p>
+    </div>
+    <div class="col-md-4 text-md-end">
+        <a href="{% url 'export_csv' %}" class="btn btn-premium px-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-file-earmark-spreadsheet-fill me-2" viewBox="0 0 16 16">
+                <path d="M6 12c0 .619-.112 1.187-.306 1.706A5.3 5.3 0 0 1 4.5 13.794l-.129-.274a2.9 2.9 0 0 0-.582-.748 1.5 1.5 0 0 0-.29-.224h1.6A1.5 1.5 0 0 1 6 12M4.418 5.753l-.8 1.6a.5.5 0 0 0 .8.6h2a.5.5 0 0 0 0-1h-1.25l.45-.9a.5.5 0 0 0-.8-.3h-.4M1.5 10H5a.5.5 0 0 1 0 1H1.5a.5.5 0 0 1 0-1m0 2H3a.5.5 0 0 1 0 1H1.5a.5.5 0 0 1 0-1m9-7.5V4a1.5 1.5 0 0 0-1.5-1.5H3A1.5 1.5 0 0 0 1.5 4v1.5a1.5 1.5 0 0 0 1.5 1.5h6A1.5 1.5 0 0 0 10.5 4.5M2 4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v.5H2zm9.5-.5a.5.5 0 0 0-.5.5v11a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5V4a.5.5 0 0 0-.5-.5z"/>
+            </svg>Export Inquiries (CSV)
+        </a>
+    </div>
+</div>
+
+{% if messages %}
+<div class="row">
+    <div class="col-12">
+        {% for message in messages %}
+        <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<!-- Stats Section -->
+<div class="row mb-5">
+    <!-- Stat Card 1 -->
+    <div class="col-lg-4 mb-4">
+        <div class="glass-card text-center py-4 h-100 d-flex flex-column justify-content-center">
+            <h5 class="text-muted text-uppercase small fw-bold mb-2">Total Inquiries</h5>
+            <h2 class="display-4 fw-bold text-accent mb-0">{{ total_inquiries }}</h2>
+        </div>
+    </div>
+    <!-- Analytics: Services -->
+    <div class="col-lg-4 mb-4">
+        <div class="glass-card h-100">
+            <h5 class="fw-bold mb-3 border-bottom pb-2">Top Service Requests</h5>
+            <ul class="list-unstyled mb-0">
+                {% if by_service %}
+                    {% for s in by_service %}
+                    <li class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="text-muted small fw-semibold">{{ s.service_name }}</span>
+                        <span class="badge bg-primary-subtle text-primary rounded-pill px-2.5">{{ s.count }}</span>
+                    </li>
+                    {% endfor %}
+                {% else %}
+                    <li class="text-muted small text-center py-3">No service requests yet.</li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    <!-- Analytics: Countries -->
+    <div class="col-lg-4 mb-4">
+        <div class="glass-card h-100">
+            <h5 class="fw-bold mb-3 border-bottom pb-2">Geographic Reach</h5>
+            <ul class="list-unstyled mb-0">
+                {% if by_country %}
+                    {% for c in by_country %}
+                    <li class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="text-muted small fw-semibold">{{ c.country }}</span>
+                        <span class="badge bg-success-subtle text-success rounded-pill px-2.5">{{ c.count }}</span>
+                    </li>
+                    {% endfor %}
+                {% else %}
+                    <li class="text-muted small text-center py-3">No geographic reach records.</li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Table Section -->
+<div class="row">
+    <div class="col-12">
+        <div class="glass-card">
+            <h3 class="fw-bold mb-4">Customer Inquiries Management</h3>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="py-3">Name</th>
+                            <th class="py-3">Company</th>
+                            <th class="py-3">Requested Service</th>
+                            <th class="py-3">Country</th>
+                            <th class="py-3">Status</th>
+                            <th class="py-3 text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if recent_inquiries %}
+                            {% for inquiry in recent_inquiries %}
+                            <tr id="inquiry-row-{{ inquiry.id }}">
+                                <td class="fw-semibold text-heading">{{ inquiry.name }}</td>
+                                <td>{{ inquiry.company_name }}</td>
+                                <td><span class="badge bg-light text-dark border">{{ inquiry.get_service_requested_display }}</span></td>
+                                <td>{{ inquiry.country }}</td>
+                                <td>
+                                    <span id="status-badge-{{ inquiry.id }}" class="badge 
+                                        {% if inquiry.status == 'Pending' %}bg-warning-subtle text-warning border border-warning-subtle
+                                        {% elif inquiry.status == 'In Progress' %}bg-primary-subtle text-primary border border-primary-subtle
+                                        {% else %}bg-success-subtle text-success border border-success-subtle{% endif %}">
+                                        {{ inquiry.status }}
+                                    </span>
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-outline-primary px-3 rounded-pill me-1" onclick="viewInquiry({{ inquiry.id }})">View Details</button>
+                                    <button class="btn btn-sm btn-outline-danger px-3 rounded-pill" onclick="confirmDelete({{ inquiry.id }}, '{{ inquiry.name }}')">Delete</button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center text-muted py-4">No customer inquiries found.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- View Inquiry Modal -->
+<div class="modal fade" id="inquiryModal" tabindex="-1" aria-labelledby="inquiryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+            <div class="modal-header bg-light border-bottom-0 pb-0">
+                <h5 class="modal-title fw-bold text-heading fs-4" id="inquiryModalLabel">Customer Inquiry Detail</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4 pt-3">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="small text-muted fw-semibold">Name</label>
+                        <p class="fs-6 text-heading fw-bold mb-0" id="modal-name">-</p>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="small text-muted fw-semibold">Email</label>
+                        <p class="fs-6 mb-0"><a href="#" id="modal-email">-</a></p>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="small text-muted fw-semibold">Phone</label>
+                        <p class="fs-6 text-heading mb-0" id="modal-phone">-</p>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="small text-muted fw-semibold">Company Name</label>
+                        <p class="fs-6 text-heading mb-0" id="modal-company">-</p>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="small text-muted fw-semibold">Job Title</label>
+                        <p class="fs-6 text-heading mb-0" id="modal-job">-</p>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="small text-muted fw-semibold">Country</label>
+                        <p class="fs-6 text-heading mb-0" id="modal-country">-</p>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="small text-muted fw-semibold">Requested Service</label>
+                        <p class="mb-0"><span class="badge bg-light text-dark border" id="modal-service">-</span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="small text-muted fw-semibold">Created Date</label>
+                        <p class="fs-6 text-muted mb-0" id="modal-date">-</p>
+                    </div>
+                    <div class="col-12 border-top pt-3">
+                        <label class="small text-muted fw-semibold">Project Details</label>
+                        <p class="fs-6 text-heading border rounded p-3 bg-light mt-1 mb-0" id="modal-details" style="white-space: pre-wrap;">-</p>
+                    </div>
+                    
+                    <!-- Update Status Section -->
+                    <div class="col-12 border-top pt-3 mt-4">
+                        <div class="d-flex align-items-center gap-3">
+                            <label class="fw-bold text-heading mb-0" for="inquiryStatus">Update Inquiry Status:</label>
+                            <select class="form-select form-select-sm w-auto" id="inquiryStatus" style="max-width: 200px;">
+                                <option value="Pending">Pending</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Resolved">Resolved</option>
+                            </select>
+                            <button type="button" class="btn btn-primary btn-sm" id="btnUpdateStatus" onclick="updateInquiryStatus()">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer bg-light border-top-0">
+                <button type="button" class="btn btn-secondary px-4 rounded-pill" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Form (Hidden) -->
+<form id="deleteForm" method="post" style="display: none;">
+    {% csrf_token %}
+</form>
+
+{% block extra_js %}
+<script>
+    let currentInquiryId = null;
+    let bootstrapModal = null;
+
+    document.addEventListener("DOMContentLoaded", () => {
+        bootstrapModal = new bootstrap.Modal(document.getElementById('inquiryModal'));
+    });
+
+    async function viewInquiry(id) {
+        currentInquiryId = id;
+        try {
+            const response = await fetch(`/inquiry/${id}/`);
+            if (!response.ok) throw new Error("Could not retrieve inquiry details.");
+            
+            const data = await response.json();
+            
+            // Populate modal fields
+            document.getElementById('modal-name').textContent = data.name;
+            document.getElementById('modal-email').textContent = data.email;
+            document.getElementById('modal-email').href = `mailto:${data.email}`;
+            document.getElementById('modal-phone').textContent = data.phone;
+            document.getElementById('modal-company').textContent = data.company_name;
+            document.getElementById('modal-job').textContent = data.job_title;
+            document.getElementById('modal-country').textContent = data.country;
+            document.getElementById('modal-service').textContent = data.service_requested;
+            document.getElementById('modal-date').textContent = data.created_at;
+            document.getElementById('modal-details').textContent = data.job_details;
+            
+            // Select correct status dropdown
+            document.getElementById('inquiryStatus').value = data.status;
+            
+            bootstrapModal.show();
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+
+    async function updateInquiryStatus() {
+        if (!currentInquiryId) return;
+        const newStatus = document.getElementById('inquiryStatus').value;
+        const btn = document.getElementById('btnUpdateStatus');
+        btn.disabled = true;
+        btn.textContent = "Updating...";
+
+        try {
+            const response = await fetch(`/inquiry/${currentInquiryId}/update/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ status: newStatus })
+            });
+            const data = await response.json();
+            
+            if (data.success) {
+                // Update table status cell
+                const badge = document.getElementById(`status-badge-${currentInquiryId}`);
+                badge.textContent = newStatus;
+                
+                // Clear existing classes
+                badge.className = "badge";
+                
+                // Add correct class
+                if (newStatus === 'Pending') {
+                    badge.classList.add('bg-warning-subtle', 'text-warning', 'border', 'border-warning-subtle');
+                } else if (newStatus === 'In Progress') {
+                    badge.classList.add('bg-primary-subtle', 'text-primary', 'border', 'border-primary-subtle');
+                } else {
+                    badge.classList.add('bg-success-subtle', 'text-success', 'border', 'border-success-subtle');
+                }
+                
+                bootstrapModal.hide();
+            } else {
+                alert(data.error || "Update failed");
+            }
+        } catch (err) {
+            alert("Error updating status: " + err.message);
+        } finally {
+            btn.disabled = false;
+            btn.textContent = "Update";
+        }
+    }
+
+    function confirmDelete(id, name) {
+        if (confirm(`Are you sure you want to permanently delete the inquiry from "${name}"?`)) {
+            const form = document.getElementById('deleteForm');
+            form.action = `/inquiry/${id}/delete/`;
+            form.submit();
+        }
+    }
+</script>
+{% endblock %}
+{% endblock %}

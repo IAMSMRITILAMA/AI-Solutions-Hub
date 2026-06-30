@@ -1,0 +1,139 @@
+{% extends 'core/dashboard_base.html' %}
+
+{% block title %}Contact Messages | AI-Solutions Staff{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+    <div>
+        <h1 class="display-6 fw-bold text-white mb-1">Contact Messages</h1>
+        <p class="text-muted mb-0">Review messages submitted through the public contact form.</p>
+    </div>
+    <div>
+        <form action="{% url 'contact_mark_all_read' %}" method="post" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-info d-flex align-items-center gap-2" {% if unread_count == 0 %}disabled{% endif %}>
+                <i class="bi bi-check-all"></i> Mark All as Read ({{ unread_count }})
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Search and Sort Card -->
+<div class="dashboard-card mb-4">
+    <form method="get" class="row g-3 align-items-center">
+        <!-- Search bar -->
+        <div class="col-md-6 col-lg-5">
+            <div class="input-group">
+                <span class="input-group-text bg-dark border-secondary border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                <input type="text" name="q" value="{{ q }}" class="form-control bg-dark border-secondary border-start-0 text-white" placeholder="Search by name, email, or subject..." style="border-radius: 0 8px 8px 0;">
+            </div>
+        </div>
+        <!-- Sorting dropdown -->
+        <div class="col-md-4 col-lg-4">
+            <div class="d-flex align-items-center gap-2">
+                <label for="sort_by" class="text-muted small text-nowrap mb-0">Sort By:</label>
+                <select name="sort_by" id="sort_by" class="form-select bg-dark border-secondary text-white" onchange="this.form.submit()">
+                    <option value="-submitted_at" {% if sort_by == '-submitted_at' %}selected{% endif %}>Date (Newest First)</option>
+                    <option value="submitted_at" {% if sort_by == 'submitted_at' %}selected{% endif %}>Date (Oldest First)</option>
+                    <option value="is_read" {% if sort_by == 'is_read' %}selected{% endif %}>Status (Unread First)</option>
+                    <option value="-is_read" {% if sort_by == '-is_read' %}selected{% endif %}>Status (Read First)</option>
+                    <option value="name" {% if sort_by == 'name' %}selected{% endif %}>Name (A-Z)</option>
+                    <option value="-name" {% if sort_by == '-name' %}selected{% endif %}>Name (Z-A)</option>
+                </select>
+            </div>
+        </div>
+        <!-- Action Buttons -->
+        <div class="col-md-2 col-lg-3 d-flex gap-2">
+            <button type="submit" class="btn btn-purple w-100">Filter</button>
+            {% if q or sort_by != '-submitted_at' %}
+                <a href="{% url 'contact_list' %}" class="btn btn-outline-secondary w-auto" title="Clear Filters"><i class="bi bi-x-lg"></i></a>
+            {% endif %}
+        </div>
+    </form>
+</div>
+
+<!-- Table Card -->
+<div class="dashboard-card">
+    <div class="table-responsive">
+        <table class="table table-dark-custom align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>Status</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Subject</th>
+                    <th>Submitted At</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if contacts %}
+                    {% for contact in contacts %}
+                    <tr {% if not contact.is_read %}class="bg-dark text-white fw-bold border-start border-info border-3"{% endif %}>
+                        <td>
+                            {% if contact.is_read %}
+                                <span class="badge bg-secondary border border-secondary px-2.5 py-1 text-light">Read</span>
+                            {% else %}
+                                <span class="badge bg-info text-dark px-2.5 py-1">Unread</span>
+                            {% endif %}
+                        </td>
+                        <td class="{% if not contact.is_read %}text-white{% else %}text-light{% endif %}">{{ contact.name }}</td>
+                        <td><a href="mailto:{{ contact.email }}" class="text-info text-decoration-none small"><i class="bi bi-envelope me-1"></i>{{ contact.email }}</a></td>
+                        <td class="text-truncate" style="max-width: 200px;">{{ contact.subject }}</td>
+                        <td class="small text-muted">{{ contact.submitted_at|date:"M d, Y H:i" }}</td>
+                        <td class="text-end">
+                            <div class="d-flex justify-content-end gap-1.5 flex-wrap">
+                                <a href="{% url 'contact_detail' contact.id %}" class="btn btn-sm btn-outline-info rounded-pill px-3 py-1"><i class="bi bi-eye"></i> View</a>
+                                <a href="{% url 'contact_delete' contact.id %}" class="btn btn-sm btn-outline-danger rounded-pill px-3 py-1"><i class="bi bi-trash"></i> Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-5">
+                            <i class="bi bi-envelope-open fs-1 text-secondary mb-3 d-block"></i>
+                            No contact messages match this query.
+                        </td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+    <div class="d-flex justify-content-center mt-4">
+        <nav aria-label="Page navigation">
+            <ul class="pagination mb-0">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if q %}&q={{ q }}{% endif %}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+                
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                    <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ num }}{% if q %}&q={{ q }}{% endif %}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">{{ num }}</a>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if q %}&q={{ q }}{% endif %}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

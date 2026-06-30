@@ -1,0 +1,90 @@
+{% extends 'core/dashboard_base.html' %}
+
+{% block title %}
+    {% if object %}Edit Event - {{ object.title }}{% else %}Create New Event{% endif %} | AI-Solutions Staff
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="d-flex align-items-center gap-3 mb-4">
+            <a href="{% url 'event_list' %}" class="btn btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
+                <i class="bi bi-arrow-left text-white fs-5"></i>
+            </a>
+            <div>
+                <h1 class="display-6 fw-bold text-white mb-1">
+                    {% if object %}Edit Event{% else %}Create New Event{% endif %}
+                </h1>
+                <p class="text-muted mb-0">
+                    {% if object %}Update the details, date, or location of this event.{% else %}Schedule a new webinar, workshop, or conference.{% endif %}
+                </p>
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <form method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label class="form-label text-white fw-bold">{{ form.title.label }}</label>
+                    {{ form.title }}
+                    {{ form.title.errors }}
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-white fw-bold">{{ form.date.label }}</label>
+                        {{ form.date }}
+                        {{ form.date.errors }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-white fw-bold">{{ form.time.label }}</label>
+                        {{ form.time }}
+                        {{ form.time.errors }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-white fw-bold">{{ form.location.label }}</label>
+                        {{ form.location }}
+                        {{ form.location.errors }}
+                        <div class="form-text text-muted">e.g. "Online (Zoom)", "London HQ"</div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-white fw-bold">{{ form.max_attendees.label }}</label>
+                        {{ form.max_attendees }}
+                        {{ form.max_attendees.errors }}
+                        <div class="form-text text-muted">Leave empty for unlimited attendees.</div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label text-white fw-bold">{{ form.description.label }}</label>
+                    {{ form.description }}
+                    {{ form.description.errors }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label text-white fw-bold">{{ form.image.label }}</label>
+                    {{ form.image }}
+                    {{ form.image.errors }}
+                </div>
+
+                <div class="mb-4 d-flex align-items-center gap-2">
+                    {{ form.is_active }}
+                    <label class="form-check-label text-white fw-bold" for="{{ form.is_active.id_for_label }}">Active (Visible to public)</label>
+                    {{ form.is_active.errors }}
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 pt-3 border-top border-secondary border-opacity-25">
+                    <a href="{% url 'event_list' %}" class="btn btn-outline-secondary rounded-pill px-4">Cancel</a>
+                    <button type="submit" class="btn btn-purple rounded-pill px-4">
+                        {% if object %}Save Changes{% else %}Create Event{% endif %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

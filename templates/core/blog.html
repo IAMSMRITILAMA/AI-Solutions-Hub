@@ -1,0 +1,383 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Blogs & Articles | AI-Solutions{% endblock %}
+
+{% block content %}
+<style>
+    /* Hero */
+    .blog-hero {
+        background: linear-gradient(135deg, #0a0a1a 0%, #0d1b3e 50%, #0a0a2e 100%);
+        padding: 90px 0;
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        color: white;
+        text-align: center;
+        margin-bottom: 60px;
+    }
+    .blog-hero .hero-label {
+        display: inline-block;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: #60a5fa;
+        background: rgba(13, 110, 253, 0.15);
+        border-radius: 999px;
+        padding: 6px 18px;
+        margin-bottom: 20px;
+    }
+
+    /* Featured Article */
+    .featured-article {
+        background: #ffffff;
+        border: 1px solid #e8eef6;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 100, 255, 0.08);
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .featured-article:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 50px rgba(0, 100, 255, 0.12);
+    }
+    .featured-badge {
+        display: inline-block;
+        background: #fff7ed;
+        color: #ea580c;
+        border: 1px solid #ffedd5;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 4px 12px;
+        border-radius: 999px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+    }
+    .featured-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        min-height: 350px;
+    }
+    
+    /* Article Card */
+    .article-card {
+        background: #ffffff;
+        border: 1px solid #e8eef6;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0, 100, 255, 0.04);
+        transition: all 0.3s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        cursor: pointer;
+    }
+    .article-card:hover {
+        border-color: #2563eb;
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(37, 99, 235, 0.15);
+    }
+    .article-img-wrapper {
+        height: 220px;
+        overflow: hidden;
+    }
+    .article-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+    .article-card:hover .article-img {
+        transform: scale(1.03);
+    }
+    .article-title a {
+        color: #0f172a;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    .article-card:hover .article-title a {
+        text-decoration: underline !important;
+        color: #2563eb !important;
+    }
+    .article-card .badge {
+        background-color: #eff6ff !important;
+        color: #2563eb !important;
+        font-weight: 600;
+        font-size: 11px;
+        padding: 4px 10px !important;
+        border-radius: 6px;
+        border: 1px solid #dbeafe;
+    }
+
+
+    /* Filter Tabs */
+    .filter-btn {
+        background: #fff;
+        color: #475569;
+        font-weight: 600;
+        transition: all 0.2s ease;
+    }
+    .filter-btn:hover {
+        border-color: #0d6efd !important;
+    }
+    .filter-btn.active {
+        background: #0d6efd;
+        border-color: #0d6efd !important;
+        color: #fff !important;
+    }
+</style>
+
+<!-- HERO BANNER -->
+<section class="blog-hero">
+    <div class="container">
+        <span class="hero-label">BLOGS & ARTICLES</span>
+        <h1 class="display-4 fw-bolder text-white mb-3">Insights & Updates</h1>
+        <p class="lead mx-auto" style="color: rgba(255,255,255,0.8); max-width: 600px;">
+            Insights and updates from the world of AI
+        </p>
+    </div>
+</section>
+
+<div class="container mb-5">
+    
+    <!-- FEATURED ARTICLE -->
+    {% if articles %}
+    <div class="row mb-5 pb-4">
+        <div class="col-12">
+            <div class="featured-article">
+                <div class="row g-0 align-items-stretch">
+                    <div class="col-lg-6 p-4 p-md-5 order-2 order-lg-1 d-flex flex-column justify-content-center">
+                        <div>
+                            <span class="featured-badge"><i class="fas fa-star me-1"></i> FEATURED</span>
+                        </div>
+                        <h2 class="fw-bold mb-3" style="color: #0f172a; line-height: 1.3;">{{ articles.0.title }}</h2>
+                        <p class="text-muted mb-4" style="font-size: 1.1rem; line-height: 1.6;">{{ articles.0.excerpt|default:articles.0.content|truncatewords:30 }}</p>
+                        
+                        <div class="d-flex align-items-center mb-4">
+                            <img src="https://ui-avatars.com/api/?name={% if articles.0.author_name %}{{ articles.0.author_name|urlencode }}{% else %}AI-Solutions+Team{% endif %}&background=0d6efd&color=fff" alt="Author" class="rounded-circle me-3" width="48" height="48">
+                            <div>
+                                <p class="fw-bold mb-0" style="color: #1e293b;">
+                                    {% if articles.0.author_name %}{{ articles.0.author_name }}{% elif articles.0.author %}{{ articles.0.author.get_full_name|default:articles.0.author.username }}{% else %}AI-Solutions Team{% endif %}
+                                </p>
+                                <p class="small text-muted mb-0">
+                                    {% if articles.0.author_role %}{{ articles.0.author_role }}{% else %}Author{% endif %} &bull; {{ articles.0.published_date|date:"F d, Y" }}
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <a href="{% url 'blog_detail' articles.0.slug %}" class="btn btn-primary rounded-pill px-4 py-2 fw-semibold">Read Article &rarr;</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 order-1 order-lg-2">
+                        {% if articles.0.featured_image %}
+                        <img src="{{ articles.0.featured_image.url }}?v=2" alt="{{ articles.0.title }}" class="featured-img">
+                        {% else %}
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" alt="Big Data" class="featured-img">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- SEARCH & FILTERS -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-8">
+            <div class="d-flex bg-white rounded-pill p-2 mb-4" style="box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e8eef6;">
+                <input type="text" id="blog-search" class="form-control border-0 bg-transparent px-4 shadow-none" placeholder="Search articles...">
+                <button class="btn btn-primary rounded-pill px-4" style="background: #0073e6;">
+                    <i class="fas fa-search me-2"></i> Search
+                </button>
+            </div>
+            
+            <div class="d-flex flex-wrap justify-content-center gap-2" id="blog-filters">
+                <button class="btn btn-sm border border-secondary-subtle rounded-pill px-3 filter-btn active" data-filter="all">All</button>
+                <button class="btn btn-sm border border-secondary-subtle rounded-pill px-3 filter-btn" data-filter="ai">AI</button>
+                <button class="btn btn-sm border border-secondary-subtle rounded-pill px-3 filter-btn" data-filter="nlp">NLP</button>
+                <button class="btn btn-sm border border-secondary-subtle rounded-pill px-3 filter-btn" data-filter="prototyping">Prototyping</button>
+                <button class="btn btn-sm border border-secondary-subtle rounded-pill px-3 filter-btn" data-filter="data">Data</button>
+                <button class="btn btn-sm border border-secondary-subtle rounded-pill px-3 filter-btn" data-filter="virtual-assistants">Virtual Assistants</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- RECENT ARTICLES -->
+    <h3 class="fw-bold mb-4" style="color: #0f172a;">Recent Posts</h3>
+    <div class="row g-4">
+        {% if articles %}
+            {% for article in articles %}
+            <div class="col-md-6 col-lg-4 article-item" data-category="{% if 'nlp' in article.title|lower or 'language' in article.title|lower %}nlp{% elif 'data' in article.title|lower %}data{% elif 'prototyp' in article.title|lower %}prototyping{% elif 'assistant' in article.title|lower or 'bot' in article.title|lower %}virtual-assistants{% else %}ai{% endif %}">
+                <div class="article-card">
+                    <div class="article-img-wrapper">
+                        {% if article.featured_image %}
+                        <a href="{% url 'blog_detail' article.slug %}">
+                            <img src="{{ article.featured_image.url }}?v=2" class="article-img" alt="{{ article.title }}">
+                        </a>
+                        {% else %}
+                        <a href="{% url 'blog_detail' article.slug %}">
+                            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80" class="article-img" alt="Placeholder">
+                        </a>
+                        {% endif %}
+                    </div>
+                    <div class="p-4 d-flex flex-column flex-grow-1">
+                        <div class="mb-2">
+                            {% if 'nlp' in article.title|lower or 'language' in article.title|lower %}
+                                <span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1">NLP</span>
+                            {% elif 'data' in article.title|lower %}
+                                <span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1">Data</span>
+                            {% elif 'prototyp' in article.title|lower %}
+                                <span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1">Prototyping</span>
+                            {% elif 'assistant' in article.title|lower or 'bot' in article.title|lower %}
+                                <span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1">Virtual Assistants</span>
+                            {% else %}
+                                <span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1">AI</span>
+                            {% endif %}
+                        </div>
+                        <h5 class="fw-bold mb-3 article-title"><a href="{% url 'blog_detail' article.slug %}" class="text-decoration-none">{{ article.title }}</a></h5>
+                        <p class="text-muted small mb-4 flex-grow-1 article-excerpt" style="line-height: 1.6;">{{ article.excerpt|default:article.content|truncatewords:20 }}</p>
+                        <div class="d-flex justify-content-between align-items-center mt-auto pt-3 border-top">
+                            <div class="d-flex align-items-center">
+                                <span class="small fw-semibold text-primary">{% if article.author_name %}{{ article.author_name }}{% elif article.author %}{{ article.author.get_full_name|default:article.author.username }}{% else %}AI-Solutions Team{% endif %}</span>
+                            </div>
+                            <span class="small text-muted"><i class="far fa-calendar-alt me-1"></i>{{ article.published_date|date:"M d, Y" }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12 text-center py-5">
+                <i class="fas fa-newspaper fa-3x text-muted mb-3 d-block"></i>
+                <p class="text-muted">Stay tuned for our first promotional article.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- LOAD MORE BUTTON -->
+    <div class="text-center mt-4 mb-5" id="load-more-container" style="display: none;">
+        <button id="load-more-btn" class="btn btn-outline-primary btn-lg rounded-pill px-5 fw-semibold border-2">
+            Load More Articles
+        </button>
+    </div>
+
+    <!-- No Results message for JS -->
+    <div id="no-results-msg" class="text-center py-5" style="display: none;">
+        <i class="fas fa-search fa-3x text-muted mb-3 d-block"></i>
+        <h5 class="text-muted">No articles found matching your search.</h5>
+    </div>
+
+    <!-- NEWSLETTER SECTION -->
+    <div class="row mb-4 mt-5">
+        <div class="col-12">
+            <div class="rounded-4 p-5 text-center text-white" style="background: linear-gradient(135deg, #0a0a1a 0%, #0d1b3e 50%, #0a0a2e 100%); box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                <h2 class="fw-bold mb-3 text-white">Stay Updated</h2>
+                <p class="mb-4 lead mx-auto" style="color: rgba(255,255,255,0.85); max-width: 500px;">Get latest AI insights delivered to your inbox</p>
+                
+                <div class="mx-auto" style="max-width: 500px;">
+                    <form id="newsletter-form" class="d-flex mb-3 bg-white rounded-pill p-1" onsubmit="handleSubscribe(event)">
+                        <input type="email" id="newsletter-email" class="form-control border-0 bg-transparent px-4 shadow-none" placeholder="Enter your email address" required>
+                        <button type="submit" class="btn btn-primary rounded-pill px-4 fw-semibold" style="background: #0073e6;">Subscribe</button>
+                    </form>
+                    <div id="newsletter-success" class="alert alert-success rounded-pill fw-semibold mb-3 py-2 text-start px-4" style="display: none;">
+                        <i class="fas fa-check-circle me-2"></i> Thank you for subscribing!
+                    </div>
+                    <p class="small mb-0" style="color: rgba(255,255,255,0.6);">Join 500+ readers already subscribed</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const searchInput = document.getElementById('blog-search');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const articles = document.querySelectorAll('.article-item');
+    const noResults = document.getElementById('no-results-msg');
+    const loadMoreBtn = document.getElementById('load-more-btn');
+    const loadMoreContainer = document.getElementById('load-more-container');
+
+    let currentLimit = 3;
+
+    function filterArticles() {
+        const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+        const activeTab = document.querySelector('.filter-btn.active');
+        const activeFilter = activeTab ? activeTab.dataset.filter : 'all';
+        let visibleCount = 0;
+        let matchCount = 0;
+
+        articles.forEach(article => {
+            const titleEl = article.querySelector('.article-title');
+            const excerptEl = article.querySelector('.article-excerpt');
+            
+            const title = titleEl ? titleEl.textContent.toLowerCase() : '';
+            const text = excerptEl ? excerptEl.textContent.toLowerCase() : '';
+            const category = article.dataset.category;
+            
+            const matchesSearch = title.includes(searchTerm) || text.includes(searchTerm);
+            const matchesCategory = activeFilter === 'all' || category === activeFilter;
+
+            if (matchesSearch && matchesCategory) {
+                matchCount++;
+                if (matchCount <= currentLimit) {
+                    article.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    article.style.display = 'none';
+                }
+            } else {
+                article.style.display = 'none';
+            }
+        });
+
+        if (noResults) {
+            noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+        
+        if (loadMoreContainer) {
+            loadMoreContainer.style.display = matchCount > currentLimit ? 'block' : 'none';
+        }
+    }
+
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', () => {
+            currentLimit += 3;
+            filterArticles();
+        });
+    }
+
+    if (searchInput) {
+        searchInput.addEventListener('input', () => {
+            currentLimit = 3;
+            filterArticles();
+        });
+    }
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            e.currentTarget.classList.add('active');
+            currentLimit = 3;
+            filterArticles();
+        });
+    });
+
+    function handleSubscribe(e) {
+        e.preventDefault();
+        const form = document.getElementById('newsletter-form');
+        const successMsg = document.getElementById('newsletter-success');
+        
+        form.style.display = 'none';
+        successMsg.style.display = 'block';
+    }
+
+    // Initial load
+    filterArticles();
+</script>
+{% endblock %}

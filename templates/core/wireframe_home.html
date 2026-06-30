@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wireframe - Home Page</title>
+    <style>
+        :root {
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --border-color: #333;
+            --text-color: #000;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-family);
+            color: var(--text-color);
+            line-height: 1.5;
+            background-color: #fff;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Helper border box with X */
+        .box-placeholder {
+            position: relative;
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #fff;
+        }
+        
+        .box-placeholder svg.x-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        
+        .box-placeholder span {
+            position: relative;
+            z-index: 1;
+            background: #fff;
+            padding: 2px 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        .btn-solid {
+            background: #000;
+            color: #fff;
+            border: 2px solid #000;
+        }
+        .btn-outline {
+            background: #fff;
+            color: #000;
+            border: 2px solid #000;
+        }
+
+        /* Typography */
+        h1 { font-size: 2.8rem; margin: 0 0 15px 0; line-height: 1.2; font-weight: 800; }
+        h2 { font-size: 1.8rem; margin: 0 0 30px 0; text-align: center; font-weight: bold; }
+        h3 { font-size: 1.2rem; margin: 0 0 10px 0; font-weight: bold; }
+        p { margin: 0 0 15px 0; color: #444; }
+        
+        hr {
+            border: none;
+            border-top: 2px solid var(--border-color);
+            margin: 40px 0;
+        }
+
+        /* --- Header --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 40px;
+        }
+        .logo {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* --- Hero --- */
+        .hero {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .hero-left {
+            flex: 1;
+        }
+        .hero-left p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+        .hero-right {
+            flex: 1;
+        }
+        .hero-right .box-placeholder {
+            width: 100%;
+            height: 300px;
+        }
+
+        /* --- Why Choose Us --- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        .feature-card {
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px 15px;
+            text-align: center;
+        }
+        .feature-card svg {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 15px;
+        }
+        .feature-card h4 {
+            margin: 0 0 10px 0;
+            font-size: 1rem;
+        }
+        .feature-card p {
+            font-size: 0.8rem;
+            margin: 0;
+        }
+
+        /* --- Testimonials --- */
+        .testimonials {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        .testi-left {
+            flex: 0 0 300px;
+        }
+        .testi-left h4 { margin: 0 0 15px 0; font-size: 0.9rem; }
+        .star-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .star-row span { width: 25px; }
+        .progress-bar-container {
+            flex: 1;
+            height: 12px;
+            border: 1px solid var(--border-color);
+            margin-left: 10px;
+        }
+        .progress-bar {
+            height: 100%;
+            background: #000;
+        }
+        
+        .testi-right {
+            flex: 1;
+            display: flex;
+            gap: 20px;
+        }
+        .testi-card {
+            flex: 1;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            gap: 15px;
+        }
+        .testi-avatar {
+            width: 45px;
+            height: 45px;
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .testi-content .stars {
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+        .testi-content p {
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        /* --- Articles & Events --- */
+        .content-cols {
+            display: flex;
+            gap: 40px;
+        }
+        .content-col {
+            flex: 1;
+        }
+        .content-col h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+        }
+        .list-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .list-img {
+            width: 100px;
+            height: 70px;
+            flex-shrink: 0;
+        }
+        .list-text h4 {
+            margin: 0 0 5px 0;
+            font-size: 0.95rem;
+        }
+        .list-text .date {
+            font-size: 0.75rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .list-text p {
+            font-size: 0.8rem;
+            margin: 0;
+        }
+
+        /* --- Filter Grid --- */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        .tabs .btn {
+            padding: 5px 15px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+        .gallery-item {
+            height: 80px;
+        }
+
+        /* --- Footer --- */
+        footer {
+            border-top: 2px solid var(--border-color);
+            padding: 30px 0;
+        }
+        .footer-cols {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        .footer-col h4 {
+            font-size: 0.95rem;
+            margin: 0 0 15px 0;
+        }
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .footer-col li {
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+            color: #444;
+        }
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 15px;
+            text-align: center;
+            font-size: 0.75rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- Header -->
+        <header>
+            <div class="logo">ACME CORP LOGO</div>
+            <div class="nav-links">
+                <span>Home</span>
+                <span>About Us</span>
+                <span>Services</span>
+                <span>Case Studies</span>
+                <span>Events</span>
+                <span>Feedback</span>
+                <span>Gallery</span>
+                <span>Blog</span>
+                <span>Contact</span>
+                <span class="btn btn-outline" style="padding: 5px 15px;">Sign In</span>
+            </div>
+        </header>
+
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-left">
+                <h1>Streamline Your Business Operations Today</h1>
+                <p>Achieve maximum efficiency with our all-in-one productivity suite.</p>
+                <div>
+                    <span class="btn btn-solid">Get Started</span>
+                    <span class="btn btn-outline">Our Services</span>
+                </div>
+            </div>
+            <div class="hero-right">
+                <div class="box-placeholder">
+                    <svg class="x-lines" preserveAspectRatio="none"><line x1="0" y1="0" x2="100%" y2="100%" stroke="#333" stroke-width="1" /><line x1="100%" y1="0" x2="0" y2="100%" stroke="#333" stroke-width="1" /></svg>
+                    <span>Video or Image Placeholder</span>
+                </div>
+            </div>
+        </section>
+
+        <hr>
+
+        <!-- Why Choose Us -->
+        <section>
+            <h2>Why Choose Us</h2>
+            <div class="features-grid">
+                <!-- Box 1 -->
+                <div class="feature-card">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    <h4>Feature 1 Headline</h4>
+                    <p>Lorem ipsum efficiency with our all-in-one adipicing elit, sed do eiusmod tempor elitiodunt readabliliy.</p>
+                </div>
+                <!-- Box 2 -->
+                <div class="feature-card">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 10.5 21 3"></path><path d="M16 3h5v5"></path><path d="M3 21l3.5-3.5"></path><path d="M10 14a4 4 0 1 1-4-4 4 4 0 0 1 4 4z"></path></svg>
+                    <h4>Feature 2 Headline</h4>
+                    <p>Lorem ipsum efficiency with our all-in-one adipicing elit, sed do eiusmod tempor elitiodunt readabliliy.</p>
+                </div>
+                <!-- Box 3 -->
+                <div class="feature-card">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    <h4>Feature 3 Headline</h4>
+                    <p>Lorem ipsum efficiency with our all-in-one adipicing elit, sed do eiusmod tempor elitiodunt readabliliy.</p>
+                </div>
+                <!-- Box 4 -->
+                <div class="feature-card">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                    <h4>Feature 4 Headline</h4>
+                    <p>Lorem ipsum efficiency with our all-in-one adipicing elit, sed do eiusmod tempor elitiodunt readabliliy.</p>
+                </div>
+            </div>
+        </section>
+
+        <hr>
+
+        <!-- Testimonials -->
+        <section>
+            <h2>Hear From Our Happy Clients</h2>
+            <div class="testimonials">
+                <div class="testi-left">
+                    <h4>STAR RATING Breakdown</h4>
+                    <div class="star-row"><span>5 ★</span><div class="progress-bar-container"><div class="progress-bar" style="width: 80%"></div></div></div>
+                    <div class="star-row"><span>4 ★</span><div class="progress-bar-container"><div class="progress-bar" style="width: 40%"></div></div></div>
+                    <div class="star-row"><span>3 ★</span><div class="progress-bar-container"><div class="progress-bar" style="width: 25%"></div></div></div>
+                    <div class="star-row"><span>2 ★</span><div class="progress-bar-container"><div class="progress-bar" style="width: 10%"></div></div></div>
+                    <div class="star-row"><span>1 ★</span><div class="progress-bar-container"><div class="progress-bar" style="width: 0%"></div></div></div>
+                </div>
+                <div class="testi-right">
+                    <!-- Card 1 -->
+                    <div class="testi-card">
+                        <div class="testi-avatar">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        </div>
+                        <div class="testi-content">
+                            <div class="stars">★★★★★</div>
+                            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua volutpat."</p>
+                        </div>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="testi-card">
+                        <div class="testi-avatar">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        </div>
+                        <div class="testi-content">
+                            <div class="stars">★★★★★</div>
+                            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua volutpat."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr>
+
+        <!-- Articles & Events -->
+        <section class="content-cols">
+            <div class="content-col">
+                <h3>Latest Articles</h3>
+                <!-- Item 1 -->
+                <div class="list-item">
+                    <div class="box-placeholder list-img"><svg class="x-lines" preserveAspectRatio="none"><line x1="0" y1="0" x2="100%" y2="100%" stroke="#333" stroke-width="1" /><line x1="100%" y1="0" x2="0" y2="100%" stroke="#333" stroke-width="1" /></svg></div>
+                    <div class="list-text">
+                        <h4>Lorem Ipsum Dolor Sit Amet</h4>
+                        <div class="date">Jan 1, 2024</div>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut...</p>
+                    </div>
+                </div>
+                <!-- Item 2 -->
+                <div class="list-item">
+                    <div class="box-placeholder list-img"><svg class="x-lines" preserveAspectRatio="none"><line x1="0" y1="0" x2="100%" y2="100%" stroke="#333" stroke-width="1" /><line x1="100%" y1="0" x2="0" y2="100%" stroke="#333" stroke-width="1" /></svg></div>
+                    <div class="list-text">
+                        <h4>Lorem Ipsum Dolor Sit Amet</h4>
+                        <div class="date">Jan 1, 2024</div>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut...</p>
+                    </div>
+                </div>
+                <!-- Item 3 -->
+                <div class="list-item">
+                    <div class="box-placeholder list-img"><svg class="x-lines" preserveAspectRatio="none"><line x1="0" y1="0" x2="100%" y2="100%" stroke="#333" stroke-width="1" /><line x1="100%" y1="0" x2="0" y2="100%" stroke="#333" stroke-width="1" /></svg></div>
+                    <div class="list-text">
+                        <h4>Lorem Ipsum Dolor Sit Amet</h4>
+                        <div class="date">Jan 1, 2024</div>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-col">
+                <h3>Upcoming Events</h3>
+                <!-- Event 1 -->
+                <div class="list-item">
+                    <div class="box-placeholder list-img"><svg class="x-lines" preserveAspectRatio="none"><line x1="0" y1="0" x2="100%" y2="100%" stroke="#333" stroke-width="1" /><line x1="100%" y1="0" x2="0" y2="100%" stroke="#333" stroke-width="1" /></svg><span>Date</span></div>
+                    <div class="list-text">
+                        <h4>Tech Conference 2024</h4>
+                        <div class="date">Jan 11, 2024 | Conference, USA</div>
+                    </div>
+                </div>
+                <!-- Event 2 -->
+                <div class="list-item">
+                    <div class="box-placeholder list-img"><svg class="x-lines" preserveAspectRatio="none"><line x1="0" y1="0" x2="100%" y2="100%" stroke="#333" stroke-width="1" /><line x1="100%" y1="0" x2="0" y2="100%" stroke="#333" stroke-width="1" /></svg><span>Date</span></div>
+                    <div class="list-text">
+                        <h4>Tech Conference 2024</h4>
+                        <div class="date">Jun 11, 2024 | Conference, USA</div>
+                    </div>
+                </div>
+                <!-- Event 3 -->
+                <div class="list-item">
+                    <div class="box-placeholder list-img"><svg class="x-lines" preserveAspectRatio="none"><line x1="0" y1="0" x2="100%" y2="100%" stroke="#333" stroke-width="1" /><line x1="100%" y1="0" x2="0" y2="100%" stroke="#333" stroke-width="1" /></svg><span>Date</span></div>
+                    <div class="list-text">
+                        <h4>Tech Conference 2024</h4>
+                        <div class="date">Jun 11, 2024 | Conference, USA</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery / Tabs -->
+        <section>
+            <div class="tabs">
+                <span class="btn btn-solid">All</span>
+                <span class="btn btn-outline">Team</span>
+                <span class="btn btn-outline">Events</span>
+                <span class="btn btn-outline">Workspace</span>
+            </div>
+            
+            <div class="gallery-grid">
+                <div class="box-placeholder gallery-item"><svg class="x-lines" preserveAspectRatio="none"><line x1="0" y1="0" x2="100%" y2="100%" stroke="#333" stroke-width="1" /><line x1="100%" y1="0" x2="0" y2="100%" stroke="#333" stroke-width="1" /></svg></div>
+                <div class="box-placeholder gallery-item"><svg class="x-lines" preserveAspectRatio="none"><line x1="0" y1="0" x2="100%" y2="100%" stroke="#333" stroke-width="1" /><line x1="100%" y1="0" x2="0" y2="100%" stroke="#333" stroke-width="1" /></svg></div>
+                <div class="box-placeholder gallery-item"><svg class="x-lines" preserveAspectRatio="none"><line x1="0" y1="0" x2="100%" y2="100%" stroke="#333" stroke-width="1" /><line x1="100%" y1="0" x2="0" y2="100%" stroke="#333" stroke-width="1" /></svg></div>
+                <div class="box-placeholder gallery-item"><svg class="x-lines" preserveAspectRatio="none"><line x1="0" y1="0" x2="100%" y2="100%" stroke="#333" stroke-width="1" /><line x1="100%" y1="0" x2="0" y2="100%" stroke="#333" stroke-width="1" /></svg></div>
+                <div class="box-placeholder gallery-item"><svg class="x-lines" preserveAspectRatio="none"><line x1="0" y1="0" x2="100%" y2="100%" stroke="#333" stroke-width="1" /><line x1="100%" y1="0" x2="0" y2="100%" stroke="#333" stroke-width="1" /></svg></div>
+                <div class="box-placeholder gallery-item"><svg class="x-lines" preserveAspectRatio="none"><line x1="0" y1="0" x2="100%" y2="100%" stroke="#333" stroke-width="1" /><line x1="100%" y1="0" x2="0" y2="100%" stroke="#333" stroke-width="1" /></svg></div>
+                <div class="box-placeholder gallery-item"><svg class="x-lines" preserveAspectRatio="none"><line x1="0" y1="0" x2="100%" y2="100%" stroke="#333" stroke-width="1" /><line x1="100%" y1="0" x2="0" y2="100%" stroke="#333" stroke-width="1" /></svg></div>
+                <div class="box-placeholder gallery-item"><svg class="x-lines" preserveAspectRatio="none"><line x1="0" y1="0" x2="100%" y2="100%" stroke="#333" stroke-width="1" /><line x1="100%" y1="0" x2="0" y2="100%" stroke="#333" stroke-width="1" /></svg></div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-cols">
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li>Home</li>
+                        <li>About Us</li>
+                        <li>Services</li>
+                        <li>Case Studies</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <ul>
+                        <li>Business owners</li>
+                        <li>Contact Us</li>
+                        <li>Website Institutions</li>
+                        <li>Mawolest.com</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <ul>
+                        <li>Events</li>
+                        <li>Feedback</li>
+                        <li>Gallery</li>
+                        <li>Blog</li>
+                        <li>Contact</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li>Contact Us</li>
+                        <li>Terms of Service</li>
+                        <li>Privacy Policy</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2024 Acme Corp. All rights reserved.
+            </div>
+        </footer>
+
+    </div>
+
+</body>
+</html>

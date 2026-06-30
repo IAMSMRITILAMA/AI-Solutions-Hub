@@ -1,0 +1,239 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Terms of Service | AI-Solutions{% endblock %}
+
+{% block content %}
+<style>
+    /* Hero */
+    .terms-hero {
+        background: linear-gradient(135deg, #0a0a1a 0%, #0d1b3e 50%, #0a0a2e 100%);
+        padding: 90px 0;
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        color: white;
+        text-align: center;
+        margin-bottom: 60px;
+    }
+    .terms-hero .hero-label {
+        display: inline-block;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: #60a5fa;
+        background: rgba(13, 110, 253, 0.15);
+        border-radius: 999px;
+        padding: 6px 18px;
+        margin-bottom: 20px;
+    }
+    .terms-card {
+        background: #ffffff;
+        border: 1px solid #e8eef6;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 100, 255, 0.04);
+        padding: 40px;
+        margin-bottom: 60px;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .terms-section {
+        margin-bottom: 35px;
+    }
+    .terms-section:last-child {
+        margin-bottom: 0;
+    }
+    .terms-section h3 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 16px;
+    }
+    .terms-section p, .terms-section li {
+        color: #475569;
+        font-size: 14px;
+        line-height: 1.7;
+    }
+    .terms-section ul {
+        padding-left: 20px;
+        margin-bottom: 0;
+    }
+    .terms-section li {
+        margin-bottom: 8px;
+    }
+    .terms-section li:last-child {
+        margin-bottom: 0;
+    }
+    .back-btn {
+        color: #2563eb;
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 30px;
+        transition: color 0.2s ease;
+    }
+    .back-btn:hover {
+        color: #1d4ed8;
+        text-decoration: underline;
+    }
+</style>
+
+<!-- HERO BANNER -->
+<section class="terms-hero">
+    <div class="container">
+        <span class="hero-label">LEGAL</span>
+        <h1 class="display-4 fw-bolder text-white mb-3">Terms of Service</h1>
+        <p class="lead mx-auto" style="color: rgba(255,255,255,0.8); max-width: 600px;">
+            Last updated: June 2026
+        </p>
+    </div>
+</section>
+
+<div class="container">
+    <div class="terms-card">
+        <!-- Back Button -->
+        <a href="{% url 'home' %}" class="back-btn">&larr; Back to Home</a>
+        
+        <!-- SECTION 1 -->
+        <div class="terms-section">
+            <h3>SECTION 1 — Acceptance of Terms</h3>
+            <p>
+                By accessing and using the AI-Solutions website you accept and agree to be bound by these Terms of Service. If you do not agree please do not use our website.
+            </p>
+        </div>
+        
+        <hr class="my-4" style="border-color: #e2e8f0;">
+        
+        <!-- SECTION 2 -->
+        <div class="terms-section">
+            <h3>SECTION 2 — Use of Website</h3>
+            <p>You agree to use this website only for lawful purposes. You must not:</p>
+            <ul>
+                <li>Use for fraudulent purposes</li>
+                <li>Attempt unauthorized access</li>
+                <li>Transmit harmful content</li>
+                <li>Copy content without permission</li>
+                <li>Use automated scraping tools</li>
+            </ul>
+        </div>
+        
+        <hr class="my-4" style="border-color: #e2e8f0;">
+        
+        <!-- SECTION 3 -->
+        <div class="terms-section">
+            <h3>SECTION 3 — Intellectual Property</h3>
+            <p>
+                All content including text, images, logos, code and blog articles are the intellectual property of AI-Solutions and protected by copyright law. You may not reproduce any content without written consent.
+            </p>
+        </div>
+
+        <hr class="my-4" style="border-color: #e2e8f0;">
+        
+        <!-- SECTION 4 -->
+        <div class="terms-section">
+            <h3>SECTION 4 — Our Services</h3>
+            <p>AI-Solutions provides:</p>
+            <ul>
+                <li>AI Prototyping</li>
+                <li>Virtual Assistant development</li>
+                <li>NLP Solutions</li>
+                <li>AI Strategy Consulting</li>
+            </ul>
+            <p class="mt-3">Service terms and pricing are agreed separately in client contracts.</p>
+        </div>
+
+        <hr class="my-4" style="border-color: #e2e8f0;">
+        
+        <!-- SECTION 5 -->
+        <div class="terms-section">
+            <h3>SECTION 5 — User Responsibilities</h3>
+            <p>When submitting information you agree to:</p>
+            <ul>
+                <li>Provide accurate information</li>
+                <li>Not impersonate anyone</li>
+                <li>Not submit spam messages</li>
+                <li>Keep contact details updated</li>
+                <li>Report unauthorized use immediately</li>
+            </ul>
+        </div>
+
+        <hr class="my-4" style="border-color: #e2e8f0;">
+        
+        <!-- SECTION 6 -->
+        <div class="terms-section">
+            <h3>SECTION 6 — Disclaimer</h3>
+            <p>
+                Information on this website is for general purposes only. AI-Solutions makes no warranties regarding accuracy of content, website availability or results from using our services. We reserve the right to modify any part of the website without notice.
+            </p>
+        </div>
+
+        <hr class="my-4" style="border-color: #e2e8f0;">
+        
+        <!-- SECTION 7 -->
+        <div class="terms-section">
+            <h3>SECTION 7 — Limitation of Liability</h3>
+            <p>
+                AI-Solutions shall not be liable for any indirect loss, loss of data or profits, or business interruption. Total liability shall not exceed amount paid in the 3 months preceding the claim.
+            </p>
+        </div>
+
+        <hr class="my-4" style="border-color: #e2e8f0;">
+
+        <!-- SECTION 8 -->
+        <div class="terms-section">
+            <h3>SECTION 8 — Third Party Links</h3>
+            <p>
+                Our website may contain links to third party websites for convenience only. AI-Solutions has no control over their content and is not responsible for their privacy practices.
+            </p>
+        </div>
+
+        <hr class="my-4" style="border-color: #e2e8f0;">
+
+        <!-- SECTION 9 -->
+        <div class="terms-section">
+            <h3>SECTION 9 — Governing Law</h3>
+            <p>
+                These Terms are governed by the laws of England and Wales. We comply with UK GDPR and Data Protection Act 2018. Disputes shall be subject to jurisdiction of courts of England and Wales.
+            </p>
+        </div>
+
+        <hr class="my-4" style="border-color: #e2e8f0;">
+
+        <!-- SECTION 10 -->
+        <div class="terms-section">
+            <h3>SECTION 10 — Changes to Terms</h3>
+            <p>
+                AI-Solutions may update these Terms at any time. Changes will be posted on this page with updated date. Continued use of website means acceptance of new terms.
+            </p>
+        </div>
+
+        <hr class="my-4" style="border-color: #e2e8f0;">
+
+        <!-- SECTION 11 -->
+        <div class="terms-section">
+            <h3>SECTION 11 — Contact Us</h3>
+            <p>For questions about these terms:</p>
+            <ul>
+                <li>Company: AI-Solutions</li>
+                <li>Address: AI-Solutions Hub, Sunderland, UK</li>
+                <li>Email: <a href="mailto:hello@ai-solutions.tech">hello@ai-solutions.tech</a></li>
+                <li>Phone: +44 191 123 4567</li>
+            </ul>
+            <p class="mt-3">We respond within 24 hours.</p>
+        </div>
+        
+        <hr class="my-4" style="border-color: #e2e8f0;">
+
+        <div class="d-flex justify-content-between mt-4">
+            <a href="{% url 'privacy_policy' %}" class="back-btn mb-0" style="color: #64748b; font-weight: 500;">&larr; Privacy Policy</a>
+            <a href="{% url 'contact' %}" class="back-btn mb-0" style="color: #64748b; font-weight: 500;">Contact Us &rarr;</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

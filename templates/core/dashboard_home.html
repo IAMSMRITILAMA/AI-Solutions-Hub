@@ -1,0 +1,351 @@
+{% extends 'core/dashboard_base.html' %}
+
+{% block title %}Dashboard Home | AI-Solutions Staff{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+    <div>
+        <h1 class="display-6 fw-bold text-white mb-1">Administrative Dashboard</h1>
+        <p class="text-muted mb-0">System status overview, customer inquiries, and contact metrics.</p>
+    </div>
+    
+    <!-- Notification Bell -->
+    <div class="dropdown">
+        <button class="btn btn-link text-white position-relative p-2 text-decoration-none" type="button" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-bell fs-4"></i>
+            {% if unread_contacts or new_inquiries %}
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border border-dark" style="transform: translate(-30%, -20%) !important;">
+                {{ unread_contacts|add:new_inquiries }}
+                <span class="visually-hidden">unread messages</span>
+            </span>
+            {% endif %}
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark shadow-lg mt-2" aria-labelledby="notificationDropdown" style="width: 320px; background-color: var(--bg-card); border-color: var(--border-color);">
+            <li class="dropdown-header text-muted fw-bold text-uppercase border-bottom border-secondary mb-2">Notifications</li>
+            
+            {% if new_inquiries %}
+            <li>
+                <a class="dropdown-item d-flex align-items-center gap-3 py-2" href="{% url 'inquiry_list' %}">
+                    <div class="rounded-circle bg-primary bg-opacity-25 p-2 text-primary d-flex align-items-center justify-content-center">
+                        <i class="bi bi-chat-left-text"></i>
+                    </div>
+                    <div>
+                        <p class="mb-0 text-white fw-medium">{{ new_inquiries }} New Inquiries</p>
+                        <small class="text-muted">Review latest requests</small>
+                    </div>
+                </a>
+            </li>
+            {% endif %}
+
+            {% if unread_contacts %}
+            <li>
+                <a class="dropdown-item d-flex align-items-center gap-3 py-2" href="{% url 'contact_list' %}">
+                    <div class="rounded-circle bg-warning bg-opacity-25 p-2 text-warning d-flex align-items-center justify-content-center">
+                        <i class="bi bi-envelope"></i>
+                    </div>
+                    <div>
+                        <p class="mb-0 text-white fw-medium">{{ unread_contacts }} Unread Messages</p>
+                        <small class="text-muted">Latest contact form entries</small>
+                    </div>
+                </a>
+            </li>
+            {% endif %}
+
+            {% if not new_inquiries and not unread_contacts %}
+            <li><span class="dropdown-item text-muted py-3 text-center">No new notifications</span></li>
+            {% endif %}
+            
+            <li><hr class="dropdown-divider border-secondary mt-2 mb-0"></li>
+            <li><a class="dropdown-item text-center text-primary py-2 fw-medium" href="#">View All Notifications</a></li>
+        </ul>
+    </div>
+</div>
+
+<!-- Stats Grid -->
+<div class="row mb-4">
+    <!-- Card 1 -->
+    <div class="col-md-6 col-xl-3 mb-3">
+        <div class="dashboard-card h-100 d-flex align-items-center gap-3">
+            <div class="rounded-3 p-3 bg-purple text-white d-flex align-items-center justify-content-center" style="width: 56px; height: 56px; background-color: rgba(124, 58, 237, 0.15); color: var(--primary-accent-hover);">
+                <i class="bi bi-chat-left-text fs-3 text-purple" style="color: #a78bfa;"></i>
+            </div>
+            <div>
+                <span class="text-muted small fw-medium text-uppercase">Total Inquiries</span>
+                <h3 class="mb-0 fw-bold mt-1">{{ total_inquiries }}</h3>
+            </div>
+        </div>
+    </div>
+    <!-- Card 2 -->
+    <div class="col-md-6 col-xl-3 mb-3">
+        <div class="dashboard-card h-100 d-flex align-items-center gap-3">
+            <div class="rounded-3 p-3 text-white d-flex align-items-center justify-content-center" style="width: 56px; height: 56px; background-color: rgba(59, 130, 246, 0.15);">
+                <i class="bi bi-envelope-exclamation fs-3 text-primary" style="color: #60a5fa;"></i>
+            </div>
+            <div>
+                <span class="text-muted small fw-medium text-uppercase">New Inquiries</span>
+                <h3 class="mb-0 fw-bold mt-1 text-primary">{{ new_inquiries }}</h3>
+            </div>
+        </div>
+    </div>
+    <!-- Card 3 -->
+    <div class="col-md-6 col-xl-3 mb-3">
+        <div class="dashboard-card h-100 d-flex align-items-center gap-3">
+            <div class="rounded-3 p-3 text-white d-flex align-items-center justify-content-center" style="width: 56px; height: 56px; background-color: rgba(245, 158, 11, 0.15);">
+                <i class="bi bi-bell-fill fs-3 text-warning" style="color: #fbbf24;"></i>
+            </div>
+            <div>
+                <span class="text-muted small fw-medium text-uppercase">Unread Contacts</span>
+                <h3 class="mb-0 fw-bold mt-1 text-warning">{{ unread_contacts }}</h3>
+            </div>
+        </div>
+    </div>
+    <!-- Card 4 -->
+    <div class="col-md-6 col-xl-3 mb-3">
+        <div class="dashboard-card h-100 d-flex align-items-center gap-3">
+            <div class="rounded-3 p-3 text-white d-flex align-items-center justify-content-center" style="width: 56px; height: 56px; background-color: rgba(16, 185, 129, 0.15);">
+                <i class="bi bi-check-circle-fill fs-3 text-success" style="color: #34d399;"></i>
+            </div>
+            <div>
+                <span class="text-muted small fw-medium text-uppercase">Resolved Inquiries</span>
+                <h3 class="mb-0 fw-bold mt-1 text-success">{{ resolved_inquiries }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Charts Row -->
+<div class="row mb-4">
+    <!-- Bar Chart: Inquiries per Month -->
+    <div class="col-lg-6 col-xl-4 mb-4">
+        <div class="dashboard-card h-100">
+            <h5 class="fw-bold mb-3"><i class="bi bi-bar-chart-fill me-2 text-purple" style="color: #a78bfa;"></i>Inquiries (Last 6 Months)</h5>
+            <div style="position: relative; height:240px; width:100%">
+                <canvas id="barChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <!-- Line Chart: Contact Messages per Week -->
+    <div class="col-lg-6 col-xl-4 mb-4">
+        <div class="dashboard-card h-100">
+            <h5 class="fw-bold mb-3"><i class="bi bi-graph-up me-2 text-success" style="color: #34d399;"></i>Contact Messages (Last 4 Weeks)</h5>
+            <div style="position: relative; height:240px; width:100%">
+                <canvas id="lineChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <!-- Pie Chart: Inquiries by Service -->
+    <div class="col-lg-12 col-xl-4 mb-4">
+        <div class="dashboard-card h-100">
+            <h5 class="fw-bold mb-3"><i class="bi bi-pie-chart-fill me-2 text-primary" style="color: #60a5fa;"></i>Inquiries by Interest</h5>
+            <div style="position: relative; height:240px; width:100%">
+                <canvas id="pieChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Activity Tables -->
+<div class="row">
+    <!-- Recent Inquiries -->
+    <div class="col-lg-6 mb-4">
+        <div class="dashboard-card h-100">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold mb-0">Recent Customer Inquiries</h5>
+                <a href="{% url 'inquiry_list' %}" class="small text-decoration-none" style="color: #a78bfa;">View All &rarr;</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-dark-custom align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Interest</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if recent_inquiries %}
+                            {% for inq in recent_inquiries %}
+                            <tr>
+                                <td class="text-white fw-bold">{{ inq.name }}</td>
+                                <td>{{ inq.service_interest }}</td>
+                                <td>
+                                    <span class="badge 
+                                        {% if inq.status == 'New' %}badge-new
+                                        {% elif inq.status == 'In Progress' %}badge-progress
+                                        {% else %}badge-resolved{% endif %} px-2.5 py-1">
+                                        {{ inq.status }}
+                                    </span>
+                                </td>
+                                <td class="small text-muted">{{ inq.created_at|date:"M d, Y" }}</td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="4" class="text-center text-muted py-4">No recent inquiries found.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Recent Contact Messages -->
+    <div class="col-lg-6 mb-4">
+        <div class="dashboard-card h-100">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold mb-0">Recent Contact Messages</h5>
+                <a href="{% url 'contact_list' %}" class="small text-decoration-none" style="color: #a78bfa;">View All &rarr;</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-dark-custom align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>Sender</th>
+                            <th>Subject</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if recent_contacts %}
+                            {% for cmsg in recent_contacts %}
+                            <tr>
+                                <td class="text-white fw-bold">{{ cmsg.name }}</td>
+                                <td class="text-truncate" style="max-width: 150px;">{{ cmsg.subject }}</td>
+                                <td>
+                                    {% if cmsg.is_read %}
+                                        <span class="badge bg-secondary border border-secondary px-2.5 py-1 text-light">Read</span>
+                                    {% else %}
+                                        <span class="badge badge-new px-2.5 py-1">Unread</span>
+                                    {% endif %}
+                                </td>
+                                <td class="small text-muted">{{ cmsg.submitted_at|date:"M d, Y" }}</td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="4" class="text-center text-muted py-4">No recent contact messages.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Include Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Chart.js global config for dark theme
+        Chart.defaults.color = '#a3a3a3';
+        Chart.defaults.borderColor = '#222222';
+        
+        // 1. Bar Chart: Inquiries last 6 months
+        const barLabels = {{ bar_labels_json|safe }};
+        const barData = {{ bar_data_json|safe }};
+        const ctxBar = document.getElementById('barChart').getContext('2d');
+        new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: barLabels,
+                datasets: [{
+                    label: 'Inquiries',
+                    data: barData,
+                    backgroundColor: 'rgba(124, 58, 237, 0.65)',
+                    borderColor: 'rgba(124, 58, 237, 1)',
+                    borderWidth: 1.5,
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1 }
+                    }
+                }
+            }
+        });
+        
+        // 2. Line Chart: Contacts last 4 weeks
+        const lineLabels = {{ line_labels_json|safe }};
+        const lineData = {{ line_data_json|safe }};
+        const ctxLine = document.getElementById('lineChart').getContext('2d');
+        new Chart(ctxLine, {
+            type: 'line',
+            data: {
+                labels: lineLabels,
+                datasets: [{
+                    label: 'Messages',
+                    data: lineData,
+                    borderColor: 'rgba(16, 185, 129, 1)',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    borderWidth: 2,
+                    tension: 0.35,
+                    fill: true,
+                    pointBackgroundColor: 'rgba(16, 185, 129, 1)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1 }
+                    }
+                }
+            }
+        });
+        
+        // 3. Pie Chart: Inquiries by Service interest
+        const pieLabels = {{ pie_labels_json|safe }};
+        const pieData = {{ pie_data_json|safe }};
+        const ctxPie = document.getElementById('pieChart').getContext('2d');
+        new Chart(ctxPie, {
+            type: 'doughnut',
+            data: {
+                labels: pieLabels,
+                datasets: [{
+                    data: pieData,
+                    backgroundColor: [
+                        'rgba(124, 58, 237, 0.7)',  // purple
+                        'rgba(59, 130, 246, 0.7)',   // blue
+                        'rgba(245, 158, 11, 0.7)',   // amber
+                        'rgba(16, 185, 129, 0.7)'    // emerald
+                    ],
+                    borderColor: '#141414',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: {
+                            boxWidth: 12,
+                            padding: 15
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}
